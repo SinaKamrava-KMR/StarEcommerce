@@ -1,7 +1,12 @@
+import { Link } from "react-router-dom"
 
 function Cart() {
   return (
-    <div>cart</div>
+    <div>
+      <Link to="/shipping">
+      پرداخت نهایی محصول 
+      </Link>
+    </div>
   )
 }
 

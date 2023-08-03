@@ -8,6 +8,12 @@ const GlobalStyles = createGlobalStyle`
     font-style: normal;
     font-display: auto;
   }
+@font-face {
+    font-family: 'yekan';
+    src: url("../assets/fonts/yekan.ttf");
+    font-style: normal;
+    font-display: auto;
+  }
 
 
 
@@ -86,15 +92,21 @@ body {
   color: var(--color-grey-700);
   transition: color 0.3s, background-color 0.3s;
   height: 100vh;
-  
+  overflow-x:hidden;
   line-height: 1.5;
   font-size: 1.6rem;
   padding: 1.2rem;
+
+ 
 }
 
 #root{
-  width: 100% ;
+  width: 100%;
   height: 100% ;
+  @media (min-width: 1200px) {
+    width: 97%;
+    margin-inline: auto;
+  }
 }
 
 input,

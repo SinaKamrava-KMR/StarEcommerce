@@ -1,7 +1,12 @@
+import { Link } from "react-router-dom"
 
 function Product() {
   return (
-    <div>product</div>
+    <div>
+      <Link to="/cart/jdfkgbns">
+       اضافه کردن به کارت 
+      </Link>
+    </div>
   )
 }
 
