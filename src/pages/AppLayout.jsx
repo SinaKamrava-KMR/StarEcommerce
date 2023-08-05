@@ -1,14 +1,19 @@
 import { Outlet } from "react-router-dom";
 import Header from "../components/header/Header";
+import { styled } from "styled-components";
+
+const MainLayout = styled.main`
+  flex: 1;
+`;
 
 function AppLayout() {
   return (
-    <div>
+    <>
       <Header />
-      <main>
+      <MainLayout>
         <Outlet />
-      </main>
-    </div>
+      </MainLayout>
+    </>
   );
 }
 

@@ -6,7 +6,7 @@ import NotFound from "../pages/NotFound";
 import Home from "../pages/home";
 import Cart from "../pages/cart";
 import Product from "../pages/product";
-import Products from "../pages/products";
+import Products from "../pages/Products";
 import DashboardLayout from "../pages/dashboard/DashboardLayout";
 import OrdersManagement from "../pages/dashboard/OrdersManagement";
 import Shipping from "../pages/Shipping";

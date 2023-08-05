@@ -6,13 +6,11 @@ import { useNavigate } from "react-router-dom";
 const SelectWrapper = styled.div`
   position: relative;
   width: 90px;
-  @media (min-width:600px) {
+  @media (min-width: 600px) {
     width: 100px;
-
   }
-  @media (min-width:1000px) {
+  @media (min-width: 1000px) {
     width: 110px;
-
   }
   background-color: #fff;
 `;
@@ -25,11 +23,10 @@ const SelectLabel = styled.label`
   transform: translateY(-50%);
   font-size: 1.4rem;
   color: #333;
-  @media (min-width:600px) {
+  @media (min-width: 600px) {
     font-size: 1.5rem;
-
   }
-  @media (min-width:1000px) {
+  @media (min-width: 1000px) {
     font-size: 1.8rem !important;
   }
 `;
@@ -68,7 +65,6 @@ const SelectOption = styled.li`
     font-weight: bold;
     scale: 1.1;
   }
-
 `;
 
 NavSelect.propTypes = {
@@ -87,10 +83,14 @@ function NavSelect({ label, options = [] }) {
 
   return (
     <SelectWrapper>
-      <SelectLabel onClick={() => setIsOpen((is) => !is)}>{label}</SelectLabel>
+      <SelectLabel
+        onClick={() => setIsOpen((is) => !is)}
+      >
+        {label}
+      </SelectLabel>
       <SelectArrow />
       {isOpen && (
-        <SelectOptions>
+        <SelectOptions onMouseLeave={() => setIsOpen((is) => !is)}>
           {options.map((option, i) => (
             <SelectOption
               as={motion.li}

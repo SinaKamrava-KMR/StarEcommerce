@@ -1,7 +1,7 @@
 import { createGlobalStyle } from "styled-components";
 
 const GlobalStyles = createGlobalStyle`
-
+@import url('https://fonts.googleapis.com/css2?family=Lobster&display=swap');
 @font-face {
     font-family: 'IRANSansXV';
     src: url("../assets/fonts/IRANSansXV.ttf");
@@ -14,6 +14,7 @@ const GlobalStyles = createGlobalStyle`
     font-style: normal;
     font-display: auto;
   }
+
 
 
 
@@ -103,6 +104,8 @@ body {
 #root{
   width: 100%;
   height: 100% ;
+  display: flex;
+  flex-direction: column;
   @media (min-width: 1200px) {
     width: 97%;
     margin-inline: auto;
