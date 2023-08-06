@@ -18,7 +18,7 @@ const GridGroup = styled(Grid)({
 function DashboardLayout() {
   return (
     <ThemeProvider theme={theme}>
-      <GridGroup spacing={2} container>
+      <GridGroup container>
         <DashboardHeader />
         <DashboardSidebar />
         <Grid component="main" item xs={10}>

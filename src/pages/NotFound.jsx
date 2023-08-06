@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { styled } from "styled-components";
 
 const Container = styled.div`
@@ -15,10 +15,11 @@ const Container = styled.div`
 `;
 
 function NotFound() {
+  const navigate = useNavigate()
   return (
     <Container>
       <h2>صفحه ی مورد نظر یافت نشد</h2>
-      <Link to="/">بازگشت به سایت</Link>
+      <p style={{cursor:"pointer"}} onClick={()=>navigate(-1)}>بازگشت به سایت</p>
     </Container>
   );
 }

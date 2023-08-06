@@ -1,13 +1,13 @@
 import { Button, styled } from "@material-ui/core";
 import { Link } from "react-router-dom";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
-const LinkTo = styled(Link)({
+const LinkTo = styled("p")({
   fontSize: "14px",
   fontFamily: "IRANSansXV",
   color: "#4778eb",
-  whiteSpace:"nowrap",
+  whiteSpace: "nowrap",
   "@media (max-width:640px)": {
-    fontSize: "12px",
+    display:"none"
   },
 });
 const Btn = styled(Button)({
@@ -17,17 +17,26 @@ const Btn = styled(Button)({
   alignItems: "center",
   justifyContent: "space-between",
   "@media (max-width:640px)": {
-    padding: ".5rem .8rem",
-    width: "140px",
+    all:"unset",
+    padding: "0",
+    justifyContent: "center",
+    display: "flex",
+    alignItems:"center",
+    width: "40px",
+    height: "40px",
+    borderRadius:"50%"
   },
 });
 
 function BackButton() {
+
   return (
-    <Btn variant="outlined">
-      <LinkTo to="/">بازگشت به فروشگاه</LinkTo>
-      <ArrowBackIosNewIcon sx={{ marginBottom: "2px" }} />
-    </Btn>
+    <Link to="/">
+      <Btn variant="outlined">
+        <LinkTo>بازگشت به فروشگاه</LinkTo>
+        <ArrowBackIosNewIcon  sx={{ marginBottom: "2px" }} />
+      </Btn>
+    </Link>
   );
 }
 

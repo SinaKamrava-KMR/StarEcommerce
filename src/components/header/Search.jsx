@@ -9,7 +9,7 @@ const SearchStyled = styled.div`
   height: 100%;
   position: relative;
   margin-left: 30px;
-  background-color: #f1f1f1;
+  background-color: #f8f8f8;
   border: 1px solid #eef3f6;
   border-radius: 5px;
   display: flex;

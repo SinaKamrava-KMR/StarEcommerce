@@ -6,12 +6,12 @@ ActiveWrapper.propTypes = {
 };
 
 const Wrapper = styled("div")(({ position }) => ({
+  // width:"90%",
   position: "absolute",
   height:"39px",
   top: position,
-  left: "0",
+  left: "10px",
   right: "0",
-  width: "100%",
   display: "flex",
   alignItems: "center",
   gap: "1rem",
@@ -23,7 +23,8 @@ const Wrapper = styled("div")(({ position }) => ({
   zIndex: 0,
   transition: "top .2s ease-in",
   "@media (max-width:950px)": {
-    top: (position -3),
+    top: (position - 3),
+    right: "10px",
     
   }
 }));
@@ -32,10 +33,10 @@ function ActiveWrapper({ activeId }) {
   let position;
   switch (activeId) {
     case "main":
-      position = 13;
+      position = 12;
       break;
     case "orders":
-      position = 65;
+      position = 64;
       break;
     case "products":
       position = 115;

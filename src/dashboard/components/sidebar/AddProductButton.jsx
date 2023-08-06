@@ -9,7 +9,7 @@ AddProductButton.propTypes = {
   onClick: PropTypes.func,
 };
 const ButtonLayout = styled(Box)(({ active }) => ({
-  width: "100%",
+  width: "97%",
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
@@ -27,6 +27,7 @@ const ButtonLayout = styled(Box)(({ active }) => ({
   "@media (max-width:950px)": {
     justifyContent: "center",
     paddingInline: "1.3rem",
+    width: "90%",
     "& > p": {
       display: "none",
     },

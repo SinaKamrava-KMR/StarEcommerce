@@ -9,12 +9,19 @@ const LogoBox = styled(Box)({
 
 const Logo = styled("img")({
   width: "40px",
-  height:"40px"
+  height: "40px",
+  "@media (max-width:640px)": {
+    width: "25px",
+    height: "25px",
+  },
 })
 const Text = styled("p")({
   whiteSpace: "nowrap",
   fontSize: "2rem",
-  fontWeight:"600"
+  fontWeight: "600",
+  "@media (max-width:640px)": {
+    fontSize: "1.6rem",
+  },
 })
 
 function PanelLogo() {

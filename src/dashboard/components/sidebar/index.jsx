@@ -23,6 +23,7 @@ const SidebarLayout = styled(ListItem)({
   gap: ".8rem",
   alignItems: "flex-start",
   position: "relative",
+  borderLeft: "1px solid #f3f3f3",
 });
 
 const navLinks = [
@@ -66,7 +67,7 @@ function DashboardSidebar() {
   }, [activeId, navigate]);
 
   return (
-    <Grid item xs={2} component="aside" height="94%">
+    <Grid item xs={2} component="aside" height="93%">
       <SidebarLayout component="ul">
         <ActiveWrapper activeId={activeId} />
         {navLinks.map((item) => {
