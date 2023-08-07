@@ -40,7 +40,7 @@ const Item = styled(Box, {
   },
 }));
 
-function NavItem({ onClick = () => {}, icon, label, active = false }) {
+function NavItem({ onClick = () => { }, icon, label, active = false }) {
   return (
     <Item onClick={onClick} active={active}>
       {icon}

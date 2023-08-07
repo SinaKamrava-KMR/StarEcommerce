@@ -24,6 +24,7 @@ const SidebarLayout = styled(ListItem)({
   alignItems: "flex-start",
   position: "relative",
   borderLeft: "1px solid #f3f3f3",
+
 });
 
 const navLinks = [

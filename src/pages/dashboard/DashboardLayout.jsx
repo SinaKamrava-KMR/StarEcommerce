@@ -11,7 +11,7 @@ import { Grid } from "@mui/material";
 
 
 const GridGroup = styled(Grid)({
-  height: "100%",
+  height:"100%",
   padding: "1.2rem 1.5rem",
 });
 
@@ -21,7 +21,7 @@ function DashboardLayout() {
       <GridGroup container>
         <DashboardHeader />
         <DashboardSidebar />
-        <Grid component="main" item xs={10}>
+        <Grid  component="main" item xs={10}>
           <Outlet />
         </Grid>
       </GridGroup>

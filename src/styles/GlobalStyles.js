@@ -100,6 +100,11 @@ body {
  
 }
 
+
+body::-webkit-scrollbar{
+  display:none;
+}
+
 #root{
   width: 100%;
   height: 100% ;

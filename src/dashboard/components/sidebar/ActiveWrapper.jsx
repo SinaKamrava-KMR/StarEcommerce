@@ -2,7 +2,7 @@ import styled from "@emotion/styled";
 import PropTypes from "prop-types";
 
 ActiveWrapper.propTypes = {
-  activeId: PropTypes.bool,
+  activeId: PropTypes.string,
 };
 
 const Wrapper = styled("div")(({ position }) => ({
