@@ -1,13 +1,20 @@
 import { createGlobalStyle } from "styled-components";
 
 const GlobalStyles = createGlobalStyle`
-
+@import url('https://fonts.googleapis.com/css2?family=Lobster&display=swap');
 @font-face {
     font-family: 'IRANSansXV';
     src: url("../assets/fonts/IRANSansXV.ttf");
     font-style: normal;
     font-display: auto;
   }
+@font-face {
+    font-family: 'yekan';
+    src: url("../assets/fonts/yekan.ttf");
+    font-style: normal;
+    font-display: auto;
+  }
+
 
 
 
@@ -86,14 +93,20 @@ body {
   color: var(--color-grey-700);
   transition: color 0.3s, background-color 0.3s;
   height: 100vh;
-  
+  overflow-x:hidden;
   line-height: 1.5;
   font-size: 1.6rem;
-  padding: 1.2rem;
+
+ 
+}
+
+
+body::-webkit-scrollbar{
+  display:none;
 }
 
 #root{
-  width: 100% ;
+  width: 100%;
   height: 100% ;
 }
 
