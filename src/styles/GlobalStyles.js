@@ -96,20 +96,18 @@ body {
   overflow-x:hidden;
   line-height: 1.5;
   font-size: 1.6rem;
-  padding: 1.2rem;
 
  
+}
+
+
+body::-webkit-scrollbar{
+  display:none;
 }
 
 #root{
   width: 100%;
   height: 100% ;
-  display: flex;
-  flex-direction: column;
-  @media (min-width: 1200px) {
-    width: 97%;
-    margin-inline: auto;
-  }
 }
 
 input,
