@@ -1,6 +1,5 @@
 import { createBrowserRouter } from "react-router-dom";
 
-
 import AppLayout from "../pages/AppLayout";
 import NotFound from "../pages/NotFound";
 import Home from "../pages/home";
@@ -12,8 +11,13 @@ import OrdersManagement from "../pages/dashboard/OrdersManagement";
 import Shipping from "../pages/Shipping";
 import DashboardHome from "../pages/dashboard/DashboardHome";
 import Account from "../pages/Account";
+import Login from "../pages/Login";
+import ProtectedRoute from "../components/router/ProtectedRoute";
+import PrivateRoute from "../components/router/privateRoute";
+import ProtectedDashboard from "../components/router/ProtectedDashboard";
 
-const router = createBrowserRouter([
+const routes = createBrowserRouter([
+  //================== store routes ==================
   {
     element: <AppLayout />,
     errorElement: <NotFound />,
@@ -24,15 +28,28 @@ const router = createBrowserRouter([
       },
       {
         path: "/cart",
-        element: <Cart />,
+        element: (
+          <PrivateRoute>
+            <Cart />
+          </PrivateRoute>
+        ),
       },
       {
         path: "/account",
-        element: <Account />,
+        element: (
+          <PrivateRoute>
+            {" "}
+            <Account />
+          </PrivateRoute>
+        ),
       },
       {
         path: "/shipping",
-        element: <Shipping />,
+        element: (
+          <PrivateRoute>
+            <Shipping />
+          </PrivateRoute>
+        ),
       },
       {
         path: "/product/:productId",
@@ -44,8 +61,13 @@ const router = createBrowserRouter([
       },
     ],
   },
+  //================== dashboard routes ==============
   {
-    element: <DashboardLayout />,
+    element: (
+      <ProtectedDashboard>
+        <DashboardLayout />
+      </ProtectedDashboard>
+    ),
     children: [
       {
         path: "/dashboard/",
@@ -57,6 +79,16 @@ const router = createBrowserRouter([
       },
     ],
   },
+  // ============= authentication routes ==================
+  {
+    element: (
+      <ProtectedRoute>
+        <Login />
+      </ProtectedRoute>
+    ),
+    path: "/auth",
+    errorElement: <NotFound />,
+  },
 ]);
 
-export default router;
+export default routes;
