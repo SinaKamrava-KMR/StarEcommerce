@@ -13,6 +13,7 @@ import { Grid } from "@mui/material";
 const GridGroup = styled(Grid)({
   height:"100%",
   padding: "1.2rem 1.5rem",
+ 
 });
 
 function DashboardLayout() {
