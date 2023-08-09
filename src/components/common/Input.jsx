@@ -96,9 +96,9 @@ const Label = styled.label`
 const ErrorMessage = styled.p`
   color: #ff6b6b;
   position: absolute;
-  bottom: -2.5rem;
+  bottom: -2rem;
   right: 1rem;
-  font-size: 1.2rem;
+  font-size: 1.1rem;
 `;
 
 function Input(
