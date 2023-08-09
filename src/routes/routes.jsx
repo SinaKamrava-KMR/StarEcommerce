@@ -14,7 +14,12 @@ import Account from "../pages/Account";
 import Login from "../pages/Login";
 import ProtectedRoute from "../components/router/ProtectedRoute";
 import PrivateRoute from "../components/router/privateRoute";
-import ProtectedDashboard from "../components/router/ProtectedDashboard";
+// import ProtectedDashboard from "../components/router/ProtectedDashboard";
+import SignUp from "../pages/SignUp";
+import ProductsManagement from "../pages/dashboard/ProductsManagement";
+import Users from "../pages/dashboard/Users";
+import AddProduct from "../pages/dashboard/AddProduct";
+import ProductsOverview from "../pages/dashboard/ProductsOverView";
 
 const routes = createBrowserRouter([
   //================== store routes ==================
@@ -63,11 +68,7 @@ const routes = createBrowserRouter([
   },
   //================== dashboard routes ==============
   {
-    element: (
-      <ProtectedDashboard>
-        <DashboardLayout />
-      </ProtectedDashboard>
-    ),
+    element: <DashboardLayout />,
     children: [
       {
         path: "/dashboard/",
@@ -76,6 +77,22 @@ const routes = createBrowserRouter([
       {
         path: "/dashboard/orders",
         element: <OrdersManagement />,
+      },
+      {
+        path: "/dashboard/management",
+        element: <ProductsManagement />,
+      },
+      {
+        path: "/dashboard/users",
+        element: <Users />,
+      },
+      {
+        path: "/dashboard/addProduct",
+        element: <AddProduct />,
+      },
+      {
+        path: "/dashboard/products",
+        element: <ProductsOverview />,
       },
     ],
   },
@@ -86,7 +103,16 @@ const routes = createBrowserRouter([
         <Login />
       </ProtectedRoute>
     ),
-    path: "/auth",
+    path: "/auth/:state",
+    errorElement: <NotFound />,
+  },
+  {
+    element: (
+      <ProtectedRoute>
+        <SignUp />
+      </ProtectedRoute>
+    ),
+    path: "/auth/signup",
     errorElement: <NotFound />,
   },
 ]);

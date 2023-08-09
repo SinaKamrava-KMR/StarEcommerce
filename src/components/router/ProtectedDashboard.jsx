@@ -11,11 +11,15 @@ ProtectedDashboard.propTypes = {
 function ProtectedDashboard({ children }) {
   const userRole = useSelector((state) => state.user.role);
   const accessToken = Cookies.get(ACCESS_TOKEN_KEY);
+
+
   console.log(userRole);
+  console.log(accessToken);
+
   return accessToken && userRole === "ADMIN" ? (
     children
   ) : (
-    <Navigate to="/auth" replace />
+    <Navigate to="/auth/admin" replace />
   );
 }
 

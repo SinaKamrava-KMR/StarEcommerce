@@ -9,7 +9,8 @@ PrivateRoute.propTypes = {
 
 function PrivateRoute({ children }) {
   const accessToken = Cookies.get(ACCESS_TOKEN_KEY);
-  return accessToken ?  children  : <Navigate to="/auth" replace />;
+  console.log(accessToken);
+  return accessToken ?  children  : <Navigate to="/auth/user" replace />;
 }
 
 export default PrivateRoute;
