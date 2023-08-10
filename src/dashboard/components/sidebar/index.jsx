@@ -24,7 +24,6 @@ const SidebarLayout = styled(ListItem)({
   alignItems: "flex-start",
   position: "relative",
   borderLeft: "1px solid #f3f3f3",
-
 });
 
 const navLinks = [
@@ -66,6 +65,13 @@ function DashboardSidebar() {
   useEffect(() => {
     navigate(`/dashboard/${activeId === "main" ? "" : activeId}`);
   }, [activeId, navigate]);
+
+  useEffect(() => {
+    if (activeId === "products" && location === "addProduct") {
+      setActiveId("addProduct");
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [location]);
 
   return (
     <Grid item xs={2} component="aside" height="93%">

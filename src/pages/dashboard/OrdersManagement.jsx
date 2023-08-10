@@ -6,7 +6,10 @@ import FilterBox from "../../dashboard/components/order/FilterBox";
 import TableWrapper from "../../components/common/TableWrapper";
 import Table from "../../components/common/Table";
 import StarPagination from "../../components/common/StarPagination";
-
+import TableRow from "../../components/common/TableRow";
+import CategoryIcon from "@mui/icons-material/Category";
+import Filter from "../../dashboard/common/Filter";
+import TimelapseIcon from "@mui/icons-material/Timelapse";
 const OrdersLayout = styled(Box)({
   width: "100%",
   height: "100%",
@@ -34,8 +37,30 @@ const ContentWrapper = styled(Box)({
   gap: "1rem",
 });
 
+const headerItems = [
+  "ردیف",
+  "مشتری",
+  "مجموع مبلغ",
+  "زمان ثبت سفارش",
+  "کالا",
+  "برسی",
+];
+
+const categoryItems = [
+  {
+    label: "لباس کودک",
+    count: 4,
+  },
+  {
+    label: "لباس زنانه",
+    count: 12,
+  },
+];
 
 function OrdersManagement() {
+  function handleClick(item) {
+    console.log(item);
+  }
   return (
     <OrdersLayout>
       <TopLayout>
@@ -44,11 +69,45 @@ function OrdersManagement() {
           <OrderTabs />
         </ContentWrapper>
 
-        <FilterBox />
+        <FilterBox>
+          <Filter
+            delay={".1"}
+            label="دسته بندی ها"
+            onClick={handleClick}
+            items={categoryItems}
+          >
+            <CategoryIcon />
+          </Filter>
+          <Filter
+            delay={".2"}
+            label="بازه زمانی"
+            onClick={handleClick}
+            items={categoryItems}
+          >
+            <TimelapseIcon />
+          </Filter>
+        </FilterBox>
       </TopLayout>
 
       <TableWrapper>
-        <Table></Table>
+        <Table headerItems={headerItems}>
+          <TableRow delay={0} />
+          <TableRow delay={1} />
+          <TableRow delay={2} />
+          <TableRow delay={3} />
+          <TableRow delay={4} />
+          <TableRow delay={5} />
+          <TableRow delay={6} />
+          <TableRow delay={7} />
+          <TableRow delay={8} />
+          <TableRow delay={9} />
+          <TableRow delay={10} />
+          <TableRow delay={0} />
+          <TableRow delay={0} />
+          <TableRow delay={0} />
+          <TableRow delay={0} />
+          <TableRow delay={0} />
+        </Table>
       </TableWrapper>
 
       <StarPagination />
