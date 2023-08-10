@@ -5,25 +5,147 @@ import AddProductFooter from "../../dashboard/components/addProduct/AddProductFo
 
 const Wrapper = styled(Box)({
   width: "100%",
+  height: "500px",
+  display: "flex",
+  flexDirection: "column",
+  padding: "0 1rem",
+  paddingTop: "2.5rem",
+  backgroundColor: "#f6f6f6",
+  overflowY: "auto",
+  gap: "2rem",
+
+  /* width*/
+  "&::-webkit-scrollbar": {
+    width: "7px",
+    height: "7px",
+  },
+
+  /* Track */
+  "&::-webkit-scrollbar-track": {
+    backgroundColor: "#d1d1d19a",
+    borderRadius: "10px",
+  },
+
+  /* Handle */
+  "&::-webkit-scrollbar-thumb ": {
+    background: "#616264",
+    borderRadius: "10px",
+  },
+});
+const Container = styled(Box)({
+  width: "100%",
+  height: "500px",
+  overflowY: "scroll",
+  flex: 1,
+  display: "grid",
+  gap: "1rem",
+  gridTemplateColumns: " 1fr 300px",
+  gridTemplateRows: "300px 1fr",
+  /* width*/
+  "&::-webkit-scrollbar": {
+    display: "none",
+  },
+
+  "@media (max-width:800px)": {
+    gridTemplateColumns: "1fr",
+    gridTemplateRows: "repeat(auto-fill,minmax(300px,1fr))",
+  },
+});
+const InfoContainer = styled(Box)({
+  width: "100%",
+  display: "flex",
+  flexDirection: "column",
+  backgroundColor: "#e9f331",
+  gridRow: "span 2",
+  height: "500px",
+  overflowY: "scroll",
+  "&::-webkit-scrollbar": {
+    display: "none",
+  },
+});
+const MediaContainer = styled(Box)({
+  width: "100%",
   height: "100%",
   display: "flex",
   flexDirection: "column",
-  padding: "2.5rem 3rem",
-  backgroundColor: "#f6f6f6",
-  gap: "2rem",
-  "@media (max-width:900px)": {
-    padding: "1.5rem 1rem",
+  backgroundColor: "#31f385",
+  "@media (max-width:800px)": {
+    gridRow: "1/2",
   },
+});
+const VisibilyContainer = styled(Box)({
+  width: "100%",
+  height: "100%",
+  display: "flex",
+  flexDirection: "column",
+  backgroundColor: "#31aff3",
 });
 
 function AddProduct() {
   return (
-
-      <Wrapper>
+    <Wrapper>
       <Typography variant="DashboardTitle">اضافه کردن محصول جدید</Typography>
       <AddProductFooter />
-      </Wrapper>
-
+      <Container>
+        <InfoContainer>
+          <p>skjfhsfdj</p>
+          <p>skjfhsfdj</p>
+          <p>skjfhsfdj</p>
+          <p>skjfhsfdj</p>
+          <p>skjfhsfdj</p>
+          <p>skjfhsfdj</p>
+          <p>skjfhsfdj</p>
+          <p>skjfhsfdj</p>
+          <p>skjfhsfdj</p>
+          <p>skjfhsfdj</p>
+          <p>skjfhsfdj</p>
+          <p>skjfhsfdj</p>
+          <p>skjfhsfdj</p>
+          <p>skjfhsfdj</p>
+          <p>skjfhsfdj</p>
+          <p>skjfhsfdj</p>
+          <p>skjfhsfdj</p>
+          <p>skjfhsfdj</p>
+          <p>skjfhsfdj</p>
+          <p>skjfhsfdj</p>
+          <p>skjfhsfdj</p>
+          <p>skjfhsfdj</p>
+          <p>skjfhsfdj</p>
+          <p>skjfhsfdj</p>
+          <p>skjfhsfdj</p>
+          <p>skjfhsfdj</p>
+          <p>skjfhsfdj</p>
+          <p>skjfhsfdj</p>
+          <p>skjfhsfdj</p>
+          <p>skjfhsfdj</p>
+          <p>skjfhsfdj</p>
+          <p>skjfhsfdj</p>
+          <p>skjfhsfdj</p>
+          <p>skjfhsfdj</p>
+          <p>skjfhsfdj</p>
+        </InfoContainer>
+        <MediaContainer>
+          <p>skjfhsfdj</p>
+          <p>skjfhsfdj</p>
+          <p>skjfhsfdj</p>
+          <p>skjfhsfdj</p>
+          <p>skjfhsfdj</p>
+          <p>skjfhsfdj</p>
+          <p>skjfhsfdj</p>
+          <p>skjfhsfdj</p>
+          <p>skjfhsfdj</p>
+          <p>skjfhsfdj</p>
+          <p>skjfhsfdj</p>
+        </MediaContainer>
+        <VisibilyContainer>
+          <p>skjfhsfdj</p>
+          <p>skjfhsfdj</p>
+          <p>skjfhsfdj</p>
+          <p>skjfhsfdj</p>
+          <p>skjfhsfdj</p>
+        </VisibilyContainer>
+      </Container>
+    </Wrapper>
   );
 }
 

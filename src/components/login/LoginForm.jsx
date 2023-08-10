@@ -71,6 +71,7 @@ function LoginForm() {
         reset();
         setIsLoading(false);
         if (res.data.user.role === "ADMIN") {
+          console.log(res.data.user);
           navigate("/dashboard/orders",{replace:true});
         }
         if (res.data.user.role === "USER") {

@@ -14,6 +14,7 @@ const Wrapper = styled(Box)({
   justifyContent: "flex-end",
   gap: "1rem",
   padding: "2rem",
+  paddingLeft:"3rem"
 });
 
 function AddProductFooter() {

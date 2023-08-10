@@ -14,12 +14,13 @@ import Account from "../pages/Account";
 import Login from "../pages/Login";
 import ProtectedRoute from "../components/router/ProtectedRoute";
 import PrivateRoute from "../components/router/privateRoute";
-// import ProtectedDashboard from "../components/router/ProtectedDashboard";
+
 import SignUp from "../pages/SignUp";
 import ProductsManagement from "../pages/dashboard/ProductsManagement";
 import Users from "../pages/dashboard/Users";
 import AddProduct from "../pages/dashboard/AddProduct";
 import ProductsOverview from "../pages/dashboard/ProductsOverView";
+// import ProtectedDashboard from "../components/router/ProtectedDashboard";
 
 const routes = createBrowserRouter([
   //================== store routes ==================
