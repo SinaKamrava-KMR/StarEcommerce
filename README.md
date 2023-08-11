@@ -35,10 +35,10 @@ This is a React project for building a clothes ecommerce application. It include
 To get started with this project, follow the steps below:
 
 1. Clone the repository: https://github.com/SinaKamrava-KMR/Maktab94_StarEcommerce_Sina_Kamrava.git
-2. Install the dependencies:  npm install
-3. Start the development server: npm run dev
+2. Install the dependencies:```npm install```
+3. Start the development server: ``` npm run dev```
 
-4. Open your browser and navigate to `http://localhost:5173/` to see the application running.
+6. Open your browser and navigate to `http://localhost:5173/` to see the application running.
 
 ## Folder Structure
 
