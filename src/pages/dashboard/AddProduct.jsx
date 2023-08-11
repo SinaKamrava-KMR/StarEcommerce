@@ -2,6 +2,7 @@ import styled from "@emotion/styled";
 import { Box } from "@material-ui/core";
 import { Typography } from "@mui/material";
 import AddProductFooter from "../../dashboard/components/addProduct/AddProductFooter";
+import ImageUploader from "../../dashboard/components/addProduct/ImageUploader";
 
 const Wrapper = styled(Box)({
   width: "100%",
@@ -32,15 +33,15 @@ const Wrapper = styled(Box)({
     borderRadius: "10px",
   },
 });
+
 const Container = styled(Box)({
   width: "100%",
-  height: "500px",
   overflowY: "scroll",
   flex: 1,
   display: "grid",
   gap: "1rem",
-  gridTemplateColumns: " 1fr 300px",
-  gridTemplateRows: "300px 1fr",
+  gridTemplateColumns: " 1fr 350px",
+  gridTemplateRows: " 1fr",
   /* width*/
   "&::-webkit-scrollbar": {
     display: "none",
@@ -51,35 +52,22 @@ const Container = styled(Box)({
     gridTemplateRows: "repeat(auto-fill,minmax(300px,1fr))",
   },
 });
+
 const InfoContainer = styled(Box)({
   width: "100%",
   display: "flex",
   flexDirection: "column",
-  backgroundColor: "#e9f331",
+  backgroundColor: "#ffc7c7",
+  padding:"1.5rem",
   gridRow: "span 2",
-  height: "500px",
+  height: "410px",
   overflowY: "scroll",
   "&::-webkit-scrollbar": {
     display: "none",
   },
 });
-const MediaContainer = styled(Box)({
-  width: "100%",
-  height: "100%",
-  display: "flex",
-  flexDirection: "column",
-  backgroundColor: "#31f385",
-  "@media (max-width:800px)": {
-    gridRow: "1/2",
-  },
-});
-const VisibilyContainer = styled(Box)({
-  width: "100%",
-  height: "100%",
-  display: "flex",
-  flexDirection: "column",
-  backgroundColor: "#31aff3",
-});
+
+
 
 function AddProduct() {
   return (
@@ -124,26 +112,8 @@ function AddProduct() {
           <p>skjfhsfdj</p>
           <p>skjfhsfdj</p>
         </InfoContainer>
-        <MediaContainer>
-          <p>skjfhsfdj</p>
-          <p>skjfhsfdj</p>
-          <p>skjfhsfdj</p>
-          <p>skjfhsfdj</p>
-          <p>skjfhsfdj</p>
-          <p>skjfhsfdj</p>
-          <p>skjfhsfdj</p>
-          <p>skjfhsfdj</p>
-          <p>skjfhsfdj</p>
-          <p>skjfhsfdj</p>
-          <p>skjfhsfdj</p>
-        </MediaContainer>
-        <VisibilyContainer>
-          <p>skjfhsfdj</p>
-          <p>skjfhsfdj</p>
-          <p>skjfhsfdj</p>
-          <p>skjfhsfdj</p>
-          <p>skjfhsfdj</p>
-        </VisibilyContainer>
+        <ImageUploader/>
+          
       </Container>
     </Wrapper>
   );

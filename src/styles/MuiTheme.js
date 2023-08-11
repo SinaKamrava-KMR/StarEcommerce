@@ -12,6 +12,22 @@ const theme = createTheme({
     DashboardTitle: {
       fontSize: 24,
       "fontWeight": 600,
+    },
+    content: {
+      fontSize: 15,
+      "fontWeight": 600,
+    },
+    content_li: {
+      fontSize: 14,
+      "fontWeight": 500,
+      
+    },
+    sub_content: {
+      fontSize: 13,
+      "fontWeight": 400,
+      color: "#999",
+      
+
     }
   }
   
