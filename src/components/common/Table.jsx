@@ -1,9 +1,9 @@
 import PropTypes from "prop-types";
 import { styled } from "styled-components";
-import TableRow from "./TableRow";
 
 Table.propTypes = {
   children: PropTypes.node,
+  headerItems:PropTypes.array
 };
 
 const TableStyle = styled.div`
@@ -56,39 +56,20 @@ const TableHeaderWrapper = styled.header`
   @media (max-width:950px) {
     width: 690px;
   };
+  z-index: 100;
 `;
 
-function Table() {
+function Table({headerItems=[],children}) {
   return (
     <>
       <TableStyle role="table">
         <TableHeaderWrapper>
           <TableHeader role="row">
-            <div>ردیف</div>
-            <div>مشتری</div>
-            <div>مجموع مبلغ</div>
-            <div>زمان ثبت سفارش</div>
-            <div>کالا</div>
-            <div>برسی</div>
+            {headerItems.map((item, i) => <div key={i}>{item}</div>)}
           </TableHeader>
         </TableHeaderWrapper>
 
-        <TableRow delay={0} />
-        <TableRow delay={1} />
-        <TableRow delay={2} />
-        <TableRow delay={3} />
-        <TableRow delay={4} />
-        <TableRow delay={5} />
-        <TableRow delay={6} />
-        <TableRow delay={7} />
-        <TableRow delay={8} />
-        <TableRow delay={9} />
-        <TableRow delay={10} />
-        <TableRow delay={0} />
-        <TableRow delay={0} />
-        <TableRow delay={0} />
-        <TableRow delay={0} />
-        <TableRow delay={0} />
+        {children}
         
       </TableStyle>
     </>

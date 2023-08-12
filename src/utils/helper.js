@@ -10,3 +10,8 @@ export const getEasternAriaLabel = (type, page) => {
   }
   return undefined;
 };
+
+export function FileToUrl(file) {
+  let previewUrl = URL.createObjectURL(file);
+  return previewUrl;
+}

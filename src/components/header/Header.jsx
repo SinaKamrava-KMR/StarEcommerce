@@ -5,7 +5,9 @@ import Logo from "../common/Logo";
 import NavBar from "./NavBar";
 import { Link } from "react-router-dom";
 import Search from "./Search";
-
+// import Cookies from "js-cookie";
+// import { ACCESS_TOKEN_KEY } from "../../configs/constants";
+// import LoginIcon from "@mui/icons-material/Login";
 const HeaderStyled = styled.header`
   width: 100%;
   padding-block: 10px;
@@ -56,6 +58,8 @@ const Flex1 = styled.div`
 `;
 
 function Header() {
+  // const accessToken = Cookies.get(ACCESS_TOKEN_KEY);
+
   return (
     <HeaderStyled>
       <Row>
@@ -77,10 +81,23 @@ function Header() {
         </Link>
 
         <Link to="/account">
-          <IconWrapper>
-            <PersonIcon sx={{ fontSize: "25px" }} />
-          </IconWrapper>
-        </Link>
+            <IconWrapper>
+              <PersonIcon sx={{ fontSize: "25px" }} />
+            </IconWrapper>
+          </Link>
+        {/* {accessToken ? (
+          <Link to="/account">
+            <IconWrapper>
+              <PersonIcon sx={{ fontSize: "25px" }} />
+            </IconWrapper>
+          </Link>
+        ) : (
+          <Link to="/auth/user">
+            <IconWrapper>
+              <LoginIcon sx={{ fontSize: "25px" }} />
+            </IconWrapper>
+          </Link>
+        )} */}
       </Row>
     </HeaderStyled>
   );
