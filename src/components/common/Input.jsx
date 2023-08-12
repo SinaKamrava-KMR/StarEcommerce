@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
-import PropTypes from "prop-types";
 import { forwardRef, useState } from "react";
 import { keyframes, styled } from "styled-components";
+import PropTypes from "prop-types";
 
 Input.propTypes = {
   rightIconClick: PropTypes.func,
