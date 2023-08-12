@@ -3,8 +3,9 @@ import { Box } from "@material-ui/core";
 import { Typography } from "@mui/material";
 import FileInput from "./FileInput";
 import UploadFileContent from "./UploadFileContent";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import MediasWrapper from "./MediasWrapper";
+import { FileToUrl } from "../../../utils/helper";
 
 const MediaContainer = styled(Box)({
   width: "100%",
@@ -42,27 +43,54 @@ const Image = styled("img")({
 });
 
 function ImageUploader() {
-  const [medias, setMedias] = useState([
-    "/public/slider/fit.jpg",
-    "/public/slider/fit.jpg",
-    "/public/slider/user5.jpg",
-  ]);
+  const [medias, setMedias] = useState([]);
 
-  const [activeImage, setActiveImage] = useState("/public/slider/user5.jpg");
+  const [activeImage, setActiveImage] = useState();
 
   function handleRemoveMedia(index) {
     setMedias((items) => items.filter((_, idx) => idx !== index));
+
+    if (medias[index + 1]) {
+      setActiveImage({
+        file: FileToUrl(medias[index + 1]),
+        index,
+      });
+    } else if (medias[index - 1]) {
+      setActiveImage({
+        file: FileToUrl(medias[index - 1]),
+        index: index - 1,
+      });
+    } else {
+      setActiveImage(null);
+    }
   }
+
+  function handleUploadFile(e) {
+    const file = e.target.files[0];
+    setMedias((files) => [...files, file]);
+    setActiveImage({
+      file: FileToUrl(file),
+      index: medias.length,
+    });
+  }
+
+  useEffect(() => {
+    return () => {
+      if (activeImage?.file) {
+        URL.revokeObjectURL(activeImage.file);
+      }
+    };
+  }, [activeImage]);
 
   return (
     <MediaContainer>
       <Typography variant="content">اپلود عکس های محصول</Typography>
       <MainMedia hasContnet={medias.length > 0}>
         {medias.length > 0 ? (
-          <Image src={activeImage} />
+          <Image src={activeImage.file} />
         ) : (
           <>
-            <FileInput />
+            <FileInput onUpload={handleUploadFile} />
             <UploadFileContent />
           </>
         )}
@@ -70,8 +98,9 @@ function ImageUploader() {
 
       <MediasWrapper
         removeMedia={handleRemoveMedia}
-        activeMedia={activeImage}
+        activeIndex={activeImage?.index}
         onActive={setActiveImage}
+        onUpload={handleUploadFile}
         medias={medias}
       />
     </MediaContainer>

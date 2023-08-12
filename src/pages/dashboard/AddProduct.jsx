@@ -3,6 +3,7 @@ import { Box } from "@material-ui/core";
 import { Typography } from "@mui/material";
 import AddProductFooter from "../../dashboard/components/addProduct/AddProductFooter";
 import ImageUploader from "../../dashboard/components/addProduct/ImageUploader";
+import InfoForm from "../../dashboard/components/addProduct/InfoForm";
 
 const Wrapper = styled(Box)({
   width: "100%",
@@ -53,67 +54,15 @@ const Container = styled(Box)({
   },
 });
 
-const InfoContainer = styled(Box)({
-  width: "100%",
-  display: "flex",
-  flexDirection: "column",
-  backgroundColor: "#ffc7c7",
-  padding:"1.5rem",
-  gridRow: "span 2",
-  height: "410px",
-  overflowY: "scroll",
-  "&::-webkit-scrollbar": {
-    display: "none",
-  },
-});
-
-
-
 function AddProduct() {
   return (
     <Wrapper>
       <Typography variant="DashboardTitle">اضافه کردن محصول جدید</Typography>
       <AddProductFooter />
       <Container>
-        <InfoContainer>
-          <p>skjfhsfdj</p>
-          <p>skjfhsfdj</p>
-          <p>skjfhsfdj</p>
-          <p>skjfhsfdj</p>
-          <p>skjfhsfdj</p>
-          <p>skjfhsfdj</p>
-          <p>skjfhsfdj</p>
-          <p>skjfhsfdj</p>
-          <p>skjfhsfdj</p>
-          <p>skjfhsfdj</p>
-          <p>skjfhsfdj</p>
-          <p>skjfhsfdj</p>
-          <p>skjfhsfdj</p>
-          <p>skjfhsfdj</p>
-          <p>skjfhsfdj</p>
-          <p>skjfhsfdj</p>
-          <p>skjfhsfdj</p>
-          <p>skjfhsfdj</p>
-          <p>skjfhsfdj</p>
-          <p>skjfhsfdj</p>
-          <p>skjfhsfdj</p>
-          <p>skjfhsfdj</p>
-          <p>skjfhsfdj</p>
-          <p>skjfhsfdj</p>
-          <p>skjfhsfdj</p>
-          <p>skjfhsfdj</p>
-          <p>skjfhsfdj</p>
-          <p>skjfhsfdj</p>
-          <p>skjfhsfdj</p>
-          <p>skjfhsfdj</p>
-          <p>skjfhsfdj</p>
-          <p>skjfhsfdj</p>
-          <p>skjfhsfdj</p>
-          <p>skjfhsfdj</p>
-          <p>skjfhsfdj</p>
-        </InfoContainer>
-        <ImageUploader/>
-          
+        <InfoForm />
+
+        <ImageUploader />
       </Container>
     </Wrapper>
   );

@@ -1,5 +1,9 @@
 import styled from "@emotion/styled";
+import PropTypes from "prop-types";
 
+FileInput.propTypes = {
+  onUpload: PropTypes.func,
+};
 const FileInputStyled = styled("input")`
   width: 100%;
   height: 100%;
@@ -10,9 +14,9 @@ const FileInputStyled = styled("input")`
   cursor: pointer;
 `;
 
-function FileInput() {
+function FileInput({onUpload}) {
   return (
-    <FileInputStyled type="file" />
+    <FileInputStyled type="file" onChange={onUpload}/>
   )
 }
 

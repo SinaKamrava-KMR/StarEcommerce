@@ -4,12 +4,14 @@ import { ImageList, ImageListItem } from "@mui/material";
 import PropTypes from "prop-types";
 import FileInput from "./FileInput";
 import AddIcon from "@mui/icons-material/Add";
-import MinimizeIcon from '@mui/icons-material/Minimize';
+import MinimizeIcon from "@mui/icons-material/Minimize";
+import { FileToUrl } from "../../../utils/helper";
 MediasWrapper.propTypes = {
   onActive: PropTypes.func,
+  onUpload: PropTypes.func,
   removeMedia: PropTypes.func,
   medias: PropTypes.array,
-  activeMedia: PropTypes.string,
+  activeIndex: PropTypes.number,
 };
 
 const MediasWrapperStyled = styled(ImageList)`
@@ -19,23 +21,23 @@ const MediasWrapperStyled = styled(ImageList)`
   gap: 1.5rem;
 `;
 const ImageItem = styled(ImageListItem)(({ isActive }) => ({
-  width: "30%",
+  width: "25%",
   display: "flex",
   borderRadius: " 0.9rem",
   gap: "1rem",
   overflow: "hidden",
   cursor: "pointer",
-  position:"relative",
+  position: "relative",
   border: isActive ? "2px solid #3378f8" : "2px solid transparent",
 }));
 const Image = styled("img")`
   width: 100%;
   height: 60px;
   border-radius: 0.5rem;
-  object-fit: fit;
+  object-fit: cover;
 `;
 const UploadWrapper = styled(Box)`
-  width: 30%;
+  width: 25%;
   height: 100%;
   border-radius: 0.5rem;
   position: relative;
@@ -58,21 +60,31 @@ const RemoveBtn = styled(Box)`
   top: 2px;
   right: 2px;
   cursor: pointer;
-
 `;
 
-function MediasWrapper({ onActive, medias, activeMedia,removeMedia }) {
+function MediasWrapper({
+  onActive,
+  medias,
+  activeIndex,
+  removeMedia,
+  onUpload,
+}) {
+  function handleRemove(e, idx) {
+    e.stopPropagation()
+    removeMedia(idx)
+  }
+
   return (
     <MediasWrapperStyled>
       {medias.map((item, idx) => (
         <ImageItem
-          isActive={activeMedia === medias[idx]}
-          onClick={() => onActive(medias[idx])}
+          isActive={activeIndex === idx}
+          onClick={() =>  onActive({ file: FileToUrl(item), index: idx })}
           key={idx}
         >
-          <Image src={item} />
-          <RemoveBtn onClick={()=>removeMedia(idx)}>
-            <MinimizeIcon/>
+          <Image src={FileToUrl(item)} />
+          <RemoveBtn onClick={(e) => handleRemove(e,idx)}>
+            <MinimizeIcon />
           </RemoveBtn>
         </ImageItem>
       ))}
@@ -80,7 +92,7 @@ function MediasWrapper({ onActive, medias, activeMedia,removeMedia }) {
       {medias.length > 0 && medias.length < 4 && (
         <UploadWrapper>
           <AddIcon sx={{ fontSize: "1.8rem", color: "#999" }} />
-          <FileInput />
+          <FileInput onUpload={onUpload} />
         </UploadWrapper>
       )}
     </MediasWrapperStyled>

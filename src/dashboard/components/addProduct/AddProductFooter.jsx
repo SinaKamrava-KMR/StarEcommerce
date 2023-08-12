@@ -13,15 +13,16 @@ const Wrapper = styled(Box)({
   alignItems: "center",
   justifyContent: "flex-end",
   gap: "1rem",
+  zIndex: 100,
   padding: "2rem",
-  paddingLeft:"3rem"
+  paddingLeft: "3rem",
 });
 
 function AddProductFooter() {
   return (
     <Wrapper>
       <StateButton variant="cancel"> انصراف</StateButton>
-      <StateButton variant="add" >اضافه کردن</StateButton>
+      <StateButton variant="add">اضافه کردن</StateButton>
     </Wrapper>
   );
 }
