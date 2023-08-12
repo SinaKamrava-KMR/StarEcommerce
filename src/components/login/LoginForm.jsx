@@ -66,7 +66,6 @@ function LoginForm() {
     service
       .Login(data)
       .then((res) => {
-       
         dispatch(addUser(res));
         reset();
         setIsLoading(false);

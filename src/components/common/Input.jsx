@@ -54,7 +54,7 @@ const StyledInput = styled.input`
   animation-iteration-count: 2;
 
   padding: 1rem;
-  padding-right: 3.5rem;
+  padding-right: ${(props) => (props.hasPadding ? "3.5rem" : "1.5rem")};
   border: 1px solid ${(props) => (props.error ? "#fa8686" : "#dddddd")};
   background-color: white;
   border-radius: 0.3rem;
@@ -70,7 +70,14 @@ const StyledInput = styled.input`
 const Label = styled.label`
   position: absolute;
   top: ${(props) => (props.focus ? "0" : props.isEmpty ? "50%" : "0")};
-  right: ${(props) => (props.focus ? "1rem" : props.isEmpty ? "3rem" : "1rem")};
+  right: ${(props) =>
+    props.focus
+      ? "1rem"
+      : props.isEmpty
+      ? props.hasPadding
+        ? "3rem"
+        : "1rem"
+      : "1rem"};
   background-color: ${(props) =>
     props.focus ? "#fff" : props.isEmpty ? "transparent" : "#fff"};
   color: ${(props) =>
@@ -91,6 +98,7 @@ const Label = styled.label`
   font-weight: 600;
   transition: all 0.1s ease-out;
   cursor: copy;
+  z-index: 1000;
 `;
 
 const ErrorMessage = styled.p`
@@ -114,13 +122,14 @@ function Input(
   ref
 ) {
   const [focus, setFocus] = useState(false);
-  // const inputRef = useRef(null);
+
   return (
     <InputWrapper>
       <RightIconWrapper error={errorMessage !== ""}>
         {rightIcon}
       </RightIconWrapper>
       <Label
+        hasPadding={rightIcon !== undefined}
         onClick={() => setFocus(true)}
         isEmpty={isEmpty}
         error={errorMessage !== ""}
@@ -130,6 +139,7 @@ function Input(
         {label}
       </Label>
       <StyledInput
+        hasPadding={rightIcon !== undefined}
         {...rest}
         error={errorMessage !== ""}
         onBlur={() => setFocus(false)}
