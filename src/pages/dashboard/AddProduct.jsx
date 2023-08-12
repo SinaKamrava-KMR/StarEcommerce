@@ -1,7 +1,7 @@
 import styled from "@emotion/styled";
 import { Box } from "@material-ui/core";
 import { Typography } from "@mui/material";
-import AddProductFooter from "../../dashboard/components/addProduct/AddProductFooter";
+
 import ImageUploader from "../../dashboard/components/addProduct/ImageUploader";
 import InfoForm from "../../dashboard/components/addProduct/InfoForm";
 
@@ -58,7 +58,7 @@ function AddProduct() {
   return (
     <Wrapper>
       <Typography variant="DashboardTitle">اضافه کردن محصول جدید</Typography>
-      <AddProductFooter />
+      
       <Container>
         <InfoForm />
 

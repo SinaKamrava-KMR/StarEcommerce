@@ -1,6 +1,12 @@
 import styled from "@emotion/styled";
 import { Box } from "@material-ui/core";
 import StateButton from "../../common/StateButton";
+import PropTypes from "prop-types";
+
+AddProductFooter.propTypes = {
+  onSubmit: PropTypes.func,
+  onCancel: PropTypes.func,
+};
 
 const Wrapper = styled(Box)({
   backgroundColor: "#fff",
@@ -18,11 +24,15 @@ const Wrapper = styled(Box)({
   paddingLeft: "3rem",
 });
 
-function AddProductFooter() {
+function AddProductFooter({ onSubmit, onCancel }) {
   return (
     <Wrapper>
-      <StateButton variant="cancel"> انصراف</StateButton>
-      <StateButton variant="add">اضافه کردن</StateButton>
+      <StateButton variant="cancel" onClick={onCancel}>
+        انصراف
+      </StateButton>
+      <StateButton variant="add" onClick={onSubmit}>
+        اضافه کردن
+      </StateButton>
     </Wrapper>
   );
 }
