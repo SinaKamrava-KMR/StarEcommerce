@@ -31,7 +31,6 @@ const data = [
 
 const colors = {
   totalSales: { stroke: "#4f46e5", fill: "#c7d2fe" },
-  extrasSales: { stroke: "#16a34a", fill: "#dcfce7" },
   text: "#374151",
   background: "#fff",
 };
