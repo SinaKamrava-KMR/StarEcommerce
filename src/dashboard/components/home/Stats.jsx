@@ -12,6 +12,7 @@ const Wrapper = styled(Box)`
   width: 100%;
   display: flex;
   align-items: center;
+  flex-wrap:wrap;
   justify-content: space-between;
   gap: 1rem;
 `;
