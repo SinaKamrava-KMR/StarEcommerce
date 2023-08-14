@@ -20,7 +20,7 @@ import ProductsManagement from "../pages/dashboard/ProductsManagement";
 import Users from "../pages/dashboard/Users";
 import AddProduct from "../pages/dashboard/AddProduct";
 import ProductsOverview from "../pages/dashboard/ProductsOverView";
-// import ProtectedDashboard from "../components/router/ProtectedDashboard";
+import ProtectedDashboard from "../components/router/ProtectedDashboard";
 
 const routes = createBrowserRouter([
   //================== store routes ==================
@@ -64,7 +64,11 @@ const routes = createBrowserRouter([
   },
   //================== dashboard routes ==============
   {
-    element: <DashboardLayout />,
+    element: (
+      <ProtectedDashboard>
+        <DashboardLayout />
+      </ProtectedDashboard>
+    ),
     children: [
       {
         path: "/dashboard/",

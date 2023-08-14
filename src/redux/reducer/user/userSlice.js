@@ -24,22 +24,20 @@ const userSlice = createSlice({
     logout: (state) => {
       // eslint-disable-next-line no-unused-vars
       state = initialState;
-      Cookies.remove(ACCESS_TOKEN_KEY, { path: "/auth" });
-      Cookies.remove(REFRESH_TOKEN_KEY, { path: "/auth" });
+      // Cookies.remove(ACCESS_TOKEN_KEY, { path: "/auth" });
+      // Cookies.remove(REFRESH_TOKEN_KEY, { path: "/auth" });
+      Cookies.remove(ACCESS_TOKEN_KEY);
+      Cookies.remove(REFRESH_TOKEN_KEY);
     },
 
     addUser: (state, { payload }) => {
       state.isLoading = false;
       // set accessToken and refreshToken on cookies
-      Cookies.set(ACCESS_TOKEN_KEY, payload.token.accessToken, {
-        path: "/auth",
-      });
-      Cookies.set(REFRESH_TOKEN_KEY, payload.token.refreshToken, {
-        path: "/auth",
-      });
+      Cookies.set(ACCESS_TOKEN_KEY, payload.token.accessToken);
+      Cookies.set(REFRESH_TOKEN_KEY, payload.token.refreshToken);
 
       const { firstname, lastname, username, phoneNumber, address, role } =
-        payload.data.user;
+      payload.data.user;
       state.message = "شما با موفقیت وارد شدید";
       state.name = firstname;
       state.lastName = lastname;
@@ -47,7 +45,6 @@ const userSlice = createSlice({
       state.phoneNumber = phoneNumber;
       state.address = address;
       state.role = role;
-      
     },
   },
   // extraReducers: (builder) => {

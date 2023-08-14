@@ -5,14 +5,15 @@ import VerifiedUserIcon from "@mui/icons-material/VerifiedUser";
 import SeePassIcon from "../common/SeePassIcon";
 import { useState } from "react";
 import Button from "../common/Button";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Form, Link, useLocation, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import ForwardedInput from "../common/Input";
 import { useDispatch } from "react-redux";
-
 import AuthApi from "../../services/api/authApi";
 import { addUser } from "../../redux/reducer/user/userSlice";
-const Form = styled.form`
+import { show } from "../../redux/reducer/toast/toastSlice";
+
+const FormStyled = styled(Form)`
   padding: 2rem;
   width: 100%;
   height: 100%;
@@ -46,6 +47,7 @@ const InputWrapper = styled.div`
 function LoginForm() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
   const param = useLocation().pathname.split("/").at(-1);
   const title = param === "user" ? "ورود کاربر" : "ورود ادمین";
   const [seePsss, setSeePsss] = useState(false);
@@ -71,20 +73,33 @@ function LoginForm() {
         setIsLoading(false);
         if (res.data.user.role === "ADMIN") {
           console.log(res.data.user);
-          navigate("/dashboard/orders",{replace:true});
+          navigate("/dashboard/orders", { replace: true });
         }
         if (res.data.user.role === "USER") {
-          navigate("/account",{replace:true});
+          navigate("/account", { replace: true });
         }
+        dispatch(
+          show({
+            message: " شما با موفقیت وارد شدید ",
+            status: "success",
+          })
+        );
       })
       .catch((error) => {
         console.log(error);
+        dispatch(
+          show({
+            message: "خطای دستری لطفا دوباره امتحان کنید",
+            status: "error",
+          })
+        );
+
         setIsLoading(false);
       });
   }
 
   return (
-    <Form onSubmit={handleSubmit(onSub)}>
+    <FormStyled onSubmit={handleSubmit(onSub)}>
       <Title>{title}</Title>
 
       <Hr />
@@ -132,6 +147,10 @@ function LoginForm() {
               value: 5,
               message: " رمز عبور نباید کمتر از ۵ کاراکتر باشد",
             },
+            pattern: {
+              value: /^(?=.*\d).+$/,
+              message: "رمز عبور باید حداقل شامل یک عدد باشد",
+            },
           })}
           errorMessage={
             errors?.password?.message ? errors.password.message : ""
@@ -146,7 +165,7 @@ function LoginForm() {
           <SubTitle>ایجاد حساب کاربری</SubTitle>
         </Link>
       )}
-    </Form>
+    </FormStyled>
   );
 }
 
