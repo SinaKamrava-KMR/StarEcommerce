@@ -5,7 +5,6 @@ const publicAxios = axios.create({
   baseURL: BASE_URL,
 });
 
-
 // check some validation for request
 // publicAxios.interceptors.request.use(
 //   (config) => {
@@ -21,11 +20,9 @@ publicAxios.interceptors.response.use(
     return res;
   },
   (error) => {
-    
-    return Promise.reject(error.data)
+    console.log(error);
+    return Promise.reject(error.data);
   }
 );
-
-
 
 export default publicAxios;

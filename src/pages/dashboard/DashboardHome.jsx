@@ -3,6 +3,7 @@ import { Box } from "@material-ui/core";
 import Stats from "../../dashboard/components/home/Stats";
 import SalesChart from "../../dashboard/components/home/SalesChart";
 import OrderChart from "../../dashboard/components/home/OrderChart";
+import { useSelector } from "react-redux";
 
 const HomeWrapper = styled(Box)`
   width: 100%;
@@ -21,6 +22,8 @@ const ChartsContainer = styled(Box)`
 `;
 
 function DashboardHome() {
+  const category = useSelector(state => state.categories);
+  console.log(category);
   return (
     <HomeWrapper>
       <Stats />

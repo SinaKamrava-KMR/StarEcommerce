@@ -11,10 +11,11 @@ import {
 } from "recharts";
 
 const data = [
-  { name: "اصفحان", value: 400 },
+  { name: "اصفهان", value: 400 },
   { name: "تهران", value: 300 },
+  { name: "رامسر", value: 100 },
   { name: "مشهد", value: 300 },
-  { name: "تنکابن", value: 200 },
+  { name: "شهسوار", value: 200 },
 ];
 
 const startDataLight = [

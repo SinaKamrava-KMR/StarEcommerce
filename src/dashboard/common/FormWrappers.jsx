@@ -15,7 +15,7 @@ export const StockWrapper = styled(Box)`
   border-radius: 0.8rem;
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 2.5rem;
   padding: 2rem;
   padding-bottom: 3rem;
 `;

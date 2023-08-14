@@ -5,6 +5,7 @@ import {
 import publicAxios from "../instance/publicAxios";
 
 export default class AuthApi {
+
   async Login(data) {
     try {
       const response = await publicAxios.post(AUTH_PARAMS_LOGIN, data);
@@ -18,4 +19,5 @@ export default class AuthApi {
       throw new Error("خطای دسترسی , لطفا دورباره امتحان کنید");
     }
   }
+  
 }

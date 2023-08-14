@@ -12,7 +12,8 @@ const Wrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 2000;
+  z-index: 101;
+
 `;
 const BackDropOverlay = styled.div`
   position: absolute;

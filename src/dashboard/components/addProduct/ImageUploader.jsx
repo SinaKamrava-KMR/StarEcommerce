@@ -41,9 +41,13 @@ const Image = styled("img")({
   borderRadius: "0.8rem",
   objectFit: "fit",
 });
+import PropTypes from "prop-types";
 
-function ImageUploader() {
-  const [medias, setMedias] = useState([]);
+ImageUploader.propTypes = {
+  medias: PropTypes.array,
+  setMedias:PropTypes.func
+};
+function ImageUploader({medias, setMedias}) {
 
   const [activeImage, setActiveImage] = useState();
 

@@ -1,11 +1,14 @@
 import { motion } from "framer-motion";
 import { styled } from "styled-components";
-import PropTypes from "prop-types";
 import { HiPencilSquare, HiTrash } from "react-icons/hi2";
 import ChangeInput from "../../dashboard/components/productsManagement/ChangeInput";
-import { useState } from "react";
+import PropTypes from "prop-types";
 TableRow.propTypes = {
   delay: PropTypes.number,
+  product: PropTypes.object,
+  row: PropTypes.number,
+  dispatch: PropTypes.func,
+  state: PropTypes.object,
 };
 const TableRowStyle = styled.div`
   width: 100%;
@@ -45,9 +48,29 @@ const ButtonGroup = styled.div`
   gap: 1.5rem;
 `;
 
-function TableRow({ delay }) {
-  const [price, setPrice] = useState("5000");
-  const [quentity, setQuentity] = useState("20");
+function TableRow({ delay, product, row, state, dispatch }) {
+  const inputValues = state.inputs.find((item) => item?.id === product.id);
+  // console.log(inputValues);
+
+  function handleChangePrice(value) {
+    dispatch({
+      type: "price/chnaged",
+      payload: { id: product.id, price: value },
+    });
+  }
+  function handleChangeQuentity(value) {
+    dispatch({
+      type: "quentity/chnaged",
+      payload: { id: product.id, quentity: value },
+    });
+  }
+  function handleClosePrice() {
+    dispatch({ type: "price/removed", payload: { id: product.id } });
+  }
+  function handleCloseQuentity() {
+    dispatch({ type: "quentity/removed", payload: { id: product.id } });
+  }
+
   return (
     <TableRowStyle
       as={motion.div}
@@ -58,11 +81,23 @@ function TableRow({ delay }) {
       initial={{ y: 500 }}
       animate={{ y: 0 }}
     >
-      <p>۱</p>
-      <p>سینا کامروا</p>
-      <p>col 3</p>
-      <ChangeInput defaultValue={2000} value={price} setValue={setPrice} />
-      <ChangeInput defaultValue={23} value={quentity} setValue={setQuentity} />
+      <p>{row}</p>
+      <p>{product.name}</p>
+      <p>{product.category}</p>
+      <ChangeInput
+        defaultValue={product.price}
+        onChange={handleChangePrice}
+        isSaved={state.isSaved}
+        value={inputValues?.price}
+        onClose={handleClosePrice}
+      />
+      <ChangeInput
+        defaultValue={product.quentity}
+        isSaved={state.isSaved}
+        value={inputValues?.quentity}
+        onChange={handleChangeQuentity}
+        onClose={handleCloseQuentity}     
+      />
 
       <ButtonGroup>
         <BtnWrapper color="#ff6969">
