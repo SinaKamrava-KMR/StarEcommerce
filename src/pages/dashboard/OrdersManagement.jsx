@@ -6,10 +6,11 @@ import FilterBox from "../../dashboard/components/order/FilterBox";
 import TableWrapper from "../../components/common/TableWrapper";
 import Table from "../../components/common/Table";
 import StarPagination from "../../components/common/StarPagination";
-import TableRow from "../../components/common/TableRow";
 import CategoryIcon from "@mui/icons-material/Category";
 import Filter from "../../dashboard/common/Filter";
 import TimelapseIcon from "@mui/icons-material/Timelapse";
+import OrderRow from "../../dashboard/components/order/OrderRow";
+
 const OrdersLayout = styled(Box)({
   width: "100%",
   height: "100%",
@@ -63,6 +64,8 @@ function OrdersManagement() {
   }
   return (
     <OrdersLayout>
+
+    
       <TopLayout>
         <ContentWrapper>
           <Typography variant="DashboardTitle">سفارشات</Typography>
@@ -91,22 +94,22 @@ function OrdersManagement() {
 
       <TableWrapper>
         <Table headerItems={headerItems}>
-          <TableRow delay={0} />
-          <TableRow delay={1} />
-          <TableRow delay={2} />
-          <TableRow delay={3} />
-          <TableRow delay={4} />
-          <TableRow delay={5} />
-          <TableRow delay={6} />
-          <TableRow delay={7} />
-          <TableRow delay={8} />
-          <TableRow delay={9} />
-          <TableRow delay={10} />
-          <TableRow delay={0} />
-          <TableRow delay={0} />
-          <TableRow delay={0} />
-          <TableRow delay={0} />
-          <TableRow delay={0} />
+          <OrderRow delay={0} />
+          <OrderRow delay={1} />
+          <OrderRow delay={2} />
+          <OrderRow delay={3} />
+          <OrderRow delay={4} />
+          <OrderRow delay={5} />
+          <OrderRow delay={6} />
+          <OrderRow delay={7} />
+          <OrderRow delay={8} />
+          <OrderRow delay={9} />
+          <OrderRow delay={10} />
+          <OrderRow delay={0} />
+          <OrderRow delay={0} />
+          <OrderRow delay={0} />
+          <OrderRow delay={0} />
+          <OrderRow delay={0} />
         </Table>
       </TableWrapper>
 

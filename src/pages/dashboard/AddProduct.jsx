@@ -5,7 +5,7 @@ import { Typography } from "@mui/material";
 import ImageUploader from "../../dashboard/components/addProduct/ImageUploader";
 import InfoForm from "../../dashboard/components/addProduct/InfoForm";
 
-const Wrapper = styled(Box)({
+export const WrapperStyled = styled(Box)({
   width: "100%",
   height: "500px",
   display: "flex",
@@ -35,7 +35,7 @@ const Wrapper = styled(Box)({
   },
 });
 
-const Container = styled(Box)({
+export const Container = styled(Box)({
   width: "100%",
   overflowY: "scroll",
   flex: 1,
@@ -56,7 +56,7 @@ const Container = styled(Box)({
 
 function AddProduct() {
   return (
-    <Wrapper>
+    <WrapperStyled>
       <Typography variant="DashboardTitle">اضافه کردن محصول جدید</Typography>
       
       <Container>
@@ -64,7 +64,7 @@ function AddProduct() {
 
         <ImageUploader />
       </Container>
-    </Wrapper>
+    </WrapperStyled>
   );
 }
 
