@@ -37,7 +37,7 @@ const MainMedia = styled(Box)(({ hasContnet }) => ({
 const Image = styled("img")({
   width: "100%",
   height: "100%",
-  maxHeight: "250px",
+  maxHeight: "300px",
   borderRadius: "0.8rem",
   objectFit: "fit",
 });

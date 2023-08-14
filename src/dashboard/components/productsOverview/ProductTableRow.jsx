@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import { styled } from "styled-components";
 import PropTypes from "prop-types";
-
+import { HiPencilSquare, HiTrash } from "react-icons/hi2";
 ProductTableRow.propTypes = {
   delay: PropTypes.number,
 };
@@ -23,6 +23,26 @@ const TableRowStyle = styled.div`
     text-align: start;
   }
 `;
+
+const ButtonGroup = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
+`;
+const BtnWrapper = styled.div`
+width: 37px;
+height: 37px;
+cursor: pointer;
+display: flex;
+align-items: center;
+justify-content: center;
+font-size: 20px;
+color: white;
+border-radius: 0.5rem;
+background-color: ${props=>props.color};
+`;
+
 
 const Image = styled("img")({
   width: "60px",
@@ -48,7 +68,14 @@ function ProductTableRow({ delay }) {
       <p>col 3</p>
       <p>col 4</p>
       <p>col 5</p>
-      <p>col 6</p>
+      <ButtonGroup>
+        <BtnWrapper color="#ff6969">
+          <HiTrash />
+        </BtnWrapper>
+        <BtnWrapper color="#69b4ff">
+          <HiPencilSquare />
+        </BtnWrapper>
+      </ButtonGroup>
     </TableRowStyle>
   );
 }

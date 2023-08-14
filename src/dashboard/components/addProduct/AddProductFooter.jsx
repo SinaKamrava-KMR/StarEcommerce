@@ -6,15 +6,19 @@ import PropTypes from "prop-types";
 AddProductFooter.propTypes = {
   onSubmit: PropTypes.func,
   onCancel: PropTypes.func,
+  inModal:PropTypes.bool
 };
 
-const Wrapper = styled(Box)({
+
+
+
+const Wrapper = styled(Box)(({ modal }) => ({
   backgroundColor: "#fff",
-  position: "fixed",
+  position: modal ? "absolute":"fixed",
   left: 0,
   right: 0,
   bottom: 0,
-  height: "70px",
+  height: "60px",
   display: "flex",
   alignItems: "center",
   justifyContent: "flex-end",
@@ -22,11 +26,16 @@ const Wrapper = styled(Box)({
   zIndex: 100,
   padding: "2rem",
   paddingLeft: "3rem",
-});
+  borderRadius:".5rem"
+}));
 
-function AddProductFooter({ onSubmit, onCancel }) {
+
+
+
+
+function AddProductFooter({ onSubmit, onCancel,inModal=false }) {
   return (
-    <Wrapper>
+    <Wrapper modal={inModal}>
       <StateButton variant="cancel" onClick={onCancel}>
         انصراف
       </StateButton>

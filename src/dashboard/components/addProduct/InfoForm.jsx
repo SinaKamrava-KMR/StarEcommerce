@@ -10,8 +10,14 @@ import { useRef } from "react";
 import { Editor } from "@tinymce/tinymce-react";
 import { useForm } from "react-hook-form";
 import AddProductFooter from "../addProduct/AddProductFooter";
+import PropTypes from "prop-types";
 
-function InfoForm() {
+InfoForm.propTypes = {
+  inModal:PropTypes.bool
+};
+
+
+function InfoForm({inModal=false}) {
   const editorRef = useRef(null);
   // editorRef.current.getContent()
   const {
@@ -148,7 +154,7 @@ function InfoForm() {
         </Row>
       </StockWrapper>
 
-      <AddProductFooter onSubmit={handleSubmit(onSubmit)} />
+      <AddProductFooter inModal={inModal} onSubmit={handleSubmit(onSubmit)} />
     </Form>
   );
 }
