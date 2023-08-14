@@ -6,6 +6,8 @@ import InfoForm from "./InfoForm";
 import ImageUploader from "./ImageUploader";
 import { HiOutlineXMark } from "react-icons/hi2";
 import PropTypes from "prop-types";
+import { useState } from "react";
+import ProductServices from "../../../services/api/productServices";
 
 AddProductModal.propTypes = {
   oncloseModal:PropTypes.func
@@ -15,9 +17,8 @@ AddProductModal.propTypes = {
 const Wrapper = styled(Box)`
   position: relative;
   background-color: #fff;
-  width: 90%;
+  width: 70%;
   height: 90%;
-  z-index: 3000;
   border-radius: 0.7rem;
   box-shadow: 0 0 10px #7a7a7a;
   display: flex;
@@ -35,7 +36,19 @@ const CloseWrapper = styled(Box)`
   font-size: 1.8rem;
 `;
 
-function AddProductModal({oncloseModal}) {
+function AddProductModal({ oncloseModal }) {
+  const [medias, setMedias] = useState([]);
+  function handleSubmit(data) {
+    console.log({ ...data, images: medias });
+
+    const service = new ProductServices();
+    service.add({ ...data, images: medias }).then(res => {
+      console.log(res);
+    })
+
+    setMedias([]);
+  }
+  
   return (
     <Wrapper component={motion.div} initial={{ y: -100 }} animate={{ y: 0 }}>
       <CloseWrapper onClick={oncloseModal}>
@@ -43,9 +56,9 @@ function AddProductModal({oncloseModal}) {
       </CloseWrapper>
       <Typography variant="DashboardTitle">اضافه کردن محصول جدید</Typography>
       <Container>
-        <InfoForm inModal={true} />
+        <InfoForm inModal={true} onSubmit={handleSubmit} />
 
-        <ImageUploader />
+        <ImageUploader medias={medias} setMedias={setMedias} />
       </Container>
     </Wrapper>
   );

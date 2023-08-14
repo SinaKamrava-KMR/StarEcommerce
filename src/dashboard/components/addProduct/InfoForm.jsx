@@ -13,11 +13,11 @@ import AddProductFooter from "../addProduct/AddProductFooter";
 import PropTypes from "prop-types";
 
 InfoForm.propTypes = {
-  inModal:PropTypes.bool
+  inModal: PropTypes.bool,
+  onSubmit:PropTypes.func
 };
 
-
-function InfoForm({inModal=false}) {
+function InfoForm({ inModal = false,onSubmit }) {
   const editorRef = useRef(null);
   // editorRef.current.getContent()
   const {
@@ -29,8 +29,10 @@ function InfoForm({inModal=false}) {
   } = useForm();
   const formsValues = watch();
 
-  function onSubmit(data) {
-    console.log(data);
+
+
+  function onSub(data) {
+    onSubmit({ ...data, description: editorRef.current })
     editorRef.current = "";
     reset();
   }
@@ -65,7 +67,8 @@ function InfoForm({inModal=false}) {
             content_style: 'body { font-family: "IRANSansXV", serif; }',
             font_formats: "IRANSansXV=IRANSansXV,serif",
           }}
-          onInit={(evt, editor) => (editorRef.current = editor)}
+          // onInit={(evt, editor) => (editorRef.current = editor)}
+          onEditorChange={(content) => (editorRef.current = content)}
         />
       </InfoWrapper>
 
@@ -107,6 +110,22 @@ function InfoForm({inModal=false}) {
             }
           />
         </Row>
+        <ForwardedInput
+            name="brand"
+            label="برند"
+            isEmpty={
+              formsValues?.brand == undefined || formsValues.brand === ""
+            }
+            {...register("brand", {
+              required: {
+                value: true,
+                message: "  برند محصول نباید خالی باشد",
+              },
+            })}
+            errorMessage={
+              errors?.brand?.message ? errors.brand.message : ""
+            }
+          />
       </StockWrapper>
 
       <StockWrapper>
@@ -154,7 +173,7 @@ function InfoForm({inModal=false}) {
         </Row>
       </StockWrapper>
 
-      <AddProductFooter inModal={inModal} onSubmit={handleSubmit(onSubmit)} />
+      <AddProductFooter inModal={inModal} onSubmit={handleSubmit(onSub)} />
     </Form>
   );
 }

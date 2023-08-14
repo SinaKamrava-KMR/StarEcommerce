@@ -76,7 +76,7 @@ const userSlice = createSlice({
       state.address = address;
       state.role = role;
       state.isLoading = false;
-      console.log(payload);
+      // console.log(payload);
     });
 
     builder.addCase(userData.rejected, (state, { error }) => {

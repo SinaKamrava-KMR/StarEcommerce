@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { styled } from "styled-components";
 import NavSelect from "./NavSelect";
+import { useSelector } from "react-redux";
 
 const NavBarWrapper = styled.ul`
   display: flex;
@@ -8,12 +9,10 @@ const NavBarWrapper = styled.ul`
   gap: 1.5rem;
   align-items: center;
   justify-content: center;
-  @media (min-width:800px) {
-    flex:1
-
+  @media (min-width: 800px) {
+    flex: 1;
   }
-  @media (min-width:1000px) {
-
+  @media (min-width: 1000px) {
     gap: 2.5rem;
   }
 `;
@@ -23,24 +22,22 @@ const Li = styled.li`
   &:hover {
     color: #222;
   }
-  white-space:nowrap;
-  @media (min-width:600px) {
+  white-space: nowrap;
+  @media (min-width: 600px) {
     font-size: 1.5rem;
-
   }
-  @media (min-width:1000px) {
+  @media (min-width: 1000px) {
     font-size: 1.8rem;
-
   }
 `;
 
-const options = [
-  { label: "لباس زنانه", value: "sfkfgsflksgfaklg" },
-  { label: "پوشاک بچه", value: "lhlhh858075gf7" },
-  { label: "لباس مجلسی", value: "jfkjf7584397807gfhg" },
-];
-
 function NavBar() {
+  const options = useSelector((state) =>
+    state.categories.categories.map((item) => {
+      return { label: item.name, value: item._id };
+    })
+  );
+
   return (
     <NavBarWrapper>
       <Li>

@@ -4,6 +4,7 @@ import { Typography } from "@mui/material";
 
 import ImageUploader from "../../dashboard/components/addProduct/ImageUploader";
 import InfoForm from "../../dashboard/components/addProduct/InfoForm";
+import { useState } from "react";
 
 export const WrapperStyled = styled(Box)({
   width: "100%",
@@ -55,14 +56,21 @@ export const Container = styled(Box)({
 });
 
 function AddProduct() {
+  const [medias, setMedias] = useState([]);
+  function handleClickSubmit(data) {
+    console.log({...data,images:medias});
+  }
+
+
+
   return (
     <WrapperStyled>
       <Typography variant="DashboardTitle">اضافه کردن محصول جدید</Typography>
       
       <Container>
-        <InfoForm />
+        <InfoForm onSubmit={handleClickSubmit} />
 
-        <ImageUploader />
+        <ImageUploader medias={medias} setMedias={setMedias}/>
       </Container>
     </WrapperStyled>
   );

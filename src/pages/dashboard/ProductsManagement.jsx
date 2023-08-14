@@ -11,6 +11,7 @@ import SortByAlphaIcon from "@mui/icons-material/SortByAlpha";
 import CategoryIcon from "@mui/icons-material/Category";
 import SaveButton from "../../dashboard/components/productsManagement/SaveButton";
 import TableRow from "../../components/common/TableRow";
+import { useEffect, useReducer } from "react";
 
 const Wrapper = styled(Box)({
   width: "100%",
@@ -44,18 +45,210 @@ const categoryItems = [
   },
 ];
 
+let fakeProducts = [
+  {
+    id: 123132,
+    row: 0,
+    name: "سینا کامروا",
+    category: "کت و شلوار",
+    price: 2000,
+    quentity: 89,
+  },
+  {
+    id: 132,
+    row: 1,
+    name: " مریم مومن",
+    category: "لباس زنانه",
+    price: 56700,
+    quentity: 9,
+  },
+  {
+    id: 1432,
+    row: 2,
+    name: " غلی حاتمیان",
+    category: " لباس کودک",
+    price: 67500,
+    quentity: 200,
+  },
+  {
+    id: 33223,
+    row: 3,
+    name: "یاسمین بنیادی",
+    category: "لباس زنانه ",
+    price: 635000,
+    quentity: 10,
+  },
+  {
+    id: 9822,
+    row: 4,
+    name: " رضا حقگو",
+    category: "کت و شلوار",
+    price: 986100,
+    quentity: 10,
+  },
+  {
+    id: 9999,
+    row: 5,
+    name: "فاطمه جعفری ",
+    category: "کفش",
+    price: 43312,
+    quentity: 12,
+  },
+  {
+    id: 5545,
+    row: 6,
+    name: "امیر راسخ",
+    category: "کت و شلوار",
+    price: 98000,
+    quentity: 6,
+  },
+  {
+    id: 8970,
+    row: 7,
+    name: "کیارش صیادی",
+    category: " تی شرت",
+    price: 76000,
+    quentity: 3,
+  },
+  {
+    id: 88888,
+    row: 8,
+    name: " رکنا هدایتی",
+    category: " کفش",
+    price: 77600,
+    quentity: 1,
+  },
+  {
+    id: 65467,
+    row: 9,
+    name: " علیرضا محمدی",
+    category: "کت و شلوار",
+    price: 9800,
+    quentity: 6,
+  },
+];
 
+const initialState = {
+  inputs: [],
+  isSaved: false,
+};
+
+const reducer = (state, action) => {
+  const { payload } = action;
+  const input = state.inputs.find((item) => item.id === payload?.id);
+
+  switch (action.type) {
+    case "price/chnaged":
+      if (input)
+        return {
+          ...state,
+          inputs: [
+            ...state.inputs.map((item) =>
+              item.id === payload.id ? { ...item, price: payload.price } : item
+            ),
+          ],
+        };
+      return {
+        ...state,
+        inputs: [...state.inputs, { id: payload.id, price: payload.price }],
+      };
+
+    case "price/removed":
+      if (input.quentity)
+        return {
+          ...state,
+          inputs: [
+            ...state.inputs.map((item) =>
+              item.id === payload.id
+                ? { id: item?.id, quentity: item?.quentity }
+                : item
+            ),
+          ],
+        };
+      return {
+        ...state,
+        inputs: [...state.inputs.filter((item) => item.id !== payload.id)],
+      };
+    case "quentity/chnaged":
+      if (input)
+        return {
+          ...state,
+          inputs: [
+            ...state.inputs.map((item) =>
+              item.id === payload.id
+                ? { ...item, quentity: payload.quentity }
+                : item
+            ),
+          ],
+        };
+      return {
+        ...state,
+        inputs: [
+          ...state.inputs,
+          { id: payload.id, quentity: payload.quentity },
+        ],
+      };
+
+    case "quentity/removed":
+      if (input.price)
+        return {
+          ...state,
+          inputs: [
+            ...state.inputs.map((item) =>
+              item.id === payload.id
+                ? { id: item?.id, price: item?.price }
+                : item
+            ),
+          ],
+        };
+
+      return {
+        ...state,
+        inputs: [...state.inputs.filter((item) => item.id !== payload.id)],
+      };
+
+    case "btn/saved":
+      return { ...state, isSaved: true };
+    case "reset":
+      return { inputs: [], isSaved: false };
+    default:
+      throw new Error("Unknown Action type !!!");
+  }
+};
 
 function ProductsManagement() {
+  const [state, dispatch] = useReducer(reducer, initialState);
+
   function handleClick(item) {
     console.log(item);
   }
+  function handleSave() {
+    dispatch({ type: "btn/saved" });
+    fakeProducts= fakeProducts.map((item) => {
+      const values = state.inputs.find((t) => t.id === item.id);
+      if (values?.price) return { ...item, price: values.price };
+      if (values?.quentity) return { ...item, quentity: values.quentity };
+      return item;
+    });
+  }
+
+  useEffect(() => {
+    if (state.isSaved) {
+      setTimeout(() => {
+        dispatch({ type: "reset" });
+      }, 1000);
+    }
+  }, [state.isSaved]);
+
   return (
     <Wrapper>
       <DashboardRow>
         <Typography variant="DashboardTitle">مدیریت محصولات </Typography>
         <span style={{ flex: 1 }}></span>
-        <SaveButton />
+        <SaveButton
+          active={state.inputs.length > 0}
+          onClick={() => handleSave()}
+        />
       </DashboardRow>
       <DashboardRow>
         <FilterBox>
@@ -79,26 +272,18 @@ function ProductsManagement() {
       </DashboardRow>
       <TableWrapper>
         <Table headerItems={headerItems}>
-
-        <TableRow delay={0} />
-          <TableRow delay={1} />
-          <TableRow delay={2} />
-          <TableRow delay={3} />
-          <TableRow delay={4} />
-          <TableRow delay={5} />
-          <TableRow delay={6} />
-          <TableRow delay={7} />
-          <TableRow delay={8} />
-          <TableRow delay={9} />
-          <TableRow delay={10} />
-          <TableRow delay={0} />
-          <TableRow delay={0} />
-          <TableRow delay={0} />
-          <TableRow delay={0} />
-          <TableRow delay={0} />
-
-
-
+          {fakeProducts.map((product, idx) => {
+            return (
+              <TableRow
+                key={product.id}
+                delay={idx}
+                row={idx + 1}
+                product={product}
+                state={state}
+                dispatch={dispatch}
+              />
+            );
+          })}
         </Table>
       </TableWrapper>
       <StarPagination />
