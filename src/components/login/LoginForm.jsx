@@ -74,16 +74,31 @@ function LoginForm() {
         if (res.data.user.role === "ADMIN") {
           console.log(res.data.user);
           navigate("/dashboard/orders", { replace: true });
+          dispatch(
+            show({
+              message: " ادمین با موفقیت وارد شدید ",
+              status: "success",
+            })
+          );
         }
         if (res.data.user.role === "USER") {
-          navigate("/account", { replace: true });
+          if (param === "user") {
+            navigate("/account", { replace: true });
+            dispatch(
+              show({
+                message: " شما با موفقیت وارد شدید ",
+                status: "success",
+              })
+            );
+          } else {
+            dispatch(
+              show({
+                message: " فقط ادمین اجازه دسترسی به داشبور را دارد",
+                status: "error",
+              })
+            );
+          }
         }
-        dispatch(
-          show({
-            message: " شما با موفقیت وارد شدید ",
-            status: "success",
-          })
-        );
       })
       .catch((error) => {
         console.log(error);

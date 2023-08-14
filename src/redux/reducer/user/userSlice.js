@@ -3,8 +3,10 @@ import { createSlice } from "@reduxjs/toolkit";
 import {
   ACCESS_TOKEN_KEY,
   REFRESH_TOKEN_KEY,
+  USER_ID,
 } from "../../../configs/constants";
 import Cookies from "js-cookie";
+import { userData } from "./userThunk";
 
 const initialState = {
   isLoading: false,
@@ -32,12 +34,16 @@ const userSlice = createSlice({
 
     addUser: (state, { payload }) => {
       state.isLoading = false;
-      // set accessToken and refreshToken on cookies
-      Cookies.set(ACCESS_TOKEN_KEY, payload.token.accessToken);
-      Cookies.set(REFRESH_TOKEN_KEY, payload.token.refreshToken);
 
-      const { firstname, lastname, username, phoneNumber, address, role } =
-      payload.data.user;
+      const {
+        _id: userId,
+        firstname,
+        lastname,
+        username,
+        phoneNumber,
+        address,
+        role,
+      } = payload.data.user;
       state.message = "شما با موفقیت وارد شدید";
       state.name = firstname;
       state.lastName = lastname;
@@ -45,44 +51,40 @@ const userSlice = createSlice({
       state.phoneNumber = phoneNumber;
       state.address = address;
       state.role = role;
+
+      // set accessToken and refreshToken on cookies
+      Cookies.set(ACCESS_TOKEN_KEY, payload.token.accessToken);
+      Cookies.set(REFRESH_TOKEN_KEY, payload.token.refreshToken);
+      Cookies.set(USER_ID, userId);
     },
   },
-  // extraReducers: (builder) => {
-  //   builder.addCase(userAuth.pending, (state) => {
-  //     state.isLoading = true;
-  //   });
+  
+  extraReducers: (builder) => {
 
-  //   builder.addCase(userAuth.fulfilled, (state, { payload }) => {
+    builder.addCase(userData.pending, (state) => {
+      state.isLoading = true;
+    });
 
-  //     state.isLoading = false;
-  //     // set accessToken and refreshToken on cookies
-  //     Cookies.set(ACCESS_TOKEN_KEY, payload.token.accessToken, {
-  //       path: "/auth",
-  //     });
-  //     Cookies.set(REFRESH_TOKEN_KEY, payload.token.refreshToken, {
-  //       path: "/auth",
-  //     });
+    builder.addCase(userData.fulfilled, (state, { payload }) => {
+      const { firstname, lastname, username, phoneNumber, address, role } =
+        payload.data.user;
+      state.message = "شما با موفقیت وارد شدید";
+      state.name = firstname;
+      state.lastName = lastname;
+      state.userName = username;
+      state.phoneNumber = phoneNumber;
+      state.address = address;
+      state.role = role;
+      state.isLoading = false;
+      console.log(payload);
+    });
 
-  //     const { firstname, lastname, username, phoneNumber, address, role } =
-  //       payload.data.user;
-  //     state.message = "شما با موفقیت وارد شدید";
-  //     state.name = firstname;
-  //     state.lastName = lastname;
-  //     state.userName = username;
-  //     state.phoneNumber = phoneNumber;
-  //     state.address = address;
-  //     state.role = role;
-
-  //   });
-
-  //   builder.addCase(userAuth.rejected, (state, { error }) => {
-  //     state = { ...initialState, message: error.message };
-  //     state.isLoading = false;
-  //     Cookies.remove(ACCESS_TOKEN_KEY, { path: "/auth" });
-  //     Cookies.remove(REFRESH_TOKEN_KEY, { path: "/auth" });
-  //     console.log(state);
-  //   });
-  // },
+    builder.addCase(userData.rejected, (state, { error }) => {
+      state = { ...initialState, message: error.message };
+      state.isLoading = false;
+      console.log(error.message);
+    });
+  },
 });
 
 export const { logout, addUser } = userSlice.actions;
