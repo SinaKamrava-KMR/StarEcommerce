@@ -3,7 +3,8 @@ import Cookies from "js-cookie";
 import { ACCESS_TOKEN_KEY } from "../../configs/constants";
 import PropTypes from "prop-types";
 import { Navigate } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { show } from "../../redux/reducer/toast/toastSlice";
 
 ProtectedDashboard.propTypes = {
   children: PropTypes.node,
@@ -11,10 +12,18 @@ ProtectedDashboard.propTypes = {
 function ProtectedDashboard({ children }) {
   const userRole = useSelector((state) => state.user.role);
   const accessToken = Cookies.get(ACCESS_TOKEN_KEY);
-
+  const dispatch = useDispatch();
 
   console.log(userRole);
   console.log(accessToken);
+  if (userRole === "USER") {
+    dispatch(
+      show({
+        message: " فقط ادمین اجازه دسترسی به داشبور را دارد",
+        status: "error",
+      })
+    );
+  }
 
   return accessToken && userRole === "ADMIN" ? (
     children

@@ -1,6 +1,10 @@
 import { Outlet } from "react-router-dom";
 import Header from "../components/header/Header";
 import { styled } from "styled-components";
+import { USER_ID } from "../configs/constants";
+import Cookies from "js-cookie";
+import { useDispatch } from "react-redux";
+import { userData } from "../redux/reducer/user/userThunk";
 
 const MainLayout = styled.main`
   flex: 1;
@@ -18,6 +22,13 @@ const AppLayoutStyle = styled.main`
 `;
 
 function AppLayout() {
+  const userId = Cookies.get(USER_ID);
+  const dispatch = useDispatch();
+
+  if (userId) {
+    dispatch(userData(userId));
+  }
+
   return (
     <AppLayoutStyle>
       <Header />
