@@ -11,14 +11,20 @@ import { Editor } from "@tinymce/tinymce-react";
 import { useForm } from "react-hook-form";
 import AddProductFooter from "../addProduct/AddProductFooter";
 import PropTypes from "prop-types";
+import { useCategoryByName } from "../../../hooks/useCategoryByName";
+import { useEffect } from "react";
+import { useSelector } from "react-redux";
+import Select from "../../../components/common/Select";
 
 InfoForm.propTypes = {
   inModal: PropTypes.bool,
-  onSubmit:PropTypes.func
+  onSubmit: PropTypes.func,
 };
 
-function InfoForm({ inModal = false,onSubmit }) {
+function InfoForm({ inModal = false, onSubmit }) {
   const editorRef = useRef(null);
+  const { category, setName } = useCategoryByName();
+  const categoriesList = useSelector((state) => state.categories.categories);
   // editorRef.current.getContent()
   const {
     register,
@@ -29,12 +35,24 @@ function InfoForm({ inModal = false,onSubmit }) {
   } = useForm();
   const formsValues = watch();
 
-
+  useEffect(() => {
+    setName(formsValues.category);
+  }, [formsValues.category, setName]);
 
   function onSub(data) {
-    onSubmit({ ...data, description: editorRef.current })
-    editorRef.current = "";
-    reset();
+    // onSubmit({
+    //   ...data,
+    //   category: category._id,
+    //   description: editorRef.current,
+    // });
+    // editorRef.current = "";
+    // reset();
+    console.log(data);
+  }
+
+  function handleOnChange(item, name) {
+    console.log(item);
+    console.log(`select box name : ${name}`);
   }
 
   return (
@@ -76,7 +94,21 @@ function InfoForm({ inModal = false,onSubmit }) {
         <Typography variant="content_li"> دسته بندی کالا</Typography>
         {/* ======================================================== */}
         <Row>
-          <ForwardedInput
+          <Select
+            name="category"
+            label="دسته بندی"
+            error="دستبندی نباید خالی باشد"
+            onChange={(item) => handleOnChange(item, "category")}
+            options={categoriesList}
+          />
+
+          <Select
+            name="subcategory"
+            label="زیر مجموعه "
+            onChange={(item) => handleOnChange(item, "subcategory")}
+            options={categoriesList}
+          />
+          {/* <ForwardedInput
             name="category"
             label="دسته بندی"
             isEmpty={
@@ -108,24 +140,20 @@ function InfoForm({ inModal = false,onSubmit }) {
             errorMessage={
               errors?.subcategory?.message ? errors.subcategory.message : ""
             }
-          />
+          /> */}
         </Row>
         <ForwardedInput
-            name="brand"
-            label="برند"
-            isEmpty={
-              formsValues?.brand == undefined || formsValues.brand === ""
-            }
-            {...register("brand", {
-              required: {
-                value: true,
-                message: "  برند محصول نباید خالی باشد",
-              },
-            })}
-            errorMessage={
-              errors?.brand?.message ? errors.brand.message : ""
-            }
-          />
+          name="brand"
+          label="برند"
+          isEmpty={formsValues?.brand == undefined || formsValues.brand === ""}
+          {...register("brand", {
+            required: {
+              value: true,
+              message: "  برند محصول نباید خالی باشد",
+            },
+          })}
+          errorMessage={errors?.brand?.message ? errors.brand.message : ""}
+        />
       </StockWrapper>
 
       <StockWrapper>

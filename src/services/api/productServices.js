@@ -7,8 +7,7 @@ export default class ProductServices {
       //TODO: we should change this 
       let currentData = {
         ...data,
-        category: "64ca4e676a508df5d29b6b2c",
-        subcategory: "64ca4e8c6a508df5d29b6b32",
+        subcategory: "64db28596e488759aa74fe98",
       };
 
 

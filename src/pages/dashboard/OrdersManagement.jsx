@@ -10,6 +10,8 @@ import CategoryIcon from "@mui/icons-material/Category";
 import Filter from "../../dashboard/common/Filter";
 import TimelapseIcon from "@mui/icons-material/Timelapse";
 import OrderRow from "../../dashboard/components/order/OrderRow";
+import useOrder from "../../hooks/useOrder";
+import Spinner from "../../components/common/Spinner";
 
 const OrdersLayout = styled(Box)({
   width: "100%",
@@ -59,13 +61,13 @@ const categoryItems = [
 ];
 
 function OrdersManagement() {
+  const { isLoading, orders } = useOrder();
+
   function handleClick(item) {
     console.log(item);
   }
   return (
     <OrdersLayout>
-
-    
       <TopLayout>
         <ContentWrapper>
           <Typography variant="DashboardTitle">سفارشات</Typography>
@@ -94,22 +96,11 @@ function OrdersManagement() {
 
       <TableWrapper>
         <Table headerItems={headerItems}>
-          <OrderRow delay={0} />
-          <OrderRow delay={1} />
-          <OrderRow delay={2} />
-          <OrderRow delay={3} />
-          <OrderRow delay={4} />
-          <OrderRow delay={5} />
-          <OrderRow delay={6} />
-          <OrderRow delay={7} />
-          <OrderRow delay={8} />
-          <OrderRow delay={9} />
-          <OrderRow delay={10} />
-          <OrderRow delay={0} />
-          <OrderRow delay={0} />
-          <OrderRow delay={0} />
-          <OrderRow delay={0} />
-          <OrderRow delay={0} />
+          {isLoading && <Spinner />}
+          {!isLoading &&
+            orders?.data?.orders.map((order) => (
+              <OrderRow key={order?._id} delay={0} />
+            ))}
         </Table>
       </TableWrapper>
 
