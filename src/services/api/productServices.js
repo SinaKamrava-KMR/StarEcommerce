@@ -4,15 +4,8 @@ export default class ProductServices {
   async add(data) {
     try {
 
-      //TODO: we should change this 
-      let currentData = {
-        ...data,
-        subcategory: "64db28596e488759aa74fe98",
-      };
-
-
-
-      const response = await privateAxios.post("/products", currentData, {
+ 
+      const response = await privateAxios.post("/products", data, {
         headers: {
           "Content-Type": "multipart/form-data",
         },

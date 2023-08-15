@@ -8,9 +8,16 @@ Select.propTypes = {
   options: PropTypes.array,
   register: PropTypes.object,
   onChange: PropTypes.func,
-  error: PropTypes.string,
+  value: PropTypes.string,
+  values: PropTypes.object,
   label: PropTypes.string,
   name: PropTypes.string,
+  active: PropTypes.bool,
+  errors: PropTypes.objectOf(
+    PropTypes.shape({
+      message: PropTypes.string,
+    })
+  ),
 };
 
 const waveAnimation = keyframes`
@@ -35,7 +42,6 @@ const SelectStyle = styled.div`
   display: flex;
   align-items: center;
   padding-right: 4rem;
-
   animation-name: ${(props) => (props.error ? waveAnimation : "none")};
   animation-duration: 0.2s;
   animation-timing-function: backwards;
@@ -47,7 +53,6 @@ const DropdownIcon = styled.div`
   right: 0;
   top: 0;
   bottom: 0;
-  cursor: pointer;
   width: 3rem;
   display: flex;
   align-items: center;
@@ -83,7 +88,7 @@ const DropdownItem = styled.div`
   border-radius: 0.5rem;
   cursor: pointer;
   &:hover {
-    background-color: #eaeaeab3;
+    background-color: #eaeaea5c;
   }
 `;
 const DropdownItems = styled.div`
@@ -91,22 +96,22 @@ const DropdownItems = styled.div`
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
-  min-height: 120px;
+  max-height: 125px;
   /* width*/
   &::-webkit-scrollbar {
-    width: 7px;
-    height: 7px;
+    width: 4px;
+    height: 4px;
   }
 
   /* Track */
   &::-webkit-scrollbar-track {
-    background-color: #d1d1d19a;
+    background-color: #e7e7e79a;
     border-radius: 10px;
   }
 
   /* Handle */
   &::-webkit-scrollbar-thumb {
-    background: #616264;
+    background: #777777;
     border-radius: 10px;
   }
 `;
@@ -138,17 +143,20 @@ const ErrorMessage = styled.small`
   right: 1rem;
 `;
 
-function Select({ options, label, onChange, error = "" }) {
+function Select({ options, label, onChange, value, errors, name }) {
   const [showOptions, setShowOptions] = useState(false);
   const [selected, setSelected] = useState({ _id: null, name: null });
-  const [filteredOptions, setFilteredOptions] = useState(options);
+  const [filteredOptions, setFilteredOptions] = useState();
   const [search, setSearch] = useState("");
+
   useEffect(() => {
     if (selected._id !== null) {
-      onChange(selected);
+      onChange(selected._id);
       setShowOptions(false);
+      setSearch("");
     }
-  }, [onChange, selected]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selected]);
 
   useEffect(() => {
     if (showOptions) {
@@ -159,20 +167,31 @@ function Select({ options, label, onChange, error = "" }) {
       } else {
         setFilteredOptions(options);
       }
-    } else {
-      setSearch("");
     }
-  }, [search, options, showOptions]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [search]);
+
+  useEffect(() => {
+    setFilteredOptions(options);
+    if (options.length === 0) {
+      setSelected({ _id: null, name: null });
+      // onChange(null);
+    }
+    if (options.length === 0 && value && name === "subcategory") {
+      onChange(null);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [options]);
 
   return (
-    <SelectStyle error={error !== ""}>
-      {error !== "" && !showOptions && (
+    <SelectStyle error={errors?.[name] !== undefined}>
+      {errors?.[name] && !showOptions && (
         <ErrorMessage
           as={motion.small}
           initial={{ y: -50, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
         >
-          {error}
+          {errors[name].message}
         </ErrorMessage>
       )}
       <DropdownIcon
