@@ -1,6 +1,6 @@
 import { styled } from "styled-components";
-import PropTypes from "prop-types";
 import { createPortal } from "react-dom";
+import PropTypes from "prop-types";
 
 Modal.propTypes = {
   children: PropTypes.node,

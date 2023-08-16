@@ -3,6 +3,8 @@ import { styled } from "styled-components";
 import { HiPencilSquare, HiTrash } from "react-icons/hi2";
 import ChangeInput from "../../dashboard/components/productsManagement/ChangeInput";
 import PropTypes from "prop-types";
+
+import { useCategoryById } from "../../hooks/useCategoryById";
 TableRow.propTypes = {
   delay: PropTypes.number,
   product: PropTypes.object,
@@ -49,26 +51,29 @@ const ButtonGroup = styled.div`
 `;
 
 function TableRow({ delay, product, row, state, dispatch }) {
-  const inputValues = state.inputs.find((item) => item?.id === product.id);
+  const inputValues = state.inputs.find((item) => item?.id === product?._id);
   // console.log(inputValues);
+  const {category} = useCategoryById(product.category)
+
+  // console.log(category);
 
   function handleChangePrice(value) {
     dispatch({
       type: "price/chnaged",
-      payload: { id: product.id, price: value },
+      payload: { id: product?._id, price: value },
     });
   }
   function handleChangeQuentity(value) {
     dispatch({
       type: "quentity/chnaged",
-      payload: { id: product.id, quentity: value },
+      payload: { id: product?._id, quentity: value },
     });
   }
   function handleClosePrice() {
-    dispatch({ type: "price/removed", payload: { id: product.id } });
+    dispatch({ type: "price/removed", payload: { id: product?._id } });
   }
   function handleCloseQuentity() {
-    dispatch({ type: "quentity/removed", payload: { id: product.id } });
+    dispatch({ type: "quentity/removed", payload: { id: product?._id } });
   }
 
   return (
@@ -83,7 +88,7 @@ function TableRow({ delay, product, row, state, dispatch }) {
     >
       <p>{row}</p>
       <p>{product.name}</p>
-      <p>{product.category}</p>
+      <p>{category?.name}</p>
       <ChangeInput
         defaultValue={product.price}
         onChange={handleChangePrice}
@@ -92,11 +97,11 @@ function TableRow({ delay, product, row, state, dispatch }) {
         onClose={handleClosePrice}
       />
       <ChangeInput
-        defaultValue={product.quentity}
+        defaultValue={product.quantity}
         isSaved={state.isSaved}
         value={inputValues?.quentity}
         onChange={handleChangeQuentity}
-        onClose={handleCloseQuentity}     
+        onClose={handleCloseQuentity}
       />
 
       <ButtonGroup>

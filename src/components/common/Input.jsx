@@ -103,10 +103,10 @@ const Label = styled.label`
 
 const ErrorMessage = styled.p`
   color: #ff6b6b;
+  font-size: 1.1rem;
   position: absolute;
   bottom: -2rem;
   right: 1rem;
-  font-size: 1.1rem;
 `;
 
 function Input(

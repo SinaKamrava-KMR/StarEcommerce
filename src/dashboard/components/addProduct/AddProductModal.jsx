@@ -40,7 +40,6 @@ function AddProductModal({ oncloseModal }) {
   const [medias, setMedias] = useState([]);
   function handleSubmit(data) {
     console.log({ ...data, images: medias });
-
     const service = new ProductServices();
     service.add({ ...data, images: medias }).then(res => {
       console.log(res);
@@ -48,6 +47,8 @@ function AddProductModal({ oncloseModal }) {
 
     setMedias([]);
   }
+
+
   
   return (
     <Wrapper component={motion.div} initial={{ y: -100 }} animate={{ y: 0 }}>

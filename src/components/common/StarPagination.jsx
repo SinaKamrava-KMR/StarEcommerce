@@ -4,7 +4,8 @@ import { styled } from "styled-components";
 import Stack from "@mui/material/Stack";
 
 StarPagination.propTypes = {
-  children: PropTypes.node,
+  onChange: PropTypes.func,
+  count:PropTypes.number,
 };
 
 const Wrapper = styled.div`
@@ -47,11 +48,13 @@ const StyledPagination = styled(Pagination)`
   }
 `;
 
-function StarPagination() {
+function StarPagination({count,onChange}) {
+
+
   return (
     <Wrapper>
       <Stack spacing={2}>
-      <StyledPagination count={5} />
+      <StyledPagination count={count} onChange={(e,page)=>onChange(page)} />
       </Stack>
     </Wrapper>
   );

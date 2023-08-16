@@ -11,7 +11,9 @@ import SortByAlphaIcon from "@mui/icons-material/SortByAlpha";
 import CategoryIcon from "@mui/icons-material/Category";
 import SaveButton from "../../dashboard/components/productsManagement/SaveButton";
 import TableRow from "../../components/common/TableRow";
-import { useEffect, useReducer } from "react";
+import { useReducer } from "react";
+import useProduct from "../../hooks/useProduct";
+import Spinner from "../../components/common/Spinner";
 
 const Wrapper = styled(Box)({
   width: "100%",
@@ -45,88 +47,88 @@ const categoryItems = [
   },
 ];
 
-let fakeProducts = [
-  {
-    id: 123132,
-    row: 0,
-    name: "سینا کامروا",
-    category: "کت و شلوار",
-    price: 2000,
-    quentity: 89,
-  },
-  {
-    id: 132,
-    row: 1,
-    name: " مریم مومن",
-    category: "لباس زنانه",
-    price: 56700,
-    quentity: 9,
-  },
-  {
-    id: 1432,
-    row: 2,
-    name: " غلی حاتمیان",
-    category: " لباس کودک",
-    price: 67500,
-    quentity: 200,
-  },
-  {
-    id: 33223,
-    row: 3,
-    name: "یاسمین بنیادی",
-    category: "لباس زنانه ",
-    price: 635000,
-    quentity: 10,
-  },
-  {
-    id: 9822,
-    row: 4,
-    name: " رضا حقگو",
-    category: "کت و شلوار",
-    price: 986100,
-    quentity: 10,
-  },
-  {
-    id: 9999,
-    row: 5,
-    name: "فاطمه جعفری ",
-    category: "کفش",
-    price: 43312,
-    quentity: 12,
-  },
-  {
-    id: 5545,
-    row: 6,
-    name: "امیر راسخ",
-    category: "کت و شلوار",
-    price: 98000,
-    quentity: 6,
-  },
-  {
-    id: 8970,
-    row: 7,
-    name: "کیارش صیادی",
-    category: " تی شرت",
-    price: 76000,
-    quentity: 3,
-  },
-  {
-    id: 88888,
-    row: 8,
-    name: " رکنا هدایتی",
-    category: " کفش",
-    price: 77600,
-    quentity: 1,
-  },
-  {
-    id: 65467,
-    row: 9,
-    name: " علیرضا محمدی",
-    category: "کت و شلوار",
-    price: 9800,
-    quentity: 6,
-  },
-];
+// let fakeProducts = [
+//   {
+//     id: 123132,
+//     row: 0,
+//     name: "سینا کامروا",
+//     category: "کت و شلوار",
+//     price: 2000,
+//     quentity: 89,
+//   },
+//   {
+//     id: 132,
+//     row: 1,
+//     name: " مریم مومن",
+//     category: "لباس زنانه",
+//     price: 56700,
+//     quentity: 9,
+//   },
+//   {
+//     id: 1432,
+//     row: 2,
+//     name: " غلی حاتمیان",
+//     category: " لباس کودک",
+//     price: 67500,
+//     quentity: 200,
+//   },
+//   {
+//     id: 33223,
+//     row: 3,
+//     name: "یاسمین بنیادی",
+//     category: "لباس زنانه ",
+//     price: 635000,
+//     quentity: 10,
+//   },
+//   {
+//     id: 9822,
+//     row: 4,
+//     name: " رضا حقگو",
+//     category: "کت و شلوار",
+//     price: 986100,
+//     quentity: 10,
+//   },
+//   {
+//     id: 9999,
+//     row: 5,
+//     name: "فاطمه جعفری ",
+//     category: "کفش",
+//     price: 43312,
+//     quentity: 12,
+//   },
+//   {
+//     id: 5545,
+//     row: 6,
+//     name: "امیر راسخ",
+//     category: "کت و شلوار",
+//     price: 98000,
+//     quentity: 6,
+//   },
+//   {
+//     id: 8970,
+//     row: 7,
+//     name: "کیارش صیادی",
+//     category: " تی شرت",
+//     price: 76000,
+//     quentity: 3,
+//   },
+//   {
+//     id: 88888,
+//     row: 8,
+//     name: " رکنا هدایتی",
+//     category: " کفش",
+//     price: 77600,
+//     quentity: 1,
+//   },
+//   {
+//     id: 65467,
+//     row: 9,
+//     name: " علیرضا محمدی",
+//     category: "کت و شلوار",
+//     price: 9800,
+//     quentity: 6,
+//   },
+// ];
 
 const initialState = {
   inputs: [],
@@ -218,27 +220,27 @@ const reducer = (state, action) => {
 
 function ProductsManagement() {
   const [state, dispatch] = useReducer(reducer, initialState);
-
+  const { isLoading,products, setParams } = useProduct();
+  
   function handleClick(item) {
     console.log(item);
   }
   function handleSave() {
     dispatch({ type: "btn/saved" });
-    fakeProducts= fakeProducts.map((item) => {
-      const values = state.inputs.find((t) => t.id === item.id);
-      if (values?.price) return { ...item, price: values.price };
-      if (values?.quentity) return { ...item, quentity: values.quentity };
-      return item;
-    });
   }
 
-  useEffect(() => {
-    if (state.isSaved) {
-      setTimeout(() => {
-        dispatch({ type: "reset" });
-      }, 1000);
-    }
-  }, [state.isSaved]);
+  // useEffect(() => {
+  //   if (state.isSaved) {
+  //     setTimeout(() => {
+  //       dispatch({ type: "reset" });
+  //     }, 1000);
+  //   }
+  // }, [state.isSaved]);
+
+  function handleChangePage(page) {
+    console.log(page);
+    setParams({ page });
+  }
 
   return (
     <Wrapper>
@@ -272,21 +274,26 @@ function ProductsManagement() {
       </DashboardRow>
       <TableWrapper>
         <Table headerItems={headerItems}>
-          {fakeProducts.map((product, idx) => {
-            return (
-              <TableRow
-                key={product.id}
-                delay={idx}
-                row={idx + 1}
-                product={product}
-                state={state}
-                dispatch={dispatch}
-              />
-            );
-          })}
+          {isLoading && <Spinner />}
+          {!isLoading &&
+            products.data.products.map((product, idx) => {
+              return (
+                <TableRow
+                  key={product?._id}
+                  delay={idx}
+                  row={idx + 1}
+                  product={product}
+                  state={state}
+                  dispatch={dispatch}
+                />
+              );
+            })}
         </Table>
       </TableWrapper>
-      <StarPagination />
+      <StarPagination
+        count={products?.total_pages}
+        onChange={handleChangePage}
+      />
     </Wrapper>
   );
 }

@@ -2,8 +2,11 @@ import { motion } from "framer-motion";
 import { styled } from "styled-components";
 import PropTypes from "prop-types";
 import { HiPencilSquare, HiTrash } from "react-icons/hi2";
+import { useCategoryById } from "../../../hooks/useCategoryById";
 ProductTableRow.propTypes = {
   delay: PropTypes.number,
+  product: PropTypes.object,
+  row: PropTypes.number,
 };
 const TableRowStyle = styled.div`
   width: 100%;
@@ -31,18 +34,17 @@ const ButtonGroup = styled.div`
   gap: 1.5rem;
 `;
 const BtnWrapper = styled.div`
-width: 37px;
-height: 37px;
-cursor: pointer;
-display: flex;
-align-items: center;
-justify-content: center;
-font-size: 20px;
-color: white;
-border-radius: 0.5rem;
-background-color: ${props=>props.color};
+  width: 37px;
+  height: 37px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  color: white;
+  border-radius: 0.5rem;
+  background-color: ${(props) => props.color};
 `;
-
 
 const Image = styled("img")({
   width: "60px",
@@ -52,7 +54,9 @@ const Image = styled("img")({
   margin: "0 auto",
 });
 
-function ProductTableRow({ delay }) {
+function ProductTableRow({ delay, product, row }) {
+  const { category } = useCategoryById(product.category);
+
   return (
     <TableRowStyle
       as={motion.div}
@@ -63,11 +67,13 @@ function ProductTableRow({ delay }) {
       initial={{ y: 500 }}
       animate={{ y: 0 }}
     >
-      <p>۱</p>
-      <Image src="/public/slider/fit.jpg" />
-      <p>col 3</p>
-      <p>col 4</p>
-      <p>col 5</p>
+      <p>{row}</p>
+      <Image
+        src={`../public/images/products/images/${product.images[0]}`}
+      />
+      <p>{product.name}</p>
+      <p>{category?.name}</p>
+      <p>{product?.quantity}</p>
       <ButtonGroup>
         <BtnWrapper color="#ff6969">
           <HiTrash />

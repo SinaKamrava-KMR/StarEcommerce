@@ -11,6 +11,8 @@ import FilterBox from "../../dashboard/components/order/FilterBox";
 import Filter from "../../dashboard/common/Filter";
 import SortByAlphaIcon from "@mui/icons-material/SortByAlpha";
 import CategoryIcon from "@mui/icons-material/Category";
+import useProduct from "../../hooks/useProduct";
+import Spinner from "../../components/common/Spinner";
 const Wrapper = styled(Box)({
   width: "100%",
   height: "100%",
@@ -44,9 +46,17 @@ const categoryItems = [
 ];
 
 function ProductsOverview() {
+  const { isLoading,products, setParams } = useProduct();
   function handleClick(item) {
     console.log(item);
   }
+
+  function handleChangePage(page) {
+    console.log(page);
+    setParams({ page });
+  }
+
+
   return (
     <Wrapper>
       <DashboardRow>
@@ -76,25 +86,25 @@ function ProductsOverview() {
       </DashboardRow>
       <TableWrapper>
         <Table headerItems={headerItems}>
-          <ProductTableRow delay={0} />
-          <ProductTableRow delay={1} />
-          <ProductTableRow delay={2} />
-          <ProductTableRow delay={3} />
-          <ProductTableRow delay={4} />
-          <ProductTableRow delay={5} />
-          <ProductTableRow delay={6} />
-          <ProductTableRow delay={7} />
-          <ProductTableRow delay={8} />
-          <ProductTableRow delay={9} />
-          <ProductTableRow delay={10} />
-          <ProductTableRow delay={0} />
-          <ProductTableRow delay={0} />
-          <ProductTableRow delay={0} />
-          <ProductTableRow delay={0} />
-          <ProductTableRow delay={0} />
+        {isLoading && <Spinner />}
+          {!isLoading &&
+            products.data.products.map((product, idx) => {
+              return (
+                <ProductTableRow
+                  key={product?._id}
+                  delay={idx}
+                  row={idx + 1}
+                  product={product}
+                  
+                />
+              );
+            })}
         </Table>
       </TableWrapper>
-      <StarPagination />
+      <StarPagination
+        count={products?.total_pages}
+        onChange={handleChangePage}
+      />
     </Wrapper>
   );
 }
