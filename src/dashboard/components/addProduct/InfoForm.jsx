@@ -65,14 +65,13 @@ function InfoForm({ inModal = false, onSubmit }) {
   const formsValues = watch();
 
   function onSub(data) {
-    // onSubmit({
-    //   ...data,
-    //   description: editorRef.current,
-    // });
-    // editorRef.current = "";
-    // reset();
+    onSubmit({
+      ...data,
+      description: editorRef.current,
+    });
+    editorRef.current = "";
+    reset();
 
-    console.log(data);
   }
 
 

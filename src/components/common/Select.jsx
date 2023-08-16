@@ -154,6 +154,7 @@ function Select({ options, label, onChange, value, errors, name }) {
       onChange(selected._id);
       setShowOptions(false);
       setSearch("");
+      setFilteredOptions(options)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selected]);

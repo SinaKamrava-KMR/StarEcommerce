@@ -4,7 +4,7 @@ export default class ProductServices {
   async add(data) {
     try {
 
- 
+
       const response = await privateAxios.post("/products", data, {
         headers: {
           "Content-Type": "multipart/form-data",

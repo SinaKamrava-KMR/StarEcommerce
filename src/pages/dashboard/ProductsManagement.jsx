@@ -220,19 +220,13 @@ const reducer = (state, action) => {
 
 function ProductsManagement() {
   const [state, dispatch] = useReducer(reducer, initialState);
-  const { isLoading, products, setParams } = useProduct();
+  const { isLoading,products, setParams } = useProduct();
+  
   function handleClick(item) {
     console.log(item);
-    setParams({page:2})
   }
   function handleSave() {
     dispatch({ type: "btn/saved" });
-    // fakeProducts = fakeProducts.map((item) => {
-    //   const values = state.inputs.find((t) => t.id === item.id);
-    //   if (values?.price) return { ...item, price: values.price };
-    //   if (values?.quentity) return { ...item, quentity: values.quentity };
-    //   return item;
-    // });
   }
 
   // useEffect(() => {
@@ -242,6 +236,11 @@ function ProductsManagement() {
   //     }, 1000);
   //   }
   // }, [state.isSaved]);
+
+  function handleChangePage(page) {
+    console.log(page);
+    setParams({ page });
+  }
 
   return (
     <Wrapper>
@@ -276,22 +275,25 @@ function ProductsManagement() {
       <TableWrapper>
         <Table headerItems={headerItems}>
           {isLoading && <Spinner />}
-          {!isLoading && products.data.products.map((product, idx) => {
-            return (
-              <TableRow
-                key={product?._id}
-                delay={idx}
-                row={idx + 1}
-                product={product}
-                state={state}
-                dispatch={dispatch}
-              />
-            );
-          })}
-         
+          {!isLoading &&
+            products.data.products.map((product, idx) => {
+              return (
+                <TableRow
+                  key={product?._id}
+                  delay={idx}
+                  row={idx + 1}
+                  product={product}
+                  state={state}
+                  dispatch={dispatch}
+                />
+              );
+            })}
         </Table>
       </TableWrapper>
-      <StarPagination />
+      <StarPagination
+        count={products?.total_pages}
+        onChange={handleChangePage}
+      />
     </Wrapper>
   );
 }
