@@ -49,7 +49,7 @@ const Label = styled("p")({
 
 function Filter({ label, items, children, delay, onClick }) {
   const [boxActive, setBoxActive] = useState(false);
-  const [selectedItem, setSelectedItem] = useState("");
+  const [selectedItem, setSelectedItem] = useState({});
 
   function handleOnSelected(item) {
     setSelectedItem(item);
@@ -62,11 +62,18 @@ function Filter({ label, items, children, delay, onClick }) {
       initial={{ x: -500, opacity: 0 }}
       animate={{ x: 0, opacity: 1 }}
       transition={{ delay, animate: "spring" }}
-      active={boxActive || selectedItem !== ""}
+      active={
+        boxActive ||
+        (selectedItem?.value !== undefined && selectedItem?.value !== "")
+      }
       onClick={() => setBoxActive((s) => !s)}
       onMouseLeave={() => setBoxActive(false)}
     >
-      <Label>{label}</Label>
+      <Label>
+        {selectedItem?.value !== undefined && selectedItem?.value !== ""
+          ? selectedItem.label
+          : label}
+      </Label>
       {boxActive && (
         <FilterDropDown
           label={label}
@@ -74,7 +81,11 @@ function Filter({ label, items, children, delay, onClick }) {
           contents={items}
         />
       )}
-      {selectedItem !== "" ? <FactCheckIcon /> : children}
+      {selectedItem?.value !== undefined && selectedItem?.value !== "" ? (
+        <FactCheckIcon />
+      ) : (
+        children
+      )}
     </Wrapper>
   );
 }

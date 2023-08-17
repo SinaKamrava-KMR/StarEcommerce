@@ -69,7 +69,7 @@ function ProductTableRow({ delay, product, row }) {
     >
       <p>{row}</p>
       <Image
-        src={`../public/images/products/images/${product.images[0]}`}
+        src={`http://localhost:8000/images/products/images/${product.images[0]}`}
       />
       <p>{product.name}</p>
       <p>{category?.name}</p>
