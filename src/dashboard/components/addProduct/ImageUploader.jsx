@@ -48,9 +48,7 @@ ImageUploader.propTypes = {
   setMedias:PropTypes.func
 };
 function ImageUploader({medias, setMedias}) {
-
   const [activeImage, setActiveImage] = useState();
-
   function handleRemoveMedia(index) {
     setMedias((items) => items.filter((_, idx) => idx !== index));
 

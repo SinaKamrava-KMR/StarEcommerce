@@ -53,7 +53,6 @@ function InfoForm({ inModal = false, onSubmit }) {
     (state) => state.categories.subcategories
   );
 
-  // editorRef.current.getContent()
   const {
     register,
     handleSubmit,
@@ -71,7 +70,6 @@ function InfoForm({ inModal = false, onSubmit }) {
     });
     editorRef.current = "";
     reset();
-
   }
 
 

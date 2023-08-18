@@ -58,7 +58,6 @@ function AddProductModal({ oncloseModal }) {
       <Typography variant="DashboardTitle">اضافه کردن محصول جدید</Typography>
       <Container>
         <InfoForm inModal={true} onSubmit={handleSubmit} />
-
         <ImageUploader medias={medias} setMedias={setMedias} />
       </Container>
     </Wrapper>
