@@ -14,6 +14,9 @@ import TableRow from "../../components/common/TableRow";
 import { useReducer } from "react";
 import useProduct from "../../hooks/useProduct";
 import Spinner from "../../components/common/Spinner";
+import useFilterItems from "../../hooks/filter/useFilterItems";
+import { useState } from "react";
+import { HiMiniFunnel } from "react-icons/hi2";
 
 const Wrapper = styled(Box)({
   width: "100%",
@@ -36,99 +39,31 @@ const headerItems = [
   "بررسی",
 ];
 
-const categoryItems = [
+const sortItems = [
   {
-    label: "لباس کودک",
-    count: 4,
+    tag: "sort",
+    label: "بیشترین تعداد ",
+    value: "-quantity",
   },
   {
-    label: "لباس زنانه",
-    count: 12,
+    tag: "sort",
+    label: "کمترین تعداد",
+    value: "quantity",
+  },
+];
+const sortPriceItems = [
+  {
+    tag: "sort",
+    label: "بیشترین قیمت",
+    value: "-price",
+  },
+  {
+    tag: "sort",
+    label: "کمترین قیمت",
+    value: "price",
   },
 ];
 
-// let fakeProducts = [
-//   {
-//     id: 123132,
-//     row: 0,
-//     name: "سینا کامروا",
-//     category: "کت و شلوار",
-//     price: 2000,
-//     quentity: 89,
-//   },
-//   {
-//     id: 132,
-//     row: 1,
-//     name: " مریم مومن",
-//     category: "لباس زنانه",
-//     price: 56700,
-//     quentity: 9,
-//   },
-//   {
-//     id: 1432,
-//     row: 2,
-//     name: " غلی حاتمیان",
-//     category: " لباس کودک",
-//     price: 67500,
-//     quentity: 200,
-//   },
-//   {
-//     id: 33223,
-//     row: 3,
-//     name: "یاسمین بنیادی",
-//     category: "لباس زنانه ",
-//     price: 635000,
-//     quentity: 10,
-//   },
-//   {
-//     id: 9822,
-//     row: 4,
-//     name: " رضا حقگو",
-//     category: "کت و شلوار",
-//     price: 986100,
-//     quentity: 10,
-//   },
-//   {
-//     id: 9999,
-//     row: 5,
-//     name: "فاطمه جعفری ",
-//     category: "کفش",
-//     price: 43312,
-//     quentity: 12,
-//   },
-//   {
-//     id: 5545,
-//     row: 6,
-//     name: "امیر راسخ",
-//     category: "کت و شلوار",
-//     price: 98000,
-//     quentity: 6,
-//   },
-//   {
-//     id: 8970,
-//     row: 7,
-//     name: "کیارش صیادی",
-//     category: " تی شرت",
-//     price: 76000,
-//     quentity: 3,
-//   },
-//   {
-//     id: 88888,
-//     row: 8,
-//     name: " رکنا هدایتی",
-//     category: " کفش",
-//     price: 77600,
-//     quentity: 1,
-//   },
-//   {
-//     id: 65467,
-//     row: 9,
-//     name: " علیرضا محمدی",
-//     category: "کت و شلوار",
-//     price: 9800,
-//     quentity: 6,
-//   },
-// ];
 
 const initialState = {
   inputs: [],
@@ -152,17 +87,17 @@ const reducer = (state, action) => {
         };
       return {
         ...state,
-        inputs: [...state.inputs, { id: payload.id, price: payload.price }],
+        inputs: [...state.inputs, { id: payload.id, price: payload?.price }],
       };
 
     case "price/removed":
-      if (input.quentity)
+      if (input?.quantity)
         return {
           ...state,
           inputs: [
             ...state.inputs.map((item) =>
               item.id === payload.id
-                ? { id: item?.id, quentity: item?.quentity }
+                ? { id: item?.id, quantity: item?.quantity }
                 : item
             ),
           ],
@@ -178,7 +113,7 @@ const reducer = (state, action) => {
           inputs: [
             ...state.inputs.map((item) =>
               item.id === payload.id
-                ? { ...item, quentity: payload.quentity }
+                ? { ...item, quantity: payload?.quantity }
                 : item
             ),
           ],
@@ -187,12 +122,12 @@ const reducer = (state, action) => {
         ...state,
         inputs: [
           ...state.inputs,
-          { id: payload.id, quentity: payload.quentity },
+          { id: payload.id, quantity: payload?.quantity },
         ],
       };
 
     case "quentity/removed":
-      if (input.price)
+      if (input?.price)
         return {
           ...state,
           inputs: [
@@ -220,25 +155,22 @@ const reducer = (state, action) => {
 
 function ProductsManagement() {
   const [state, dispatch] = useReducer(reducer, initialState);
-  const { isLoading,products, setParams } = useProduct();
-  
+  const { isLoading, products, setParams } = useProduct();
+  const { items, isLoading: isFiltering } = useFilterItems();
+  const [filterBy, setFilterBy] = useState("");
+
   function handleClick(item) {
-    console.log(item);
+    if (item?.tag) {
+      setParams((params) => ({ ...params, [item.tag]: item.value }));
+    } else {
+      setFilterBy(item.value);
+    }
   }
   function handleSave() {
     dispatch({ type: "btn/saved" });
   }
 
-  // useEffect(() => {
-  //   if (state.isSaved) {
-  //     setTimeout(() => {
-  //       dispatch({ type: "reset" });
-  //     }, 1000);
-  //   }
-  // }, [state.isSaved]);
-
   function handleChangePage(page) {
-    console.log(page);
     setParams({ page });
   }
 
@@ -253,40 +185,65 @@ function ProductsManagement() {
         />
       </DashboardRow>
       <DashboardRow>
-        <FilterBox>
-          <Filter
-            delay={".1"}
-            label="دسته بندی ها"
-            onClick={handleClick}
-            items={categoryItems}
-          >
-            <CategoryIcon />
-          </Filter>
-          <Filter
-            delay={".2"}
-            label="مرتب کردن"
-            onClick={handleClick}
-            items={categoryItems}
-          >
-            <SortByAlphaIcon />
-          </Filter>
-        </FilterBox>
+        {!isFiltering && (
+          <FilterBox>
+            <Filter
+              delay={".1"}
+              label="دسته بندی ها"
+              onClick={handleClick}
+              items={items?.categories}
+            >
+              <CategoryIcon />
+            </Filter>
+            <Filter
+              delay={".2"}
+              label=" قیمت محصول"
+              onClick={handleClick}
+              items={sortPriceItems}
+            >
+              <SortByAlphaIcon />
+            </Filter>
+            <Filter
+              delay={".3"}
+              label=" تعداد محصول"
+              onClick={handleClick}
+              items={sortItems}
+            >
+              <HiMiniFunnel />
+            </Filter>
+          </FilterBox>
+        )}
       </DashboardRow>
       <TableWrapper>
         <Table headerItems={headerItems}>
           {isLoading && <Spinner />}
           {!isLoading &&
             products.data.products.map((product, idx) => {
-              return (
-                <TableRow
-                  key={product?._id}
-                  delay={idx}
-                  row={idx + 1}
-                  product={product}
-                  state={state}
-                  dispatch={dispatch}
-                />
-              );
+              if (filterBy !== "") {
+                if (filterBy === product.category) {
+                  return (
+                    <TableRow
+                      key={product?._id}
+                      delay={idx}
+                      row={idx + 1}
+                      product={product}
+                      state={state}
+                      dispatch={dispatch}
+                    />
+                  );
+                }
+              } else {
+                return (
+                  <TableRow
+                    key={product?._id}
+                    delay={idx}
+                    row={idx + 1}
+                    product={product}
+                    state={state}
+                    dispatch={dispatch}
+                  />
+                );
+              }
             })}
         </Table>
       </TableWrapper>

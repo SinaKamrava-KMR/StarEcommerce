@@ -13,6 +13,8 @@ import SortByAlphaIcon from "@mui/icons-material/SortByAlpha";
 import CategoryIcon from "@mui/icons-material/Category";
 import useProduct from "../../hooks/useProduct";
 import Spinner from "../../components/common/Spinner";
+import useFilterItems from "../../hooks/filter/useFilterItems";
+import { useState } from "react";
 const Wrapper = styled(Box)({
   width: "100%",
   height: "100%",
@@ -34,28 +36,36 @@ const headerItems = [
   "بررسی",
 ];
 
-const categoryItems = [
+const sortItems = [
   {
-    label: "لباس کودک",
-    count: 4,
+    tag: "sort",
+    label: "بیشترین تعداد ",
+    value: "-quantity",
   },
   {
-    label: "لباس زنانه",
-    count: 12,
+    tag: "sort",
+    label: "کمترین تعداد",
+    value: "quantity",
   },
 ];
 
 function ProductsOverview() {
-  const { isLoading,products, setParams } = useProduct();
+  const { isLoading, products, setParams } = useProduct();
+  const { items, isLoading: isFiltering } = useFilterItems();
+  const [filterBy, setFilterBy] = useState("");
+
   function handleClick(item) {
-    console.log(item);
+    if (item?.tag) {
+      setParams((params) => ({ ...params, [item.tag]: item.value }));
+    } else {
+      setFilterBy(item.value);
+    }
   }
 
   function handleChangePage(page) {
     console.log(page);
     setParams({ page });
   }
-
 
   return (
     <Wrapper>
@@ -65,39 +75,53 @@ function ProductsOverview() {
         <AddProductButton />
       </DashboardRow>
       <DashboardRow>
-        <FilterBox>
-          <Filter
-            delay={".1"}
-            label="دسته بندی ها"
-            onClick={handleClick}
-            items={categoryItems}
-          >
-            <CategoryIcon />
-          </Filter>
-          <Filter
-            delay={".2"}
-            label="مرتب کردن"
-            onClick={handleClick}
-            items={categoryItems}
-          >
-            <SortByAlphaIcon />
-          </Filter>
-        </FilterBox>
+        {!isFiltering && (
+          <FilterBox>
+            <Filter
+              delay={".1"}
+              label="دسته بندی ها"
+              onClick={handleClick}
+              items={items?.categories}
+            >
+              <CategoryIcon />
+            </Filter>
+            <Filter
+              delay={".2"}
+              label=" تعداد محصول"
+              onClick={handleClick}
+              items={sortItems}
+            >
+              <SortByAlphaIcon />
+            </Filter>
+          </FilterBox>
+        )}
       </DashboardRow>
       <TableWrapper>
         <Table headerItems={headerItems}>
-        {isLoading && <Spinner />}
+          {isLoading && <Spinner />}
           {!isLoading &&
             products.data.products.map((product, idx) => {
-              return (
-                <ProductTableRow
-                  key={product?._id}
-                  delay={idx}
-                  row={idx + 1}
-                  product={product}
-                  
-                />
-              );
+              if (filterBy !== "") {
+                if (filterBy === product.category) {
+                  return (
+                    <ProductTableRow
+                      key={product?._id}
+                      delay={idx}
+                      row={idx + 1}
+                      product={product}
+                    />
+                  );
+                }
+              } else {
+                return (
+                  <ProductTableRow
+                    key={product?._id}
+                    delay={idx}
+                    row={idx + 1}
+                    product={product}
+                  />
+                );
+              }
             })}
         </Table>
       </TableWrapper>

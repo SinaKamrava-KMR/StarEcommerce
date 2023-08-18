@@ -66,7 +66,7 @@ function TableRow({ delay, product, row, state, dispatch }) {
   function handleChangeQuentity(value) {
     dispatch({
       type: "quentity/chnaged",
-      payload: { id: product?._id, quentity: value },
+      payload: { id: product?._id, quantity: value },
     });
   }
   function handleClosePrice() {
@@ -99,7 +99,7 @@ function TableRow({ delay, product, row, state, dispatch }) {
       <ChangeInput
         defaultValue={product.quantity}
         isSaved={state.isSaved}
-        value={inputValues?.quentity}
+        value={inputValues?.quantity}
         onChange={handleChangeQuentity}
         onClose={handleCloseQuentity}
       />

@@ -98,8 +98,8 @@ function OrdersManagement() {
         <Table headerItems={headerItems}>
           {isLoading && <Spinner />}
           {!isLoading &&
-            orders?.data?.orders.map((order) => (
-              <OrderRow key={order?._id} delay={0} />
+            orders?.data?.orders.map((order, idx) => (
+              <OrderRow key={order?._id} delay={idx} />
             ))}
         </Table>
       </TableWrapper>

@@ -15,3 +15,8 @@ export function FileToUrl(file) {
   let previewUrl = URL.createObjectURL(file);
   return previewUrl;
 }
+
+
+
+
+

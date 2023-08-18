@@ -11,18 +11,47 @@ FilterDropDown.propTypes = {
   contents: PropTypes.array,
 };
 
-const Container = styled(Box)({
-  padding: "2rem .5rem",
-  borderRadius: ".6rem",
-  boxShadow: "0 0 10px #8d8d8d44",
-  overflow: "hidden",
-  backgroundColor: "#fff",
+const Container = styled(Box)`
+  background-color: #fff;
+  overflow: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  max-height: 180px;
+  width: 200px;
+  padding: 2rem 0.5rem;
+  border-radius: 0.6rem;
+  box-shadow: 0 0 10px #8d8d8d44;
+  /* width*/
+  &::-webkit-scrollbar {
+    width: 4px;
+    height: 4px;
+  }
 
-});
+  /* Track */
+  &::-webkit-scrollbar-track {
+    background-color: #e7e7e79a;
+    border-radius: 10px;
+  }
+
+  /* Handle */
+  &::-webkit-scrollbar-thumb {
+    background: #dcdcdc;
+    border-radius: 10px;
+  }
+`;
+// const Container = styled(Box)({
+//   padding: "2rem .5rem",
+//   borderRadius: ".6rem",
+//   boxShadow: "0 0 10px #8d8d8d44",
+//   overflow: "hidden",
+//   backgroundColor: "#fff",
+
+// });
 
 const Wrapper = styled(Box)({
-  minWidth:"180px",
-  zIndex:"1000",
+  minWidth: "180px",
+  zIndex: "1000",
   paddingTop: "2rem",
   position: "absolute",
   top: "70%",
@@ -32,7 +61,7 @@ const Wrapper = styled(Box)({
   },
 });
 const ItemWrapper = styled(Box)({
- width:"100%",
+  width: "100%",
   display: "flex",
   gap: "4rem",
   padding: "1rem",
@@ -59,7 +88,7 @@ const Count = styled("span")({
   fontSize: "12px",
 });
 
-function FilterDropDown({ label, contents, onSelectItem }) {
+function FilterDropDown({ contents, onSelectItem }) {
   return (
     <Wrapper
       component={motion.div}
@@ -67,18 +96,17 @@ function FilterDropDown({ label, contents, onSelectItem }) {
       animate={{ y: 0, opacity: 1 }}
     >
       <Container>
-        <ItemWrapper onClick={() => onSelectItem("")}>
+        <ItemWrapper onClick={() => onSelectItem({ value: "" })}>
           <Item>انتخاب کنید</Item>
         </ItemWrapper>
 
         {contents.map((data) => {
           return (
-            <ItemWrapper
-              key={data.label}
-              onClick={() => onSelectItem(`${label}/${data.label}`)}
-            >
+            <ItemWrapper key={data.label} onClick={() => onSelectItem(data)}>
               <Item>{data.label}</Item>
-              <Count>{data.count}</Count>
+              {data?.count !== undefined && data.count !== 0 && (
+                <Count>{data.count}</Count>
+              )}
             </ItemWrapper>
           );
         })}
