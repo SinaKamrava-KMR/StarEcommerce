@@ -28,6 +28,10 @@ const Wrapper = styled(Box)`
   padding: 2rem 1rem;
   padding-bottom: 5rem;
 `;
+
+
+
+
 const CloseWrapper = styled(Box)`
   position: absolute;
   left: 2rem;
