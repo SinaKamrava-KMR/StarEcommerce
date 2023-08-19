@@ -20,7 +20,5 @@ export default function useProduct() {
     refetch();
   }, [params, refetch]);
 
-  
-
   return { isLoading, refetch, isFetching, products, error, setParams };
 }

@@ -132,7 +132,7 @@ const Label = styled.p`
   font-size: 1.4rem;
 `;
 const SelectedValue = styled.p`
-  color: #5f5f5f;
+  color: #292828;
   font-size: 1.5rem;
 `;
 const ErrorMessage = styled.small`
@@ -145,7 +145,11 @@ const ErrorMessage = styled.small`
 
 function Select({ options, label, onChange, value, errors, name }) {
   const [showOptions, setShowOptions] = useState(false);
-  const [selected, setSelected] = useState({ _id: null, name: null });
+
+  const [selected, setSelected] = useState({
+    _id: null,
+    name: null,
+  });
   const [filteredOptions, setFilteredOptions] = useState();
   const [search, setSearch] = useState("");
 
@@ -154,7 +158,7 @@ function Select({ options, label, onChange, value, errors, name }) {
       onChange(selected._id);
       setShowOptions(false);
       setSearch("");
-      setFilteredOptions(options)
+      setFilteredOptions(options);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selected]);
@@ -183,6 +187,14 @@ function Select({ options, label, onChange, value, errors, name }) {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [options]);
+
+  useEffect(() => {
+    const defaultName = options.find((item) => item._id === value);
+    if (defaultName?.name !== undefined && value !== undefined) {
+      setSelected({ _id: value, name: defaultName?.name });
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [value]);
 
   return (
     <SelectStyle error={errors?.[name] !== undefined}>

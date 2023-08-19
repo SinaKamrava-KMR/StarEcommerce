@@ -20,4 +20,22 @@ export default class ProductServices {
       throw new Error(error.message);
     }
   }
+
+  async delete(id) {
+    
+    try {
+      const response = await privateAxios.delete(`/products/${id}`);
+
+      if (response.data.status !== "success")
+        throw new Error("   خطا: امکان  حذف کردن  این محصول وجود ندارد لطفا دوباره تلاش کنید   ");
+
+      return response.data;
+    } catch (error) {
+      console.log(error);
+      throw new Error(error.message);
+    }
+
+
+  }
+
 }

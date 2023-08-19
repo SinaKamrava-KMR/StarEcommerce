@@ -3,7 +3,7 @@ import { Box } from "@material-ui/core";
 import { Typography } from "@mui/material";
 import FileInput from "./FileInput";
 import UploadFileContent from "./UploadFileContent";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import MediasWrapper from "./MediasWrapper";
 import { FileToUrl } from "../../../utils/helper";
 
@@ -45,10 +45,18 @@ import PropTypes from "prop-types";
 
 ImageUploader.propTypes = {
   medias: PropTypes.array,
-  setMedias:PropTypes.func
+  setMedias: PropTypes.func,
 };
-function ImageUploader({medias, setMedias}) {
-  const [activeImage, setActiveImage] = useState();
+function ImageUploader({ medias, setMedias }) {
+  const initUrl =
+    medias.length > 0
+      ? `http://localhost:8000/images/products/images/${medias.at(-1)}`
+      : null;
+
+  const [activeImage, setActiveImage] = useState({
+    index: medias?.length - 1,
+    file: initUrl,
+  });
   function handleRemoveMedia(index) {
     setMedias((items) => items.filter((_, idx) => idx !== index));
 
@@ -76,20 +84,20 @@ function ImageUploader({medias, setMedias}) {
     });
   }
 
-  useEffect(() => {
-    return () => {
-      if (activeImage?.file) {
-        URL.revokeObjectURL(activeImage.file);
-      }
-    };
-  }, [activeImage]);
+  // useEffect(() => {
+  //   return () => {
+  //     if (activeImage?.file) {
+  //       URL.revokeObjectURL(activeImage.file);
+  //     }
+  //   };
+  // }, [activeImage]);
 
   return (
     <MediaContainer>
       <Typography variant="content">اپلود عکس های محصول</Typography>
       <MainMedia hasContnet={medias.length > 0}>
         {medias.length > 0 ? (
-          <Image src={activeImage.file} />
+          <Image src={activeImage?.file} />
         ) : (
           <>
             <FileInput onUpload={handleUploadFile} />

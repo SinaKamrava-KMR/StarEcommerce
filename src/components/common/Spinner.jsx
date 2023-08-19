@@ -1,6 +1,6 @@
 import styled, { keyframes } from "styled-components";
 
-const rotate = keyframes`
+ const rotate = keyframes`
   to {
     transform: rotate(1turn)
   }

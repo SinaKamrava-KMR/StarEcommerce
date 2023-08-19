@@ -42,13 +42,16 @@ function ActiveWrapper({ activeId }) {
       position = 115;
       break;
     case "management":
-      position = 169;
+      position = 167;
       break;
+      case "categories":
+        position = 219;
+        break;
     case "users":
-      position = 220;
+      position = 270;
       break;
     case "addProduct":
-      position = 268;
+      position = 318;
       break;
   }
 

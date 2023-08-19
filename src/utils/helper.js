@@ -12,11 +12,10 @@ export const getEasternAriaLabel = (type, page) => {
 };
 
 export function FileToUrl(file) {
-  let previewUrl = URL.createObjectURL(file);
-  return previewUrl;
+  if (typeof file !== "string") {
+    let previewUrl = URL.createObjectURL(file);
+    return previewUrl;
+  } else {
+    return `http://localhost:8000/images/products/images/${file}`;
+  }
 }
-
-
-
-
-

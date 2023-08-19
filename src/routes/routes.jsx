@@ -21,6 +21,7 @@ import Users from "../pages/dashboard/Users";
 import AddProduct from "../pages/dashboard/AddProduct";
 import ProductsOverview from "../pages/dashboard/ProductsOverView";
 import ProtectedDashboard from "../components/router/ProtectedDashboard";
+import Categories from "../pages/dashboard/Categories";
 
 const routes = createBrowserRouter([
   //================== store routes ==================
@@ -93,6 +94,10 @@ const routes = createBrowserRouter([
       {
         path: "/dashboard/products",
         element: <ProductsOverview />,
+      },
+      {
+        path: "/dashboard/categories",
+        element: <Categories />,
       },
     ],
   },

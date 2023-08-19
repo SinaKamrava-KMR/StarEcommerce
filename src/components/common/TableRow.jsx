@@ -5,11 +5,14 @@ import ChangeInput from "../../dashboard/components/productsManagement/ChangeInp
 import PropTypes from "prop-types";
 
 import { useCategoryById } from "../../hooks/useCategoryById";
+import { useState } from "react";
+import DeleteModal from "../../dashboard/common/DeleteModal";
 TableRow.propTypes = {
   delay: PropTypes.number,
   product: PropTypes.object,
   row: PropTypes.number,
   dispatch: PropTypes.func,
+  onDelete: PropTypes.func,
   state: PropTypes.object,
 };
 const TableRowStyle = styled.div`
@@ -50,9 +53,11 @@ const ButtonGroup = styled.div`
   gap: 1.5rem;
 `;
 
-function TableRow({ delay, product, row, state, dispatch }) {
+function TableRow({ delay, product, row, state, dispatch,onDelete }) {
   const inputValues = state.inputs.find((item) => item?.id === product?._id);
   // console.log(inputValues);
+  const [isDeleting, setIsDeleting] = useState(false);
+
   const {category} = useCategoryById(product.category)
 
   // console.log(category);
@@ -86,6 +91,16 @@ function TableRow({ delay, product, row, state, dispatch }) {
       initial={{ y: 500 }}
       animate={{ y: 0 }}
     >
+       {isDeleting && (
+        <DeleteModal
+          label={product.name}
+          onCancel={() => setIsDeleting(false)}
+          onDelete={() => {
+            onDelete(product?._id);
+            setIsDeleting(false);
+          }}
+        />
+      )}
       <p>{row}</p>
       <p>{product.name}</p>
       <p>{category?.name}</p>
@@ -105,7 +120,7 @@ function TableRow({ delay, product, row, state, dispatch }) {
       />
 
       <ButtonGroup>
-        <BtnWrapper color="#ff6969">
+        <BtnWrapper onClick={() => setIsDeleting(true)} color="#ff6969">
           <HiTrash />
         </BtnWrapper>
         <BtnWrapper color="#69b4ff">

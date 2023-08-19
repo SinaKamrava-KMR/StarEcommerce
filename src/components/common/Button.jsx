@@ -6,6 +6,7 @@ Button.propTypes = {
   children: PropTypes.node,
   active: PropTypes.bool,
   rest: PropTypes.array,
+  state:PropTypes.string
 };
 const Wrapper = styled.p`
   width: 100%;
@@ -16,7 +17,7 @@ const Wrapper = styled.p`
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: #0c4cc3d2;
+  background-color:${(props) => (props.state==="delete" ?"#ff3c3cd2" :"#0c4cc3d2")} ;
   color: ${(props) => (props.active ? "#ffffff" : "#dfdfdf")};
   box-shadow: 0 1px 5px #9b9b9b;
   &:active {
@@ -25,7 +26,7 @@ const Wrapper = styled.p`
   &:hover {
     /* background-color: ${(props) =>
       props.active ? "#1982dd" : "#2361d496"}; */
-    background-color: #043ca5d2;
+    background-color: ${(props) => (props.state==="delete" ?"#ed2929d2" :"#043ca5d2")};
   }
 `;
 
@@ -40,9 +41,9 @@ const ButtonStyled = styled.button`
   }
 `;
 
-function Button({ active, children, ...rest }) {
+function Button({ active, children,state, ...rest }) {
   return (
-    <Wrapper {...rest} active={active}>
+    <Wrapper {...rest} active={active} state={state}>
       {!active ? <Loader /> : <ButtonStyled>{children}</ButtonStyled>}
     </Wrapper>
   );

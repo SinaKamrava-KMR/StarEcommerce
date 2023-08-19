@@ -15,6 +15,9 @@ import useProduct from "../../hooks/useProduct";
 import Spinner from "../../components/common/Spinner";
 import useFilterItems from "../../hooks/filter/useFilterItems";
 import { useState } from "react";
+import useDeleteProduct from "../../hooks/useDeleteProduct";
+import Loading from "../../components/common/Loading";
+
 const Wrapper = styled(Box)({
   width: "100%",
   height: "100%",
@@ -53,6 +56,7 @@ function ProductsOverview() {
   const { isLoading, products, setParams } = useProduct();
   const { items, isLoading: isFiltering } = useFilterItems();
   const [filterBy, setFilterBy] = useState("");
+  const { isDeleting, deleteProduct } = useDeleteProduct();
 
   function handleClick(item) {
     if (item?.tag) {
@@ -63,12 +67,16 @@ function ProductsOverview() {
   }
 
   function handleChangePage(page) {
-    console.log(page);
     setParams({ page });
+  }
+
+  function handleDelete(id) {
+    deleteProduct(id);
   }
 
   return (
     <Wrapper>
+      {isDeleting && <Loading />}
       <DashboardRow>
         <Typography variant="DashboardTitle">محصولات</Typography>
         <span style={{ flex: 1 }}></span>
@@ -109,6 +117,7 @@ function ProductsOverview() {
                       delay={idx}
                       row={idx + 1}
                       product={product}
+                      onDelete={handleDelete}
                     />
                   );
                 }
@@ -119,6 +128,7 @@ function ProductsOverview() {
                     delay={idx}
                     row={idx + 1}
                     product={product}
+                    onDelete={handleDelete}
                   />
                 );
               }
