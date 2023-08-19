@@ -13,7 +13,7 @@ import ProductsIcon from "../../common/ProductsIcon";
 import ManageIcon from "../../common/ManageIcon";
 import { useLocation, useNavigate } from "react-router";
 import { useEffect } from "react";
-
+import { HiOutlineSquares2X2 } from "react-icons/hi2";
 const SidebarLayout = styled(ListItem)({
   padding: "1rem 0",
   width: "100%",
@@ -39,6 +39,16 @@ const navLinks = [
     id: "management",
     label: "مدیریت کالاها",
     icon: <ManageIcon />,
+    active: false,
+  },
+  {
+    id: "categories",
+    label: "دسته بندی ها",
+    icon: (
+      <HiOutlineSquares2X2
+        style={{ transform: "scale(1.5) translateX(-2px)" }}
+      />
+    ),
     active: false,
   },
   { id: "users", label: "کاربران", icon: <UsersIcon />, active: false },
@@ -70,7 +80,7 @@ function DashboardSidebar() {
     if (activeId === "products" && location === "addProduct") {
       setActiveId("addProduct");
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [location]);
 
   return (

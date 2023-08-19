@@ -46,8 +46,11 @@ const Controller = ({ control, register, name, rules, render }) => {
   });
 };
 
+
+
 function InfoForm({ inModal = false, onSubmit }) {
   const editorRef = useRef(null);
+  
   let categoriesList = useSelector((state) => state.categories.categories);
   let subcategoriesList = useSelector(
     (state) => state.categories.subcategories
@@ -70,6 +73,12 @@ function InfoForm({ inModal = false, onSubmit }) {
     });
     editorRef.current = "";
     reset();
+  }
+
+  function handleReset(e) {
+    e.preventDefault();
+    reset()
+
   }
 
 
@@ -209,7 +218,7 @@ function InfoForm({ inModal = false, onSubmit }) {
         </Row>
       </StockWrapper>
 
-      <AddProductFooter inModal={inModal} onSubmit={handleSubmit(onSub)} />
+      <AddProductFooter inModal={inModal} onCancel={handleReset} onSubmit={handleSubmit(onSub)} />
     </Form>
   );
 }

@@ -8,11 +8,14 @@ import { HiOutlineXMark } from "react-icons/hi2";
 import PropTypes from "prop-types";
 import { useState } from "react";
 import ProductServices from "../../../services/api/productServices";
+import { useDispatch } from "react-redux";
+import { show } from "../../../redux/reducer/toast/toastSlice";
+
+import Loading from "../../../components/common/Loading";
 
 AddProductModal.propTypes = {
-  oncloseModal:PropTypes.func
+  oncloseModal: PropTypes.func,
 };
-
 
 const Wrapper = styled(Box)`
   position: relative;
@@ -29,9 +32,6 @@ const Wrapper = styled(Box)`
   padding-bottom: 5rem;
 `;
 
-
-
-
 const CloseWrapper = styled(Box)`
   position: absolute;
   left: 2rem;
@@ -41,19 +41,39 @@ const CloseWrapper = styled(Box)`
 `;
 
 function AddProductModal({ oncloseModal }) {
+  const dispatch = useDispatch();
   const [medias, setMedias] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
   function handleSubmit(data) {
+    setIsLoading(true);
     console.log({ ...data, images: medias });
     const service = new ProductServices();
-    service.add({ ...data, images: medias }).then(res => {
-      console.log(res);
-    })
+    service
+      .add({ ...data, images: medias })
+      .then((res) => {
+        console.log(res);
+        dispatch(
+          show({
+            message: "  محصول با موفقیت اضافه شد  ",
+            status: "success",
+          })
+        );
+      })
+      .catch((error) => {
+        dispatch(
+          show({
+            message: error.message,
+            status: "error",
+          })
+        );
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
 
     setMedias([]);
   }
 
-
-  
   return (
     <Wrapper component={motion.div} initial={{ y: -100 }} animate={{ y: 0 }}>
       <CloseWrapper onClick={oncloseModal}>
@@ -61,6 +81,7 @@ function AddProductModal({ oncloseModal }) {
       </CloseWrapper>
       <Typography variant="DashboardTitle">اضافه کردن محصول جدید</Typography>
       <Container>
+        {isLoading && <Loading />}
         <InfoForm inModal={true} onSubmit={handleSubmit} />
         <ImageUploader medias={medias} setMedias={setMedias} />
       </Container>
