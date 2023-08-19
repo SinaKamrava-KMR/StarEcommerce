@@ -17,6 +17,8 @@ import Spinner from "../../components/common/Spinner";
 import useFilterItems from "../../hooks/filter/useFilterItems";
 import { useState } from "react";
 import { HiMiniFunnel } from "react-icons/hi2";
+import useDeleteProduct from "../../hooks/useDeleteProduct";
+import Loading from "../../components/common/Loading";
 
 const Wrapper = styled(Box)({
   width: "100%",
@@ -63,7 +65,6 @@ const sortPriceItems = [
     value: "price",
   },
 ];
-
 
 const initialState = {
   inputs: [],
@@ -158,6 +159,7 @@ function ProductsManagement() {
   const { isLoading, products, setParams } = useProduct();
   const { items, isLoading: isFiltering } = useFilterItems();
   const [filterBy, setFilterBy] = useState("");
+  const { isDeleting, deleteProduct } = useDeleteProduct();
 
   function handleClick(item) {
     if (item?.tag) {
@@ -174,8 +176,13 @@ function ProductsManagement() {
     setParams({ page });
   }
 
+  function handleDelete(id) {
+    deleteProduct(id);
+  }
+
   return (
     <Wrapper>
+      {isDeleting && <Loading />}
       <DashboardRow>
         <Typography variant="DashboardTitle">مدیریت محصولات </Typography>
         <span style={{ flex: 1 }}></span>
@@ -229,6 +236,7 @@ function ProductsManagement() {
                       product={product}
                       state={state}
                       dispatch={dispatch}
+                      onDelete={handleDelete}
                     />
                   );
                 }
@@ -241,6 +249,7 @@ function ProductsManagement() {
                     product={product}
                     state={state}
                     dispatch={dispatch}
+                    onDelete={handleDelete}
                   />
                 );
               }

@@ -3,10 +3,15 @@ import { styled } from "styled-components";
 import PropTypes from "prop-types";
 import { HiPencilSquare, HiTrash } from "react-icons/hi2";
 import { useCategoryById } from "../../../hooks/useCategoryById";
+import DeleteModal from "../../common/DeleteModal";
+import { useState } from "react";
+import AddProductModal from "../addProduct/AddProductModal";
+import Modal from "../../../components/common/Modal";
 ProductTableRow.propTypes = {
   delay: PropTypes.number,
   product: PropTypes.object,
   row: PropTypes.number,
+  onDelete: PropTypes.func,
 };
 const TableRowStyle = styled.div`
   width: 100%;
@@ -54,9 +59,10 @@ const Image = styled("img")({
   margin: "0 auto",
 });
 
-function ProductTableRow({ delay, product, row }) {
+function ProductTableRow({ delay, product, row, onDelete }) {
   const { category } = useCategoryById(product.category);
-
+  const [isDeleting, setIsDeleting] = useState(false);
+  const [showEditModal, setShowEditModal] = useState(false);
   return (
     <TableRowStyle
       as={motion.div}
@@ -67,6 +73,24 @@ function ProductTableRow({ delay, product, row }) {
       initial={{ y: 500 }}
       animate={{ y: 0 }}
     >
+      {showEditModal && (
+        <Modal>
+          <AddProductModal
+            product={product}
+            oncloseModal={() => setShowEditModal(false)}
+          />
+        </Modal>
+      )}
+      {isDeleting && (
+        <DeleteModal
+          label={product.name}
+          onCancel={() => setIsDeleting(false)}
+          onDelete={() => {
+            onDelete(product?._id);
+            setIsDeleting(false);
+          }}
+        />
+      )}
       <p>{row}</p>
       <Image
         src={`http://localhost:8000/images/products/images/${product.images[0]}`}
@@ -75,10 +99,15 @@ function ProductTableRow({ delay, product, row }) {
       <p>{category?.name}</p>
       <p>{product?.quantity}</p>
       <ButtonGroup>
-        <BtnWrapper color="#ff6969">
+        <BtnWrapper onClick={() => setIsDeleting(true)} color="#ff6969">
           <HiTrash />
         </BtnWrapper>
-        <BtnWrapper color="#69b4ff">
+        <BtnWrapper
+          onClick={() => {
+            setShowEditModal(true);
+          }}
+          color="#69b4ff"
+        >
           <HiPencilSquare />
         </BtnWrapper>
       </ButtonGroup>

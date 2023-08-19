@@ -15,6 +15,7 @@ import Loading from "../../../components/common/Loading";
 
 AddProductModal.propTypes = {
   oncloseModal: PropTypes.func,
+  product: PropTypes.object,
 };
 
 const Wrapper = styled(Box)`
@@ -40,38 +41,44 @@ const CloseWrapper = styled(Box)`
   font-size: 1.8rem;
 `;
 
-function AddProductModal({ oncloseModal }) {
+function AddProductModal({ oncloseModal, product }) {
   const dispatch = useDispatch();
-  const [medias, setMedias] = useState([]);
+  const [medias, setMedias] = useState(product?.images ? product?.images : []);
   const [isLoading, setIsLoading] = useState(false);
-  function handleSubmit(data) {
+  function handleSubmit(data, id) {
     setIsLoading(true);
-    console.log({ ...data, images: medias });
     const service = new ProductServices();
-    service
-      .add({ ...data, images: medias })
-      .then((res) => {
-        console.log(res);
-        dispatch(
-          show({
-            message: "  محصول با موفقیت اضافه شد  ",
-            status: "success",
-          })
-        );
-      })
-      .catch((error) => {
-        dispatch(
-          show({
-            message: error.message,
-            status: "error",
-          })
-        );
-      })
-      .finally(() => {
-        setIsLoading(false);
-      });
+    if (id === undefined) {
+      //Add New Product
+      service
+        .add({ ...data, images: medias })
+        .then((res) => {
+          console.log(res);
+          dispatch(
+            show({
+              message: "  محصول با موفقیت اضافه شد  ",
+              status: "success",
+            })
+          );
+        })
+        .catch((error) => {
+          dispatch(
+            show({
+              message: error.message,
+              status: "error",
+            })
+          );
+        })
+        .finally(() => {
+          setIsLoading(false);
+        });
+      setMedias([]);
+    } else {
+      // Update Product
+      setIsLoading(false);
+      console.log(id, { ...data, images: medias });
+    }
 
-    setMedias([]);
   }
 
   return (
@@ -82,7 +89,7 @@ function AddProductModal({ oncloseModal }) {
       <Typography variant="DashboardTitle">اضافه کردن محصول جدید</Typography>
       <Container>
         {isLoading && <Loading />}
-        <InfoForm inModal={true} onSubmit={handleSubmit} />
+        <InfoForm product={product} inModal={true} onSubmit={handleSubmit} />
         <ImageUploader medias={medias} setMedias={setMedias} />
       </Container>
     </Wrapper>

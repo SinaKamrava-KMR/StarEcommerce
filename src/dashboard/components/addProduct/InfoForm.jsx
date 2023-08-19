@@ -14,10 +14,12 @@ import PropTypes from "prop-types";
 
 import { useSelector } from "react-redux";
 import Select from "../../../components/common/Select";
+import { useEffect } from "react";
 
 InfoForm.propTypes = {
   inModal: PropTypes.bool,
   onSubmit: PropTypes.func,
+  product: PropTypes.object,
 };
 
 const Controller = ({ control, register, name, rules, render }) => {
@@ -46,11 +48,9 @@ const Controller = ({ control, register, name, rules, render }) => {
   });
 };
 
-
-
-function InfoForm({ inModal = false, onSubmit }) {
+function InfoForm({ inModal = false, onSubmit, product }) {
   const editorRef = useRef(null);
-  
+
   let categoriesList = useSelector((state) => state.categories.categories);
   let subcategoriesList = useSelector(
     (state) => state.categories.subcategories
@@ -67,20 +67,35 @@ function InfoForm({ inModal = false, onSubmit }) {
   const formsValues = watch();
 
   function onSub(data) {
+  
     onSubmit({
       ...data,
       description: editorRef.current,
-    });
+    },product?._id);
     editorRef.current = "";
     reset();
   }
 
   function handleReset(e) {
     e.preventDefault();
-    reset()
-
+    reset();
   }
 
+  useEffect(() => {
+    console.log(product);
+    if (product?.name !== undefined) {
+      const { brand, category, name, price, quantity, subcategory } = product;
+      reset({
+        brand,
+        category,
+        name,
+        price,
+        quantity,
+        subcategory,
+      });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <Form>
@@ -105,6 +120,7 @@ function InfoForm({ inModal = false, onSubmit }) {
         />
         {/* ======================================================== */}
         <Editor
+          initialValue={product?.description ? product.description : ""}
           init={{
             directionality: "rtl",
             language: "fa",
@@ -151,7 +167,9 @@ function InfoForm({ inModal = false, onSubmit }) {
               render: (props) => (
                 <Select
                   label="زیر مجموعه "
-                  options={subcategoriesList.filter((item) => item.category === formsValues.category)}
+                  options={subcategoriesList.filter(
+                    (item) => item.category === formsValues.category
+                  )}
                   {...props}
                 />
               ),
@@ -218,7 +236,11 @@ function InfoForm({ inModal = false, onSubmit }) {
         </Row>
       </StockWrapper>
 
-      <AddProductFooter inModal={inModal} onCancel={handleReset} onSubmit={handleSubmit(onSub)} />
+      <AddProductFooter
+        inModal={inModal}
+        onCancel={handleReset}
+        onSubmit={handleSubmit(onSub)}
+      />
     </Form>
   );
 }
