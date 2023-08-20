@@ -4,6 +4,9 @@ import { HiPencilSquare, HiTrash } from "react-icons/hi2";
 import ChangeInput from "../../dashboard/components/productsManagement/ChangeInput";
 import PropTypes from "prop-types";
 
+import AddProductModal from "../../dashboard/components/addProduct/AddProductModal";
+import Modal from "./Modal";
+
 import { useCategoryById } from "../../hooks/useCategoryById";
 import { useState } from "react";
 import DeleteModal from "../../dashboard/common/DeleteModal";
@@ -53,12 +56,12 @@ const ButtonGroup = styled.div`
   gap: 1.5rem;
 `;
 
-function TableRow({ delay, product, row, state, dispatch,onDelete }) {
+function TableRow({ delay, product, row, state, dispatch, onDelete }) {
   const inputValues = state.inputs.find((item) => item?.id === product?._id);
   // console.log(inputValues);
   const [isDeleting, setIsDeleting] = useState(false);
-
-  const {category} = useCategoryById(product.category)
+  const [showEditModal, setShowEditModal] = useState(false);
+  const { category } = useCategoryById(product.category);
 
   // console.log(category);
 
@@ -91,7 +94,15 @@ function TableRow({ delay, product, row, state, dispatch,onDelete }) {
       initial={{ y: 500 }}
       animate={{ y: 0 }}
     >
-       {isDeleting && (
+      {showEditModal && (
+        <Modal>
+          <AddProductModal
+            product={product}
+            oncloseModal={() => setShowEditModal(false)}
+          />
+        </Modal>
+      )}
+      {isDeleting && (
         <DeleteModal
           label={product.name}
           onCancel={() => setIsDeleting(false)}
@@ -123,7 +134,12 @@ function TableRow({ delay, product, row, state, dispatch,onDelete }) {
         <BtnWrapper onClick={() => setIsDeleting(true)} color="#ff6969">
           <HiTrash />
         </BtnWrapper>
-        <BtnWrapper color="#69b4ff">
+        <BtnWrapper
+          onClick={() => {
+            setShowEditModal(true);
+          }}
+          color="#69b4ff"
+        >
           <HiPencilSquare />
         </BtnWrapper>
       </ButtonGroup>

@@ -2,10 +2,12 @@ import Pagination from "@mui/material/Pagination";
 import PropTypes from "prop-types";
 import { styled } from "styled-components";
 import Stack from "@mui/material/Stack";
+import { useState } from "react";
 
 StarPagination.propTypes = {
   onChange: PropTypes.func,
   count:PropTypes.number,
+  defualtPage:PropTypes.number,
 };
 
 const Wrapper = styled.div`
@@ -48,13 +50,19 @@ const StyledPagination = styled(Pagination)`
   }
 `;
 
-function StarPagination({count,onChange}) {
+function StarPagination({ count, onChange,defualtPage }) {
+  const [page, setPage] = useState(defualtPage)
+ 
+  function handleChangePage(newPage) { 
+    setPage(newPage)
+    onChange(newPage)
+}
 
 
   return (
     <Wrapper>
       <Stack spacing={2}>
-      <StyledPagination count={count} onChange={(e,page)=>onChange(page)} />
+      <StyledPagination page={page}  count={count} onChange={(e,page)=>handleChangePage(page)} />
       </Stack>
     </Wrapper>
   );

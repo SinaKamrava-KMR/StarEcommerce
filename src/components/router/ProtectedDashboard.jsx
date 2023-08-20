@@ -24,8 +24,8 @@ function ProtectedDashboard({ children }) {
       })
     );
   }
-
-  return accessToken && userRole === "ADMIN" ? (
+  // && userRole === "ADMIN"
+  return accessToken  ? (
     children
   ) : (
     <Navigate to="/auth/admin" replace />
