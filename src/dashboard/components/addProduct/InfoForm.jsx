@@ -14,11 +14,12 @@ import PropTypes from "prop-types";
 
 import { useSelector } from "react-redux";
 import Select from "../../../components/common/Select";
-import { useEffect } from "react";
+// import { useEffect } from "react";
 
 InfoForm.propTypes = {
   inModal: PropTypes.bool,
   onSubmit: PropTypes.func,
+  onReset: PropTypes.func,
   product: PropTypes.object,
 };
 
@@ -48,7 +49,9 @@ const Controller = ({ control, register, name, rules, render }) => {
   });
 };
 
-function InfoForm({ inModal = false, onSubmit, product }) {
+
+
+function InfoForm({ inModal = false, onSubmit, product, onReset }) {
   const editorRef = useRef(null);
 
   let categoriesList = useSelector((state) => state.categories.categories);
@@ -56,46 +59,91 @@ function InfoForm({ inModal = false, onSubmit, product }) {
     (state) => state.categories.subcategories
   );
 
+  let initialValues = {
+    brand: "",
+    category: "",
+    name: "",
+    price: "",
+    quantity: "",
+    subcategory: "",
+  };
+
+  if (product?.name !== undefined) {
+    const { brand, category, name, price, quantity, subcategory } = product;
+    initialValues = {
+      brand,
+      category,
+      name,
+      price,
+      quantity,
+      subcategory,
+    };
+  }
+
   const {
     register,
     handleSubmit,
     reset,
     control,
     watch,
+    getValues,
     formState: { errors },
-  } = useForm();
+  } = useForm({ defaultValues: initialValues });
   const formsValues = watch();
 
   function onSub(data) {
-  
-    onSubmit({
-      ...data,
-      description: editorRef.current,
-    },product?._id);
-    editorRef.current = "";
-    reset();
+    if (product?.name !== undefined) {
+      const formValues = getValues();
+      const changedFields = {};
+
+      for (const field in formValues) {
+        if (formValues[field] !== initialValues[field]) {
+          changedFields[field] = formValues[field];
+        }
+      }
+
+      if (
+        editorRef.current !== product.description &&
+        editorRef.current !== null
+      ) {
+        
+        changedFields["description"] = editorRef.current;
+      }
+
+      // reset(changedFields);
+      onSubmit(
+        {
+          ...changedFields,
+        },
+        product?._id
+      );
+    } else {
+      onSubmit({
+        ...data,
+        description: editorRef.current,
+      });
+
+      editorRef.current = "";
+      reset();
+    }
   }
 
   function handleReset(e) {
     e.preventDefault();
-    reset();
-  }
-
-  useEffect(() => {
-    console.log(product);
-    if (product?.name !== undefined) {
-      const { brand, category, name, price, quantity, subcategory } = product;
-      reset({
-        brand,
-        category,
-        name,
-        price,
-        quantity,
-        subcategory,
-      });
+    reset({
+      brand: "",
+      category: "",
+      name: "",
+      price: "",
+      quantity: "",
+      subcategory: "",
+    });
+    const editor = window.tinymce.get("description");
+    if (editor) {
+      editor.setContent("");
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    onReset();
+  }
 
   return (
     <Form>
@@ -120,6 +168,7 @@ function InfoForm({ inModal = false, onSubmit, product }) {
         />
         {/* ======================================================== */}
         <Editor
+          id="description"
           initialValue={product?.description ? product.description : ""}
           init={{
             directionality: "rtl",
@@ -128,7 +177,6 @@ function InfoForm({ inModal = false, onSubmit, product }) {
             content_style: 'body { font-family: "IRANSansXV", serif; }',
             font_formats: "IRANSansXV=IRANSansXV,serif",
           }}
-          // onInit={(evt, editor) => (editorRef.current = editor)}
           onEditorChange={(content) => (editorRef.current = content)}
         />
       </InfoWrapper>
@@ -240,6 +288,7 @@ function InfoForm({ inModal = false, onSubmit, product }) {
         inModal={inModal}
         onCancel={handleReset}
         onSubmit={handleSubmit(onSub)}
+        text={product?.name !== undefined ? "ویرایش" : "اضافه کردن"}
       />
     </Form>
   );
