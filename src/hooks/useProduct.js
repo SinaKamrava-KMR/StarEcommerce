@@ -2,8 +2,8 @@ import { useQuery } from "@tanstack/react-query";
 import getProducts from "../services/api/getProducts";
 import { useEffect, useState } from "react";
 
-export default function useProduct() {
-  const [params, setParams] = useState({ page: 1 });
+export default function useProduct(defaultPage = 1) {
+  const [params, setParams] = useState({ page: defaultPage });
   // const queryClient = useQueryClient();
   const {
     isLoading,

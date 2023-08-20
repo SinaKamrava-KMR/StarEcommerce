@@ -17,6 +17,7 @@ import useFilterItems from "../../hooks/filter/useFilterItems";
 import { useState } from "react";
 import useDeleteProduct from "../../hooks/useDeleteProduct";
 import Loading from "../../components/common/Loading";
+import { useSearchParams } from "react-router-dom";
 
 const Wrapper = styled(Box)({
   width: "100%",
@@ -53,10 +54,15 @@ const sortItems = [
 ];
 
 function ProductsOverview() {
-  const { isLoading, products, setParams } = useProduct();
+  const [searchParams, setSearchParams] = useSearchParams();
+  const { isLoading, products, setParams } = useProduct(
+    searchParams.get("page")
+  );
   const { items, isLoading: isFiltering } = useFilterItems();
   const [filterBy, setFilterBy] = useState("");
   const { isDeleting, deleteProduct } = useDeleteProduct();
+
+
 
   function handleClick(item) {
     if (item?.tag) {
@@ -68,6 +74,7 @@ function ProductsOverview() {
 
   function handleChangePage(page) {
     setParams({ page });
+    setSearchParams({ page });
   }
 
   function handleDelete(id) {
@@ -136,6 +143,7 @@ function ProductsOverview() {
         </Table>
       </TableWrapper>
       <StarPagination
+        defualtPage={+searchParams.get("page")}
         count={products?.total_pages}
         onChange={handleChangePage}
       />

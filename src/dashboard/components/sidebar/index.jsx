@@ -14,6 +14,7 @@ import ManageIcon from "../../common/ManageIcon";
 import { useLocation, useNavigate } from "react-router";
 import { useEffect } from "react";
 import { HiOutlineSquares2X2 } from "react-icons/hi2";
+import { useSearchParams } from "react-router-dom";
 const SidebarLayout = styled(ListItem)({
   padding: "1rem 0",
   width: "100%",
@@ -62,6 +63,8 @@ const navLinks = [
 
 function DashboardSidebar() {
   const navigate = useNavigate();
+  // eslint-disable-next-line no-unused-vars
+  const [searchParams, setSearchParams] = useSearchParams();
   let location = useLocation().pathname.split("/").at(-1);
   if (location === "") location = "main";
   const [activeId, setActiveId] = useState(location);
@@ -74,6 +77,11 @@ function DashboardSidebar() {
 
   useEffect(() => {
     navigate(`/dashboard/${activeId === "main" ? "" : activeId}`);
+    if (activeId === "management")
+      setSearchParams({ page: searchParams.get("page") || 1 });
+    if (activeId === "products")
+      setSearchParams({ page: searchParams.get("page") || 1 });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeId, navigate]);
 
   useEffect(() => {

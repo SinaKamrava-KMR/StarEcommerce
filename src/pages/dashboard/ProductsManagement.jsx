@@ -19,6 +19,7 @@ import { useState } from "react";
 import { HiMiniFunnel } from "react-icons/hi2";
 import useDeleteProduct from "../../hooks/useDeleteProduct";
 import Loading from "../../components/common/Loading";
+import { useSearchParams } from "react-router-dom";
 
 const Wrapper = styled(Box)({
   width: "100%",
@@ -156,7 +157,12 @@ const reducer = (state, action) => {
 
 function ProductsManagement() {
   const [state, dispatch] = useReducer(reducer, initialState);
-  const { isLoading, products, setParams } = useProduct();
+  // eslint-disable-next-line no-unused-vars
+  const [searchParams, setSearchParams] = useSearchParams();
+  const { isLoading, products, setParams } = useProduct(
+    searchParams.get("page")
+  );
+
   const { items, isLoading: isFiltering } = useFilterItems();
   const [filterBy, setFilterBy] = useState("");
   const { isDeleting, deleteProduct } = useDeleteProduct();
@@ -174,6 +180,7 @@ function ProductsManagement() {
 
   function handleChangePage(page) {
     setParams({ page });
+    setSearchParams({ page });
   }
 
   function handleDelete(id) {
@@ -257,6 +264,7 @@ function ProductsManagement() {
         </Table>
       </TableWrapper>
       <StarPagination
+        defualtPage={+searchParams.get("page")}
         count={products?.total_pages}
         onChange={handleChangePage}
       />
