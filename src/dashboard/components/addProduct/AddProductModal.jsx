@@ -12,6 +12,8 @@ import { useDispatch } from "react-redux";
 import { show } from "../../../redux/reducer/toast/toastSlice";
 
 import Loading from "../../../components/common/Loading";
+import { useQueryClient } from "@tanstack/react-query";
+import { handleMedias } from "../../../utils/helper";
 
 AddProductModal.propTypes = {
   oncloseModal: PropTypes.func,
@@ -43,9 +45,10 @@ const CloseWrapper = styled(Box)`
 
 function AddProductModal({ oncloseModal, product }) {
   const dispatch = useDispatch();
+  const queryClient = useQueryClient();
   const [medias, setMedias] = useState(product?.images ? product?.images : []);
   const [isLoading, setIsLoading] = useState(false);
-  function handleSubmit(data, id) {
+  async function handleSubmit(data, id) {
     setIsLoading(true);
     const service = new ProductServices();
     if (id === undefined) {
@@ -54,6 +57,9 @@ function AddProductModal({ oncloseModal, product }) {
         .add({ ...data, images: medias })
         .then((res) => {
           console.log(res);
+          queryClient.invalidateQueries({
+            queryKey: ["products"],
+          });
           dispatch(
             show({
               message: "  محصول با موفقیت اضافه شد  ",
@@ -75,10 +81,53 @@ function AddProductModal({ oncloseModal, product }) {
       setMedias([]);
     } else {
       // Update Product
-      setIsLoading(false);
-      console.log(id, { ...data, images: medias });
+      const images = await handleMedias(medias);
+      
+      if (images) {
+        data = { ...data, images };
+      }
+      console.log(id, { ...data });
+      if (Object.keys(data).length > 0) {
+        service
+          .update({ ...data }, id)
+          .then((res) => {
+            console.log(res);
+            oncloseModal();
+            queryClient.invalidateQueries({
+              queryKey: ["products"],
+            });
+            dispatch(
+              show({
+                message: "  محصول با موفقیت ویرایش شد  ",
+                status: "success",
+              })
+            );
+          })
+          .catch(() => {
+            dispatch(
+              show({
+                message: "خطا در ویرایش محصول",
+                status: "error",
+              })
+            );
+          })
+          .finally(() => {
+            setIsLoading(false);
+          });
+      } else {
+        setIsLoading(false);
+        dispatch(
+          show({
+            message: " شما ایتمی را ویرایش نکردید",
+            status: "error",
+          })
+        );
+      }
     }
+  }
 
+  function handleReset() {
+    setMedias([]);
   }
 
   return (
@@ -86,10 +135,17 @@ function AddProductModal({ oncloseModal, product }) {
       <CloseWrapper onClick={oncloseModal}>
         <HiOutlineXMark />
       </CloseWrapper>
-      <Typography variant="DashboardTitle">اضافه کردن محصول جدید</Typography>
+      <Typography variant="DashboardTitle">
+        {product?.name !== undefined ? "ویرایش محصول" : "اضافه کردن محصول جدید"}
+      </Typography>
       <Container>
         {isLoading && <Loading />}
-        <InfoForm product={product} inModal={true} onSubmit={handleSubmit} />
+        <InfoForm
+          product={product}
+          inModal={true}
+          onReset={handleReset}
+          onSubmit={handleSubmit}
+        />
         <ImageUploader medias={medias} setMedias={setMedias} />
       </Container>
     </Wrapper>

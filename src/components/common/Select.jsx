@@ -193,6 +193,10 @@ function Select({ options, label, onChange, value, errors, name }) {
     if (defaultName?.name !== undefined && value !== undefined) {
       setSelected({ _id: value, name: defaultName?.name });
     }
+
+    if (value === "") {
+      setSelected({ _id: null, name: null });
+    }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [value]);
 

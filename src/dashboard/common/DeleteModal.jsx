@@ -3,6 +3,7 @@ import Modal from "../../components/common/Modal";
 import styled from "@emotion/styled";
 import { Box } from "@mui/material";
 import { Typography } from "@material-ui/core";
+import { motion } from "framer-motion";
 
 DeleteModal.propTypes = {
   onDelete: PropTypes.func,
@@ -34,37 +35,35 @@ const Label = styled("span")`
   margin-inline: 5px;
 `;
 const DeleteBtn = styled("p")`
- background-color: #fb5050;
+  background-color: #fb5050;
   color: #f3f2f2;
   border-radius: 0.4rem;
-  padding: .5rem 1.5rem;
+  padding: 0.5rem 1.5rem;
   cursor: pointer;
 `;
 const CancelBtn = styled("p")`
-background-color: #eaeaea;
+  background-color: #eaeaea;
   color: #242424;
   border-radius: 0.4rem;
-  padding: .5rem 1.5rem;
+  padding: 0.5rem 1.5rem;
   cursor: pointer;
-  
 `;
 
 function DeleteModal({ onDelete, onCancel, label }) {
   return (
     <Modal>
-      <Container>
+      <Container
+        component={motion.div}
+        initial={{ y: -100 }}
+        animate={{ y: 0 }}
+      >
         <Typography variant="content">
           ایا از حذف محصول <Label>{label}</Label> اطمینان دارید؟
         </Typography>
 
         <ButtonGroup>
-        <CancelBtn  onClick={onCancel} >
-            انصراف
-          </CancelBtn>
-          <DeleteBtn onClick={onDelete}>
-            حذف محصول
-          </DeleteBtn>
-         
+          <CancelBtn onClick={onCancel}>انصراف</CancelBtn>
+          <DeleteBtn onClick={onDelete}>حذف محصول</DeleteBtn>
         </ButtonGroup>
       </Container>
     </Modal>
