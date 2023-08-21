@@ -33,25 +33,25 @@ function ActiveWrapper({ activeId }) {
   let position;
   switch (activeId) {
     case "main":
-      position = 15;
+      position = 12;
       break;
     case "orders":
-      position = 67;
+      position = 65;
       break;
     case "products":
       position = 117;
       break;
     case "management":
-      position = 170;
+      position = 169;
       break;
       case "categories":
-        position = 221;
+        position = 219;
         break;
     case "users":
-      position = 275;
+      position = 272;
       break;
     case "addProduct":
-      position = 322;
+      position = 320;
       break;
   }
 

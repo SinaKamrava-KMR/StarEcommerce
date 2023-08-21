@@ -56,7 +56,7 @@ const BoxOpen = keyframes`
 const TitleBox = styled.div`
   width: 100%;
   height: 50px;
-  background: linear-gradient(to right, #243b55, #27354f);
+  background: linear-gradient(to right, #1d2f44, #212c41);
   z-index: 10;
   position: relative;
   border-radius: 0.6rem;
