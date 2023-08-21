@@ -118,13 +118,13 @@ function TableRow({ delay, product, row, state, dispatch, onDelete }) {
       <ChangeInput
         defaultValue={product.price}
         onChange={handleChangePrice}
-        isSaved={state.isSaved}
+        isSaved={!state.isSaved && state.inputs.length == 0}
         value={inputValues?.price}
         onClose={handleClosePrice}
       />
       <ChangeInput
         defaultValue={product.quantity}
-        isSaved={state.isSaved}
+        isSaved={!state.isSaved && state.inputs.length == 0}
         value={inputValues?.quantity}
         onChange={handleChangeQuentity}
         onClose={handleCloseQuentity}

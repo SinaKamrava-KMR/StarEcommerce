@@ -36,22 +36,22 @@ function ActiveWrapper({ activeId }) {
       position = 12;
       break;
     case "orders":
-      position = 64;
+      position = 65;
       break;
     case "products":
-      position = 115;
+      position = 117;
       break;
     case "management":
-      position = 167;
+      position = 169;
       break;
       case "categories":
         position = 219;
         break;
     case "users":
-      position = 270;
+      position = 272;
       break;
     case "addProduct":
-      position = 318;
+      position = 320;
       break;
   }
 

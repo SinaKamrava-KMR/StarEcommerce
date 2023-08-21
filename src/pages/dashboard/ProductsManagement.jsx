@@ -20,6 +20,10 @@ import { HiMiniFunnel } from "react-icons/hi2";
 import useDeleteProduct from "../../hooks/useDeleteProduct";
 import Loading from "../../components/common/Loading";
 import { useSearchParams } from "react-router-dom";
+import ProductServices from "../../services/api/productServices";
+import { useQueryClient } from "@tanstack/react-query";
+import { show } from "../../redux/reducer/toast/toastSlice";
+import { useDispatch } from "react-redux";
 
 const Wrapper = styled(Box)({
   width: "100%",
@@ -148,6 +152,7 @@ const reducer = (state, action) => {
 
     case "btn/saved":
       return { ...state, isSaved: true };
+
     case "reset":
       return { inputs: [], isSaved: false };
     default:
@@ -156,6 +161,7 @@ const reducer = (state, action) => {
 };
 
 function ProductsManagement() {
+  const dispatchToast = useDispatch();
   const [state, dispatch] = useReducer(reducer, initialState);
   // eslint-disable-next-line no-unused-vars
   const [searchParams, setSearchParams] = useSearchParams();
@@ -166,7 +172,7 @@ function ProductsManagement() {
   const { items, isLoading: isFiltering } = useFilterItems();
   const [filterBy, setFilterBy] = useState("");
   const { isDeleting, deleteProduct } = useDeleteProduct();
-
+  const queryClient = useQueryClient();
   function handleClick(item) {
     if (item?.tag) {
       setParams((params) => ({ ...params, [item.tag]: item.value }));
@@ -175,7 +181,41 @@ function ProductsManagement() {
     }
   }
   function handleSave() {
+    console.log(state);
+
     dispatch({ type: "btn/saved" });
+
+    if (state.inputs.length > 0) {
+      const service = new ProductServices();
+
+      service
+        .updateQueue(state.inputs)
+        .then((res) => {
+          queryClient.invalidateQueries({
+            queryKey: ["products"],
+          });
+
+          dispatchToast(
+            show({
+              message: "محصول با موفقیت اپدیت شد",
+              status: "success",
+            })
+          );
+          console.log(res);
+        })
+        .catch((error) => {
+          dispatchToast(
+            show({
+              message: "خطا در هنگام  اپدیت محصول ",
+              status: "error",
+            })
+          );
+          console.log(error);
+        })
+        .finally(() => {
+          dispatch({ type: "reset" });
+        });
+    }
   }
 
   function handleChangePage(page) {
@@ -189,6 +229,7 @@ function ProductsManagement() {
 
   return (
     <Wrapper>
+      {state.isSaved && <Loading />}
       {isDeleting && <Loading />}
       <DashboardRow>
         <Typography variant="DashboardTitle">مدیریت محصولات </Typography>
