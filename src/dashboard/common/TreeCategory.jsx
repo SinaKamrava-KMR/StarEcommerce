@@ -27,10 +27,10 @@ function TreeCategory() {
 
   return (
     <Wrapper>
-      <AddItemNode title="   دسته بندی جدید" delay={0} />
+      <AddItemNode title="دسته بندی جدید" palceHolder="دسته بندی" delay={0} />
       {categories.map((item) => {
         return (
-          <CategoryNode categoryId={item._id} key={item._id} name={item.name} />
+          <CategoryNode icon={item.icon} categoryId={item._id} key={item._id} name={item.name} />
         );
       })}
     </Wrapper>

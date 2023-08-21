@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 import { styled } from "styled-components";
 import {
   HiOutlinePencilSquare,
-  HiAcademicCap,
+  HiMiniBolt,
   HiMiniCheck,
 } from "react-icons/hi2";
 import { useState } from "react";
@@ -79,8 +79,8 @@ function SubcategoryNode({ delay, name = "تاپ مشکی" }) {
       animate={{ x: 0, opacity: 1 }}
       transition={{ delay }}
     >
-      <IconWrapper isedit={isEditing} bgcolor="#405c7c" color="#e3e3e3">
-        <HiAcademicCap />
+      <IconWrapper isedit={false} bgcolor="#405c7c0" color="#e3e3e3">
+        <HiMiniBolt />
       </IconWrapper>
       <SubCategoryName>
         {isEditing ? (

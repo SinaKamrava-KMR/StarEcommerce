@@ -1,11 +1,7 @@
 import { useState } from "react";
 import SubcategoryNode from "./SubcategoryNode";
 import { keyframes, styled } from "styled-components";
-import {
-  HiOutlinePencilSquare,
-  HiAcademicCap,
-  HiMiniCheck,
-} from "react-icons/hi2";
+import { HiOutlinePencilSquare, HiMiniCheck } from "react-icons/hi2";
 import PropTypes from "prop-types";
 import AddItemNode from "./AddItemNode";
 import { useSelector } from "react-redux";
@@ -13,6 +9,7 @@ CategoryNode.propTypes = {
   delay: PropTypes.number,
   name: PropTypes.string,
   categoryId: PropTypes.string,
+  icon: PropTypes.string | PropTypes.object,
 };
 const Wrapper = styled.div`
   width: 300px;
@@ -59,10 +56,10 @@ const BoxOpen = keyframes`
 const TitleBox = styled.div`
   width: 100%;
   height: 50px;
-  background: linear-gradient(to right, #243b55, #141e30);
+  background: linear-gradient(to right, #243b55, #27354f);
   z-index: 10;
   position: relative;
-  border-radius: 0.5rem;
+  border-radius: 0.6rem;
   display: flex;
   align-items: center;
   gap: 1rem;
@@ -78,6 +75,7 @@ const IconWrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  position: relative;
   gap: 1rem;
   font-size: 22px;
   color: ${(props) => props.color};
@@ -127,7 +125,21 @@ const CategoryInput = styled.input`
   }
 `;
 
-function CategoryNode({ name = "لباس زنانه", categoryId }) {
+const IconLable = styled.label`
+  position: absolute;
+  inset: 0;
+  background: transparent;
+  border: 0;
+  outline: 0;
+  z-index: 20;
+`;
+const IconImg = styled.img`
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+`;
+
+function CategoryNode({ name = "لباس زنانه", categoryId, icon }) {
   const subcategories = useSelector((state) =>
     state.categories.subcategories.filter(
       (item) => item.category === categoryId
@@ -137,13 +149,36 @@ function CategoryNode({ name = "لباس زنانه", categoryId }) {
   const [isOpen, setIsOpen] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [value, setValue] = useState(name);
+  const [iconMedia, setIconMedia] = useState("");
+
+  function handleUploadIcon(e) {
+    const file = e.target.files[0];
+    setIconMedia(URL.createObjectURL(file));
+  }
   return (
     <Wrapper>
-      <TitleBox onClick={() => !isEditing && setIsOpen((p) => !p)}>
-        <IconWrapper isedit={isEditing} bgcolor="#071e36" color="#e3e3e3">
-          <HiAcademicCap />
+      <TitleBox>
+        <IconWrapper isedit={isEditing} bgcolor="#071e360" color="#e3e3e3">
+          <IconImg
+            src={
+              iconMedia !== ""
+                ? iconMedia
+                : `http://localhost:8000/images/categories/icons/${icon}`
+            }
+          />
+          {isEditing && (
+            <>
+              <IconLable htmlFor="icon_img"></IconLable>
+              <input
+                id="icon_img"
+                type="file"
+                hidden
+                onChange={handleUploadIcon}
+              />
+            </>
+          )}
         </IconWrapper>
-        <CategoryName>
+        <CategoryName onClick={() => !isEditing && setIsOpen((p) => !p)}>
           {isEditing ? (
             <CategoryInput
               value={value}
@@ -168,7 +203,13 @@ function CategoryNode({ name = "لباس زنانه", categoryId }) {
       <Box isopen={isOpen}>
         {isOpen && (
           <>
-            <AddItemNode bgColor="#e6fbde" title="  زیر مجموعه جدید" delay={0} />
+            <AddItemNode
+              bgColor="#ffffff"
+              palceHolder="زیر مجموعه"
+              isSubCategory={true}
+              title="زیر مجموعه جدید"
+              delay={0}
+            />
             {subcategories.map((item, i) => {
               return (
                 <SubcategoryNode
