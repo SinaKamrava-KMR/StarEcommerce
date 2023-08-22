@@ -123,7 +123,7 @@ export const IconLable = styled.label`
   z-index: 20;
 `;
 export const IconImg = styled.img`
-  width: 100%;
-  height: 100%;
+  width: 25px;
+  height: 25px;
   object-fit: cover;
 `;

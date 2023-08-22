@@ -17,25 +17,44 @@ import {
   Wrapper,
 } from "./AddItemNodeStyles";
 
-
-
-
 function AddItemNode({
   palceHolder,
   title,
   bgColor = "#ffffff",
   isSubCategory = false,
+  onCreate,
 }) {
   const [isAdding, setIsAdding] = useState(false);
   const [value, setValue] = useState("");
-  const [iconMedia, setIconMedia] = useState("");
+  const [iconMedia, setIconMedia] = useState(null);
 
-  function handleUploadIcon(e) {
+  const handleUploadIcon = (e) => {
     const file = e.target.files[0];
-    setIconMedia(URL.createObjectURL(file));
-  }
+    setIconMedia(file);
+  };
+
+  const handleClick = (e) => {
+    e.stopPropagation()
+    if (value !== "") {
+      if (iconMedia !== null) {
+        onCreate({ name: value, icon: iconMedia });
+      } else {
+        onCreate({ name: value });
+      }
+    }
+
+    setIconMedia(null);
+    setValue("");
+    setIsAdding(false);
+  };
   return (
-    <Wrapper bgcolor={bgColor} onClick={() => setIsAdding(true)}>
+    <Wrapper
+      bgcolor={bgColor}
+      onClick={(e) => {
+        e.stopPropagation();
+        setIsAdding(true);
+      }}
+    >
       {!isAdding ? (
         <AddWrapper>
           <p>{title}</p>
@@ -46,8 +65,8 @@ function AddItemNode({
           <IconWrapper hasborder={!isSubCategory} color="#4c4c4c">
             {isSubCategory ? (
               <HiMiniBolt />
-            ) : iconMedia !== "" ? (
-              <IconImg src={iconMedia} />
+            ) : iconMedia !== null ? (
+              <IconImg src={URL.createObjectURL(iconMedia)} />
             ) : (
               <HiMiniPhoto />
             )}
@@ -69,7 +88,7 @@ function AddItemNode({
             value={value}
             onChange={(e) => setValue(e.target.value)}
           />
-          <IconWrapper color="#4c4c4c">
+          <IconWrapper onClick={handleClick} color="#4c4c4c">
             <HiMiniCheck />
           </IconWrapper>
         </Container>
@@ -84,6 +103,7 @@ AddItemNode.propTypes = {
   bgColor: PropTypes.string,
   palceHolder: PropTypes.string,
   isSubCategory: PropTypes.bool,
+  onCreate: PropTypes.func,
 };
 
 export default AddItemNode;

@@ -6,11 +6,29 @@ import {
 } from "react-icons/hi2";
 import { useState } from "react";
 import PropTypes from "prop-types";
-import { IconWrapper, SubCategoryInput, SubCategoryName, Wrapper } from "./SubcategoryNodeStyles";
+import {
+  IconWrapper,
+  SubCategoryInput,
+  SubCategoryName,
+  Wrapper,
+} from "./SubcategoryNodeStyles";
+import { useEditSubCategory } from "../../hooks/useEditSubCategory";
+import Loading from "../../components/common/Loading";
 
-function SubcategoryNode({ delay, name = "تاپ مشکی" }) {
+function SubcategoryNode({ delay, name = "تاپ مشکی", id, category }) {
   const [isEditing, setIsEditing] = useState(false);
   const [value, setValue] = useState(name);
+  const { isLoading, mutate } = useEditSubCategory();
+
+  const handleClick = (event) => {
+    event.stopPropagation();
+    if (value !== name && isEditing) {
+      mutate({ id, data: { name: value, category } });
+    }
+
+    setIsEditing((e) => !e);
+  };
+
   return (
     <Wrapper
       as={motion.div}
@@ -18,6 +36,7 @@ function SubcategoryNode({ delay, name = "تاپ مشکی" }) {
       animate={{ x: 0, opacity: 1 }}
       transition={{ delay }}
     >
+      {isLoading && <Loading />}
       <IconWrapper isedit={false} bgcolor="#405c7c0" color="#e3e3e3">
         <HiMiniBolt />
       </IconWrapper>
@@ -32,11 +51,7 @@ function SubcategoryNode({ delay, name = "تاپ مشکی" }) {
         )}
       </SubCategoryName>
 
-      <IconWrapper
-        onClick={() => setIsEditing((e) => !e)}
-        bgcolor="#3b3c3c"
-        color="#f2f2f2"
-      >
+      <IconWrapper onClick={handleClick} bgcolor="#3b3c3c" color="#f2f2f2">
         {isEditing ? <HiMiniCheck /> : <HiOutlinePencilSquare />}
       </IconWrapper>
     </Wrapper>
@@ -46,7 +61,8 @@ function SubcategoryNode({ delay, name = "تاپ مشکی" }) {
 SubcategoryNode.propTypes = {
   delay: PropTypes.number,
   name: PropTypes.string,
+  id: PropTypes.string,
+  category: PropTypes.string,
 };
-
 
 export default SubcategoryNode;
