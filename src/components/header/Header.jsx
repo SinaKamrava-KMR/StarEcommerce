@@ -5,6 +5,8 @@ import Logo from "../common/Logo";
 import NavBar from "./NavBar";
 import { Link } from "react-router-dom";
 import Search from "./Search";
+import { useEffect } from "react";
+import { useState } from "react";
 // import Cookies from "js-cookie";
 // import { ACCESS_TOKEN_KEY } from "../../configs/constants";
 // import LoginIcon from "@mui/icons-material/Login";
@@ -14,11 +16,14 @@ const HeaderStyled = styled.header`
   display: grid;
   gap: 1.6rem;
   align-items: center;
+  background-color: ${(props) =>
+    props.position > 80 ? "#fff" : "transparent"};
   z-index: 99999;
   position: fixed;
-  top: 1.2rem;
-  left: 2rem;
-  right: 2rem;
+  top: 0;
+  left: 0;
+  right: 0;
+  padding: 1.2rem 2rem 1rem 2rem;
   grid-template-columns: repeat(auto-fill, maxmin(50px, 1fr));
   @media (min-width: 800px) {
     grid-template-columns: 1fr 1fr;
@@ -64,9 +69,22 @@ const Flex1 = styled.div`
 
 function Header() {
   // const accessToken = Cookies.get(ACCESS_TOKEN_KEY);
+  const [scrollPosition, setScrollPosition] = useState(0);
+  const handleScroll = () => {
+    const position = window.pageYOffset;
+    setScrollPosition(position);
+  };
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll, { passive: true });
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
-    <HeaderStyled>
+    <HeaderStyled position={scrollPosition}>
       <Row>
         <Logo />
 

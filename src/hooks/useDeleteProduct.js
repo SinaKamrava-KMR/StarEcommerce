@@ -6,6 +6,7 @@ import { show } from "../redux/reducer/toast/toastSlice";
 export default function useDeleteProduct() {
   const dispatch = useDispatch();
   const queryClient = useQueryClient();
+
   const services = new ProductServices();
 
   const { isLoading: isDeleting, mutate: deleteProduct } = useMutation({
