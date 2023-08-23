@@ -19,13 +19,8 @@ const MainLayout = styled.main`
 const AppLayoutStyle = styled.main`
   height: 100%;
   width: 100%;
-  padding: 1.2rem;
   display: flex;
   flex-direction: column;
-  @media (min-width: 1200px) {
-    width: 97%;
-    margin-inline: auto;
-  }
 `;
 
 function AppLayout() {

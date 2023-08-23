@@ -2,6 +2,8 @@ import { styled } from "styled-components";
 import CategoryNode from "./CategoryNode";
 import AddItemNode from "./AddItemNode";
 import { useSelector } from "react-redux";
+import { useCreateCategory } from "../../hooks/useCreateCategory";
+import Loading from "../../components/common/Loading";
 
 const Wrapper = styled.div`
   display: flex;
@@ -22,19 +24,35 @@ const Wrapper = styled.div`
     border-top: 1px solid #333;
   }
 `;
-function TreeCategory() {
+const TreeCategory = () => {
   const categories = useSelector((state) => state.categories.categories);
+  const { isLoading, mutate } = useCreateCategory();
+  const handleCreateCategory = (data) => {
+    mutate(data);
+    console.log(data);
+  };
 
   return (
     <Wrapper>
-      <AddItemNode title="دسته بندی جدید" palceHolder="دسته بندی" delay={0} />
+      {isLoading && <Loading />}
+      <AddItemNode
+        onCreate={handleCreateCategory}
+        title="دسته بندی جدید"
+        palceHolder="دسته بندی"
+        delay={0}
+      />
       {categories.map((item) => {
         return (
-          <CategoryNode icon={item.icon} categoryId={item._id} key={item._id} name={item.name} />
+          <CategoryNode
+            icon={item.icon}
+            categoryId={item._id}
+            key={item._id}
+            name={item.name}
+          />
         );
       })}
     </Wrapper>
   );
-}
+};
 
 export default TreeCategory;

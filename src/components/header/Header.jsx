@@ -9,11 +9,16 @@ import Search from "./Search";
 // import { ACCESS_TOKEN_KEY } from "../../configs/constants";
 // import LoginIcon from "@mui/icons-material/Login";
 const HeaderStyled = styled.header`
-  width: 100%;
   padding-block: 10px;
+  margin-inline: auto;
   display: grid;
   gap: 1.6rem;
   align-items: center;
+  z-index: 99999;
+  position: fixed;
+  top: 1.2rem;
+  left: 2rem;
+  right: 2rem;
   grid-template-columns: repeat(auto-fill, maxmin(50px, 1fr));
   @media (min-width: 800px) {
     grid-template-columns: 1fr 1fr;
@@ -81,10 +86,10 @@ function Header() {
         </Link>
 
         <Link to="/account">
-            <IconWrapper>
-              <PersonIcon sx={{ fontSize: "25px" }} />
-            </IconWrapper>
-          </Link>
+          <IconWrapper>
+            <PersonIcon sx={{ fontSize: "25px" }} />
+          </IconWrapper>
+        </Link>
         {/* {accessToken ? (
           <Link to="/account">
             <IconWrapper>
