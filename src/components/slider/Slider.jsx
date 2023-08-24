@@ -8,18 +8,26 @@ import {
   Autoplay,
   EffectFade,
 } from "swiper/modules";
+import { useImperativeHandle } from "react";
+import { useRef } from "react";
 import { Swiper } from "swiper/react";
+import { styled } from "styled-components";
 
 // Import Swiper styles
 import "swiper/css";
 import "swiper/css/navigation";
-import "swiper/css/pagination";
 
-import { Wrapper } from "./SliderStyles";
-import { useImperativeHandle } from "react";
-import { useRef } from "react";
+
+const Wrapper = styled.div`
+  width: 100%;
+  height: 100%;
+`;
+
 const Slider = forwardRef(
-  ({ onSlideChange = () => {}, autoPlay = false, children }, ref) => {
+  (
+    { onSlideChange = () => {}, autoPlay = false, children },
+    ref
+  ) => {
     const swiperRef = useRef(null);
 
     useImperativeHandle(ref, () => ({
@@ -51,7 +59,6 @@ const Slider = forwardRef(
           pagination={{
             clickable: true,
           }}
-        
           scrollbar={{ draggable: true }}
           onSwiper={(swiper) => console.log(swiper)}
           onSlideChange={onSlideChange}
@@ -59,6 +66,7 @@ const Slider = forwardRef(
           ref={swiperRef}
           autoplay={autoPlay}
         >
+         
           {children}
         </Swiper>
       </Wrapper>
@@ -75,4 +83,5 @@ Slider.propTypes = {
 };
 
 Slider.displayName = "Slider";
+
 export default Slider;

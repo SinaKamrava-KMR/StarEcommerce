@@ -5,6 +5,7 @@ import { SwiperSlide } from "swiper/react";
 import SliderCircle from "../components/home/SliderCircle";
 import { useState } from "react";
 import { useEffect } from "react";
+import PaginationSlider from "../components/slider/PaginationSlider";
 
 const HomeWrapper = styled.div`
   height: 100%;
@@ -46,7 +47,7 @@ const SeeMore = styled.div`
   font-size: 16px;
   cursor: pointer;
   z-index: 20;
-  transition: all .5s ease-in;
+  transition: all 0.5s ease-in;
   background-image: linear-gradient(120deg, #f093fb 0%, #f5576c 100%);
   &:hover {
     background-image: linear-gradient(120deg, #e85ef8 0%, #f94059 100%);
@@ -69,6 +70,8 @@ const DiscountAd = styled.p`
   font-size: 12px;
   background-image: linear-gradient(to right, #6a11cb 0%, #2575fc 100%);
 `;
+
+const colors = ["#5941c6", "#3bda60", "#35a0e2", "#e44e4e"];
 
 function Home() {
   const sliderRef = useRef(null);
@@ -102,7 +105,7 @@ function Home() {
   return (
     <HomeWrapper>
       <SliderWrapper>
-        <SliderCircle expand={expand} />
+        <SliderCircle color={colors[activeSlide]} expand={expand} />
         <SeeMore>
           <p>دیدن</p>
           <p>محصولات</p>
@@ -119,12 +122,15 @@ function Home() {
           }}
           onSlideChange={handleSlideChange}
         >
+          <PaginationSlider
+            activeIndex={activeSlide}
+            length={4}
+            colors={colors}
+          />
           <SwiperSlideStyled>Slide 1</SwiperSlideStyled>
           <SwiperSlideStyled>Slide 2</SwiperSlideStyled>
           <SwiperSlideStyled>Slide 3</SwiperSlideStyled>
           <SwiperSlideStyled>Slide 4</SwiperSlideStyled>
-          <SwiperSlideStyled>Slide 5</SwiperSlideStyled>
-          <SwiperSlideStyled>Slide 6</SwiperSlideStyled>
         </Slider>
       </SliderWrapper>
       <button onClick={() => sliderRef.current.goNext()}>set expand</button>
