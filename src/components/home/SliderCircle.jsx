@@ -19,7 +19,7 @@ const SliderCircleWrapper = styled.div`
 const SliderCircle = ({ expand, color }) => {
   return (
     <SliderCircleWrapper
-      color={`${color}41`}
+      color={`${color}37`}
       expand={expand}
     ></SliderCircleWrapper>
   );
