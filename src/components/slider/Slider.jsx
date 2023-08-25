@@ -15,8 +15,6 @@ import { styled } from "styled-components";
 
 // Import Swiper styles
 import "swiper/css";
-import "swiper/css/navigation";
-
 
 const Wrapper = styled.div`
   width: 100%;
@@ -24,10 +22,7 @@ const Wrapper = styled.div`
 `;
 
 const Slider = forwardRef(
-  (
-    { onSlideChange = () => {}, autoPlay = false, children },
-    ref
-  ) => {
+  ({ onSlideChange = () => {}, autoPlay = false, children }, ref) => {
     const swiperRef = useRef(null);
 
     useImperativeHandle(ref, () => ({
@@ -66,7 +61,6 @@ const Slider = forwardRef(
           ref={swiperRef}
           autoplay={autoPlay}
         >
-         
           {children}
         </Swiper>
       </Wrapper>
@@ -80,6 +74,7 @@ Slider.propTypes = {
   effect: PropTypes.string,
   autoPlay: PropTypes.object,
   children: PropTypes.node,
+  render: PropTypes.node,
 };
 
 Slider.displayName = "Slider";

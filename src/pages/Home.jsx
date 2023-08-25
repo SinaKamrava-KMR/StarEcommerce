@@ -6,6 +6,9 @@ import SliderCircle from "../components/home/SliderCircle";
 import { useState } from "react";
 import { useEffect } from "react";
 import PaginationSlider from "../components/slider/PaginationSlider";
+import NavigationSlider from "../components/slider/NavigationSlider";
+import HomeSlideWrapper from "../components/slider/HomeSlideWrapper";
+import { motion } from "framer-motion";
 
 const HomeWrapper = styled.div`
   height: 100%;
@@ -25,12 +28,6 @@ const SliderWrapper = styled.div`
   position: relative;
 `;
 
-const SwiperSlideStyled = styled(SwiperSlide)`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`;
-
 const SeeMore = styled.div`
   width: 100px;
   height: 100px;
@@ -38,7 +35,7 @@ const SeeMore = styled.div`
 
   position: absolute;
   bottom: 14%;
-  right: 25%;
+  right: 20%;
   color: white;
   display: flex;
   flex-direction: column;
@@ -71,7 +68,7 @@ const DiscountAd = styled.p`
   background-image: linear-gradient(to right, #6a11cb 0%, #2575fc 100%);
 `;
 
-const colors = ["#5941c6", "#3bda60", "#35a0e2", "#e44e4e"];
+const colors = ["#e23737", "#12769e", "#949494", "#090908"];
 
 function Home() {
   const sliderRef = useRef(null);
@@ -106,7 +103,21 @@ function Home() {
     <HomeWrapper>
       <SliderWrapper>
         <SliderCircle color={colors[activeSlide]} expand={expand} />
-        <SeeMore>
+        <NavigationSlider
+          onLeft={() => sliderRef.current.goNext()}
+          onRight={() => sliderRef.current.goPrev()}
+        />
+        <PaginationSlider
+          activeIndex={activeSlide}
+          length={4}
+          colors={colors}
+        />
+        <SeeMore
+          as={motion.div}
+          initial={{ transform: "scale(2)", opacity: 0 }}
+          animate={{ transform: "scale(1)", opacity: 1 }}
+          transition={{ delay: 0.2, duration: 0.8 }}
+        >
           <p>دیدن</p>
           <p>محصولات</p>
         </SeeMore>
@@ -117,20 +128,35 @@ function Home() {
         <Slider
           ref={sliderRef}
           autoPlay={{
-            delay: 3000,
+            delay: 5000,
             disableOnInteraction: false,
           }}
           onSlideChange={handleSlideChange}
         >
-          <PaginationSlider
-            activeIndex={activeSlide}
-            length={4}
-            colors={colors}
-          />
-          <SwiperSlideStyled>Slide 1</SwiperSlideStyled>
-          <SwiperSlideStyled>Slide 2</SwiperSlideStyled>
-          <SwiperSlideStyled>Slide 3</SwiperSlideStyled>
-          <SwiperSlideStyled>Slide 4</SwiperSlideStyled>
+          <SwiperSlide>
+            <HomeSlideWrapper
+              index={0}
+              active={activeSlide === 0}
+            ></HomeSlideWrapper>
+          </SwiperSlide>
+          <SwiperSlide>
+            <HomeSlideWrapper
+              index={1}
+              active={activeSlide === 1}
+            ></HomeSlideWrapper>
+          </SwiperSlide>
+          <SwiperSlide>
+            <HomeSlideWrapper
+              index={2}
+              active={activeSlide === 2}
+            ></HomeSlideWrapper>
+          </SwiperSlide>
+          <SwiperSlide>
+            <HomeSlideWrapper
+              index={3}
+              active={activeSlide === 3}
+            ></HomeSlideWrapper>
+          </SwiperSlide>
         </Slider>
       </SliderWrapper>
       <button onClick={() => sliderRef.current.goNext()}>set expand</button>
