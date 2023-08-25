@@ -22,7 +22,10 @@ const Wrapper = styled.div`
 `;
 
 const Slider = forwardRef(
-  ({ onSlideChange = () => {}, autoPlay = false, children }, ref) => {
+  (
+    { onSlideChange = () => {}, autoPlay = false, slidesPerView=1, children },
+    ref
+  ) => {
     const swiperRef = useRef(null);
 
     useImperativeHandle(ref, () => ({
@@ -49,7 +52,7 @@ const Slider = forwardRef(
         <Swiper
           // install Swiper modules
           modules={[Navigation, Pagination, A11y, Autoplay, EffectFade]}
-          slidesPerView={1}
+          slidesPerView={slidesPerView}
           navigation
           pagination={{
             clickable: true,
@@ -75,6 +78,7 @@ Slider.propTypes = {
   autoPlay: PropTypes.object,
   children: PropTypes.node,
   render: PropTypes.node,
+  slidesPerView: PropTypes.number,
 };
 
 Slider.displayName = "Slider";

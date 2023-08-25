@@ -20,7 +20,7 @@ const Content = styled.div`
   flex: 1;
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 2rem;
 `;
 const SlideAnimation = styled.div`
   /* animation: ${(props) =>
@@ -103,7 +103,7 @@ const Button = styled.div`
   color: white;
   align-self: flex-end;
   min-width: 200px;
-  margin-top: 2rem;
+  margin-top: 4rem;
   transition: all 0.2s ease-in;
   & > * {
     transition: all 0.2s ease-in;
@@ -121,7 +121,7 @@ const Button = styled.div`
       opacity: 0;
     }
     100% {
-      transform: translate(0, -20px);
+      transform: translate(0, -10px);
       opacity: 1;
     }
   }
