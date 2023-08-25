@@ -1,6 +1,8 @@
 import { styled } from "styled-components";
 import BannerSlider from "../components/home/BannerSlider";
 import Brands from "../components/home/Brands";
+import Experiance from "../components/home/Experiance";
+import { Wrapper } from "../components/common/Wrapper";
 
 const HomeWrapper = styled.div`
   height: 100%;
@@ -16,18 +18,10 @@ function Home() {
   return (
     <HomeWrapper>
       <BannerSlider />
-      <Brands />
-      <p>xkfsjklf</p>
-      <p>xkfsjklf</p>
-      <p>xkfsjklf</p>
-      <p>xkfsjklf</p>
-      <p>xkfsjklf</p>
-      <p>xkfsjklf</p>
-      <p>xkfsjklf</p>
-      <p>xkfsjklf</p>
-      <p>xkfsjklf</p>
-      <p>xkfsjklf</p>
-      <p>xkfsjklf</p>
+      <Wrapper>
+        <Brands />
+        <Experiance />
+      </Wrapper>
     </HomeWrapper>
   );
 }

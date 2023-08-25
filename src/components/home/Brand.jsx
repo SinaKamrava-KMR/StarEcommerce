@@ -8,8 +8,10 @@ const Wrapper = styled.div`
   justify-content: center;
   height: 100px;
   cursor: pointer;
-  &:hover > div{
-    background-color: #c3c3c3;
+  transition: all .2s ease-in-out;
+  &:hover{
+    
+    transform: scale(1.3);
 }
 `;
 const Shape = styled.div`

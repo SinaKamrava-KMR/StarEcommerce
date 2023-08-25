@@ -4,11 +4,12 @@ import { HiArrowLongLeft } from "react-icons/hi2";
 const Wrapper = styled.div`
   width: 88%;
   margin-inline: auto;
+  padding-left: 10rem;
   display: flex;
   align-items: center;
   justify-content: center;
   height: 100%;
-  gap: 3rem;
+  gap: 1rem;
 `;
 
 const Image = styled.img`
