@@ -2,6 +2,8 @@ import { styled } from "styled-components";
 import { Title } from "../common/Title";
 import { ImHappy, ImCoinPound, ImGift, ImCart } from "react-icons/im";
 
+
+
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
@@ -12,6 +14,7 @@ const Container = styled.div`
   align-items: center;
   justify-content: space-between;
   gap: 1rem;
+
 `;
 const SubTitle = styled.p`
   color: #636363;
@@ -29,22 +32,19 @@ const Item = styled.div`
   flex-direction: column;
   gap: 0.5rem;
   gap: 2rem;
-  height: 300px;
   flex: 1;
   padding-inline: 2rem;
 `;
 const IconWrapper = styled.div`
-  width: 40px;
-  height: 40px;
-  background-color: #e9e9e9;
+  width: 45px;
+  height: 45px;
+  background-color: #ebebeb;
   color:#4f4f4f;
   border-radius:.5rem;
   display: flex;
   align-items: center;
   justify-content: center;
   font-size:23px;
-  
-
 `;
 const ItemTitel = styled.p`
     color: #333;
@@ -53,10 +53,8 @@ const ItemTitel = styled.p`
 `;
 const ItemDescription = styled.p`
     color: #6a6a6a;
-    font-size: 14px;
-    
+    font-size: 14px;    
 `;
-
 const contents = [
   {
     icon: <ImCoinPound />,
@@ -80,6 +78,8 @@ const contents = [
       "تمام محصولات ما از طریق سریع ترین سیستم حمل نقل ارسال خواهد شد",
   },
 ];
+
+
 
 const Experiance = () => {
   return (

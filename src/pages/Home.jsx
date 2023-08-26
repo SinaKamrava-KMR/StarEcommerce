@@ -3,6 +3,7 @@ import BannerSlider from "../components/home/BannerSlider";
 import Brands from "../components/home/Brands";
 import Experiance from "../components/home/Experiance";
 import { Wrapper } from "../components/common/Wrapper";
+import HomeCategories from "../components/home/HomeCategories";
 
 const HomeWrapper = styled.div`
   height: 100%;
@@ -21,6 +22,7 @@ function Home() {
       <Wrapper>
         <Brands />
         <Experiance />
+        <HomeCategories />
       </Wrapper>
     </HomeWrapper>
   );

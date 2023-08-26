@@ -69,7 +69,7 @@ const Brands = () => {
   return (
     <Wrapper>
       <Title>برند های محبوب</Title>
-      <Slider slidesPerView={10}>
+      <Slider slidesPerView={8}>
         {brands.map((brand, idx) => (
           <SwiperSlide key={idx}>
             <Brand brand={brand} />
