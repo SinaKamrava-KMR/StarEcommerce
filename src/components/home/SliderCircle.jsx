@@ -10,7 +10,7 @@ const SliderCircleWrapper = styled.div`
   transition: all 0.3s ease-in-out;
   overflow: hidden;
   position: absolute;
-  right: ${(props) => (props.expand ? 0 : `20%`)};
+  right: ${(props) => (props.expand ? 0 : `16%`)};
   bottom: ${(props) => (props.expand ? 0 : `20%`)};
   background-color: ${(props) => props.color};
   /* background-image: linear-gradient(to right, #fdb4c166 0%, #fba3b466 19%, #ffb4b867 60%, #ffcbc35b 100%); */

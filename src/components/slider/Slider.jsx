@@ -15,8 +15,6 @@ import { styled } from "styled-components";
 
 // Import Swiper styles
 import "swiper/css";
-import "swiper/css/navigation";
-
 
 const Wrapper = styled.div`
   width: 100%;
@@ -25,7 +23,7 @@ const Wrapper = styled.div`
 
 const Slider = forwardRef(
   (
-    { onSlideChange = () => {}, autoPlay = false, children },
+    { onSlideChange = () => {}, autoPlay = false, slidesPerView=1, children },
     ref
   ) => {
     const swiperRef = useRef(null);
@@ -54,7 +52,7 @@ const Slider = forwardRef(
         <Swiper
           // install Swiper modules
           modules={[Navigation, Pagination, A11y, Autoplay, EffectFade]}
-          slidesPerView={1}
+          slidesPerView={slidesPerView}
           navigation
           pagination={{
             clickable: true,
@@ -66,7 +64,6 @@ const Slider = forwardRef(
           ref={swiperRef}
           autoplay={autoPlay}
         >
-         
           {children}
         </Swiper>
       </Wrapper>
@@ -80,6 +77,8 @@ Slider.propTypes = {
   effect: PropTypes.string,
   autoPlay: PropTypes.object,
   children: PropTypes.node,
+  render: PropTypes.node,
+  slidesPerView: PropTypes.number,
 };
 
 Slider.displayName = "Slider";
