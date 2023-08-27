@@ -4,8 +4,9 @@ import Brands from "../components/home/Brands";
 
 import { Wrapper } from "../components/common/Wrapper";
 import HomeCategories from "../components/home/HomeCategories";
-import CategoryPreview from "../components/home/CategoryPreview";
+import ProductsPreview from "../components/home/ProductsPreview";
 import useProduct from "../hooks/useProduct";
+import MultiProductsPreview from "../components/home/MultiProductsPreview";
 
 const HomeWrapper = styled.div`
   height: 100%;
@@ -27,17 +28,18 @@ function Home() {
         <Brands />
         {/* <Experiance /> */}
 
-        <CategoryPreview
+        <ProductsPreview
           isLoading={isLoading}
           data={products?.data.products}
           title="لباس های کژوال"
         />
         <HomeCategories />
-        <CategoryPreview
+        <ProductsPreview
           isLoading={isLoading}
           data={products?.data.products}
           title="کت و شلوار"
         />
+        <MultiProductsPreview/>
       </Wrapper>
     </HomeWrapper>
   );

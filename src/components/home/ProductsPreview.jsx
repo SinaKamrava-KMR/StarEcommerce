@@ -3,7 +3,7 @@ import { styled } from "styled-components";
 import { Title } from "../common/Title";
 import Slider from "../slider/Slider";
 import { SwiperSlide } from "swiper/react";
-import ProductItem from "../product/ProductCard";
+import ProductCard from "../product/ProductCard";
 import PreviewNavigation from "./PreviewNavigation";
 import { useRef } from "react";
 
@@ -32,7 +32,7 @@ const SeeMoreTag = styled.p`
   padding: .4rem 1rem;
 `;
 
-function CategoryPreview({ title, data }) {
+function ProductsPreview({ title, data }) {
   const sliderRef = useRef(null);
   return (
     <Wrapper>
@@ -48,7 +48,7 @@ function CategoryPreview({ title, data }) {
       <Slider ref={sliderRef} spaceBetween={10} slidesPerView={4}>
         {data?.map((product, idx) => (
           <SwiperSlide key={idx}>
-            <ProductItem product={product} />
+            <ProductCard product={product} />
           </SwiperSlide>
         ))}
       </Slider>
@@ -56,9 +56,9 @@ function CategoryPreview({ title, data }) {
   );
 }
 
-CategoryPreview.propTypes = {
+ProductsPreview.propTypes = {
   title: PropTypes.string,
   data: PropTypes.array,
 };
 
-export default CategoryPreview;
+export default ProductsPreview;

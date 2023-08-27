@@ -27,7 +27,7 @@ export const Image = styled.img`
 
 export const ImageWrapper = styled.div`
   width: 100%;
-  height: 25rem;
+  height: 60%;
   position: relative;
   border-top-right-radius: 0.5rem;
   border-top-left-radius: 0.5rem;
@@ -60,12 +60,11 @@ export const AddButton = styled.div`
 export const Title = styled.p`
   overflow: hidden;
   text-align: center;
-  width: 250px;
+  width: 80%;
   & p {
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;
-    font-size: 18px;
     font-weight: bold;
   }
 `;
