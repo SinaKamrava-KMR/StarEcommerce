@@ -55,3 +55,21 @@ export async function handleMedias(images) {
     return undefined;
   }
 }
+
+
+ export function convertToPersianNumber(number) {
+  const persianDigits = ["۰", "۱", "۲", "۳", "۴", "۵", "۶", "۷", "۸", "۹"];
+  
+  const englishDigits = number.toString().split("");
+  let persianNumber = "";
+  
+  for (let i = 0; i < englishDigits.length; i++) {
+    if (!isNaN(englishDigits[i])) {
+      persianNumber += persianDigits[englishDigits[i]];
+    } else {
+      persianNumber += englishDigits[i];
+    }
+  }
+  
+  return persianNumber;
+}

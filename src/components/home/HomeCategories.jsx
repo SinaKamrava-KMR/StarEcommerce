@@ -34,7 +34,7 @@ const Image = styled.img`
   transition: all 0.3s ease-in-out;
   cursor: pointer;
   &:hover {
-    transform: scale(1.5);
+    transform: scale(1.5) translate(-20px , 20px);
   }
 `;
 const FloatButton = styled.p`
@@ -51,10 +51,11 @@ const FloatButton = styled.p`
   border-radius: 0.5rem;
   padding: 1rem 0.5rem;
   gap: 1rem;
-  box-shadow: 0 2px 5px #0b0b0b5c;
   cursor: pointer;
+
+  box-shadow: 0 2px 5px #5656565c;
   &:hover {
-    box-shadow: 0 2px 10px #0b0b0b5c;
+    box-shadow: 0 2px 10px #4444445c;
   }
 `;
 

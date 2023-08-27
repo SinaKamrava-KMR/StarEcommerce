@@ -29,7 +29,6 @@ const Logo = styled.img`
 `;
 
 const Brand = ({ brand }) => {
-  console.log(brand);
   return (
     <Wrapper>
       <Logo src={brand.src} />
