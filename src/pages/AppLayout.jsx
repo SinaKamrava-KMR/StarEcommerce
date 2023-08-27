@@ -12,6 +12,7 @@ import {
 
 import { useQuery } from "@tanstack/react-query";
 import { getCategories, getSubcategories } from "../services/api/categoryApi";
+import Footer from "../components/footer/Footer";
 
 const MainLayout = styled.main`
   flex: 1;
@@ -21,6 +22,7 @@ const AppLayoutStyle = styled.main`
   width: 100%;
   display: flex;
   flex-direction: column;
+  gap: 3rem;
 `;
 
 function AppLayout() {
@@ -53,6 +55,7 @@ function AppLayout() {
       <MainLayout>
         <Outlet />
       </MainLayout>
+      <Footer />
     </AppLayoutStyle>
   );
 }

@@ -7,6 +7,7 @@ import HomeCategories from "../components/home/HomeCategories";
 import ProductsPreview from "../components/home/ProductsPreview";
 import useProduct from "../hooks/useProduct";
 import MultiProductsPreview from "../components/home/MultiProductsPreview";
+import Experiance from "../components/home/Experiance";
 
 const HomeWrapper = styled.div`
   height: 100%;
@@ -39,6 +40,7 @@ function Home() {
           data={products?.data.products}
           title="کت و شلوار"
         />
+        <Experiance />
         <MultiProductsPreview/>
       </Wrapper>
     </HomeWrapper>
