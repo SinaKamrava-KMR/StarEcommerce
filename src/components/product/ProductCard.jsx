@@ -10,36 +10,58 @@ import {
   PriceWrapper,
   AddButton,
 } from "./ProductCardStyle";
+import { Link } from "react-router-dom";
+import { addProduct } from "../../redux/reducer/cart/cartSlice";
+import { useDispatch } from "react-redux";
+import {
+  addFavoriteProduct,
+  removeFavoriteProduct,
+} from "../../redux/reducer/wishlist/wishlistSlice";
 
-function ProductCard({ product }) {
+function ProductCard({ product, isLike = false }) {
+  const dispatch = useDispatch();
+  const handleAdToCart = (e) => {
+    e.preventDefault();
+    dispatch(addProduct(product));
+  };
+  const handleLike = (state) => {
+    if (state) {
+      dispatch(addFavoriteProduct(product));
+    } else {
+      dispatch(removeFavoriteProduct({ id: product._id }));
+    }
+  };
   return (
-    <Wrapper>
-      <ImageWrapper>
-        <LikeButton />
-        <Image
-          src={`http://localhost:8000/images/products/images/${product.images[0]}`}
-        />
-      </ImageWrapper>
-      <Title>
-        <p>{product.name}</p>
-      </Title>
+    <Link to={`/product/${product._id}`}>
+      <Wrapper>
+        <ImageWrapper>
+          <LikeButton onLike={handleLike} init={isLike} />
+          <Image
+            src={`http://localhost:8000/images/products/images/${product.images[0]}`}
+          />
+        </ImageWrapper>
+        <Title>
+          <p>{product.name}</p>
+        </Title>
 
-      <PriceWrapper>
-        <p>{convertToPersianNumber(product.price)}</p>
-        <p>تومان</p>
-      </PriceWrapper>
+        <PriceWrapper>
+          <p>{convertToPersianNumber(product.price)}</p>
+          <p>تومان</p>
+        </PriceWrapper>
 
-      <AddButton>
-        <HiOutlinePlus />
-        <p>افزودن به سبد</p>
-      </AddButton>
-    </Wrapper>
+        <AddButton onClick={handleAdToCart}>
+          <HiOutlinePlus />
+          <p>افزودن به سبد</p>
+        </AddButton>
+      </Wrapper>
+    </Link>
   );
 }
 
 ProductCard.propTypes = {
   title: PropTypes.string,
   children: PropTypes.node,
+  isLike: PropTypes.bool,
   product: PropTypes.object,
 };
 export default ProductCard;

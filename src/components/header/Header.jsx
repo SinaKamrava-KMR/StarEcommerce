@@ -7,6 +7,8 @@ import { Link } from "react-router-dom";
 import Search from "./Search";
 import { useEffect } from "react";
 import { useState } from "react";
+import { useSelector } from "react-redux";
+
 // import Cookies from "js-cookie";
 // import { ACCESS_TOKEN_KEY } from "../../configs/constants";
 // import LoginIcon from "@mui/icons-material/Login";
@@ -69,6 +71,7 @@ const Flex1 = styled.div`
 
 function Header() {
   // const accessToken = Cookies.get(ACCESS_TOKEN_KEY);
+  const carts = useSelector(state=>state.cart.products)
   const [scrollPosition, setScrollPosition] = useState(0);
   const handleScroll = () => {
     const position = window.pageYOffset;
@@ -76,7 +79,6 @@ function Header() {
   };
   useEffect(() => {
     window.addEventListener("scroll", handleScroll, { passive: true });
-
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
@@ -96,9 +98,12 @@ function Header() {
         <Search />
         <Link to="/cart">
           <IconWrapper>
-            <BadgeIcon>
-              <p>3</p>
-            </BadgeIcon>
+            {carts.length > 0 && (
+              <BadgeIcon>
+                <p>{carts.length}</p>
+              </BadgeIcon>
+            )}
+
             <ShoppingCartIcon fontSize="large" />
           </IconWrapper>
         </Link>

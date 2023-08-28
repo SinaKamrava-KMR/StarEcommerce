@@ -1,5 +1,7 @@
-import { Link } from "react-router-dom"
-import { styled } from "styled-components"
+import { useParams } from "react-router-dom";
+import { styled } from "styled-components";
+import { useProductById } from "../hooks/useProductById";
+import Loading from "../components/common/Loading";
 
 const ProductStyled = styled.div`
   height: 100%;
@@ -8,18 +10,14 @@ const ProductStyled = styled.div`
   gap: 3rem;
   align-items: center;
   justify-content: center;
-`
-
+`;
 
 function Product() {
-  return (
-    <ProductStyled>
-      <h1>صفحه محصول</h1>
-      <Link to="/cart">
-       اضافه کردن به کارت 
-      </Link>
-    </ProductStyled>
-  )
+  let { productId } = useParams();
+  const { isLoading, product } = useProductById(productId);
+  if (isLoading) return <Loading />;
+  console.log(product);
+  return <ProductStyled></ProductStyled>;
 }
 
-export default Product
+export default Product;

@@ -59,7 +59,6 @@ const Slider = forwardRef(
             clickable: true,
           }}
           scrollbar={{ draggable: true }}
-          onSwiper={(swiper) => console.log(swiper)}
           onSlideChange={onSlideChange}
           style={{ width: "100%", height: "100%" }}
           ref={swiperRef}

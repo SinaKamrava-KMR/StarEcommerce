@@ -6,6 +6,7 @@ import { SwiperSlide } from "swiper/react";
 import ProductCard from "../product/ProductCard";
 import PreviewNavigation from "./PreviewNavigation";
 import { useRef } from "react";
+import { Link } from "react-router-dom";
 
 const Wrapper = styled.div`
   width: 100%;
@@ -24,21 +25,25 @@ const SeeMoreTag = styled.p`
   cursor: pointer;
   font-size: 12px;
   background-color: #3794ebeb;
-  &:hover{
+  &:hover {
     background-color: #126ec4eb;
   }
   border-radius: 50px;
   color: #fff;
-  padding: .4rem 1rem;
+  padding: 0.4rem 1rem;
 `;
 
-function ProductsPreview({ title, data }) {
+function ProductsPreview({ title, data, categoryId, wishList=[] }) {
   const sliderRef = useRef(null);
+  let filteredList = data?.filter((item) => item.category === categoryId);
+
   return (
     <Wrapper>
       <HeaderContainer>
         <Title>{title}</Title>
-        <SeeMoreTag>دیدن محصولات</SeeMoreTag>
+        <Link to={`/products?category=${categoryId}`}>
+          <SeeMoreTag>دیدن محصولات</SeeMoreTag>
+        </Link>
         <span style={{ flex: 1 }}></span>
         <PreviewNavigation
           onLeft={() => sliderRef.current.goNext()}
@@ -46,11 +51,21 @@ function ProductsPreview({ title, data }) {
         />
       </HeaderContainer>
       <Slider ref={sliderRef} spaceBetween={10} slidesPerView={4}>
-        {data?.map((product, idx) => (
-          <SwiperSlide key={idx}>
-            <ProductCard product={product} />
-          </SwiperSlide>
-        ))}
+        {filteredList?.reverse()?.map(
+          (product, idx) =>
+            idx < 6 && (
+              <SwiperSlide key={idx}>
+                <ProductCard
+                  product={product}
+                  isLike={
+                    wishList.find((item) => item._id === product._id)
+                      ? true
+                      : false
+                  }
+                />
+              </SwiperSlide>
+            )
+        )}
       </Slider>
     </Wrapper>
   );
@@ -58,7 +73,9 @@ function ProductsPreview({ title, data }) {
 
 ProductsPreview.propTypes = {
   title: PropTypes.string,
+  categoryId: PropTypes.string,
   data: PropTypes.array,
+  wishList: PropTypes.array,
 };
 
 export default ProductsPreview;

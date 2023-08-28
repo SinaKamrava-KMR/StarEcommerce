@@ -49,6 +49,7 @@ export const AddButton = styled.div`
   background-color: #575757;
   color: #fff;
   cursor: pointer;
+  z-index: 20;
   transition: all 0.1s ease-in-out;
   &:hover {
     background-color: #484848;

@@ -1,3 +1,4 @@
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { styled } from "styled-components";
 
@@ -11,6 +12,8 @@ const AccountStyle = styled.div`
 `;
 
 function Account() {
+  const wishlist = useSelector((state) => state.wishlist.products);
+  console.log(wishlist);
   return (
     <AccountStyle>
       <h1>صفحه پروفایل و تنظیمات کاربر</h1>
