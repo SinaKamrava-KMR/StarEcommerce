@@ -1,25 +1,38 @@
-import { Link } from "react-router-dom"
-import { styled } from "styled-components"
+import { useParams } from "react-router-dom";
+import { styled } from "styled-components";
+import { useProductById } from "../hooks/useProductById";
+import Loading from "../components/common/Loading";
+import ProductSlider from "../components/product/ProductSlider";
 
 const ProductStyled = styled.div`
-  height: 100%;
+  height: 100vh;
+
   display: flex;
-  flex-direction: column;
+  flex-wrap: wrap;
+  padding: 3rem;
   gap: 3rem;
   align-items: center;
-  justify-content: center;
-`
-
+`;
+const Container = styled.div`
+  flex: 1;
+`;
 
 function Product() {
+  let { productId } = useParams();
+  const { isLoading, product } = useProductById(productId);
+
+  console.log(product);
+
+  if (isLoading) return <Loading />;
   return (
     <ProductStyled>
-      <h1>صفحه محصول</h1>
-      <Link to="/cart">
-       اضافه کردن به کارت 
-      </Link>
+      <ProductSlider images={product.images} />
+      <Container>
+        <p>{product.name}</p>
+        <div dangerouslySetInnerHTML={{ __html: product.description }} />
+      </Container>
     </ProductStyled>
-  )
+  );
 }
 
-export default Product
+export default Product;

@@ -7,6 +7,8 @@ import HomeCategories from "../components/home/HomeCategories";
 import ProductsPreview from "../components/home/ProductsPreview";
 import useProduct from "../hooks/useProduct";
 import MultiProductsPreview from "../components/home/MultiProductsPreview";
+import Experiance from "../components/home/Experiance";
+import { useSelector } from "react-redux";
 
 const HomeWrapper = styled.div`
   height: 100%;
@@ -19,27 +21,41 @@ const HomeWrapper = styled.div`
 `;
 
 function Home() {
-  const { isLoading, products } = useProduct();
-
+  const { isLoading, products } = useProduct(1, 1000);
+  const categories = useSelector((state) => state.categories.categories);
+  const wishList = useSelector((state) => state.wishlist.products);
   return (
     <HomeWrapper>
       <BannerSlider />
       <Wrapper>
         <Brands />
+
         {/* <Experiance /> */}
 
         <ProductsPreview
           isLoading={isLoading}
           data={products?.data.products}
+          categoryId={categories?.at(-1)?._id}
           title="لباس های کژوال"
+          wishList={wishList}
         />
         <HomeCategories />
         <ProductsPreview
           isLoading={isLoading}
           data={products?.data.products}
+          categoryId={categories?.at(1)?._id}
           title="کت و شلوار"
+          wishList={wishList}
         />
-        <MultiProductsPreview/>
+        <Experiance />
+        <MultiProductsPreview wishList={wishList} />
+        <ProductsPreview
+          isLoading={isLoading}
+          data={products?.data.products}
+          wishList={wishList}
+          categoryId={categories?.at(0)?._id}
+          title="لباس زنانه"
+        />
       </Wrapper>
     </HomeWrapper>
   );

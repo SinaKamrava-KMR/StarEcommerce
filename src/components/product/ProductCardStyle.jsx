@@ -8,16 +8,18 @@ export const Wrapper = styled.div`
   max-width: 40rem;
   border: 1px solid #d8d8d8;
   cursor: pointer;
+  padding: 1rem;
   &:hover {
     background-color: #f5f5f5e4;
   }
-  border-radius: 1rem;
+  border-radius: 1.5rem;
   padding-bottom: 1.6rem;
   overflow: hidden;
 `;
 export const Image = styled.img`
   width: 100%;
   height: 100%;
+  
   object-fit: fill;
   transition: all 0.5s ease-in-out;
   &:hover {
@@ -29,8 +31,9 @@ export const ImageWrapper = styled.div`
   width: 100%;
   height: 60%;
   position: relative;
-  border-top-right-radius: 0.5rem;
-  border-top-left-radius: 0.5rem;
+  border-top-right-radius: 1rem;
+  border-top-left-radius: 1rem;
+ 
   overflow: hidden;
   cursor: pointer;
 `;
@@ -49,6 +52,7 @@ export const AddButton = styled.div`
   background-color: #575757;
   color: #fff;
   cursor: pointer;
+  z-index: 20;
   transition: all 0.1s ease-in-out;
   &:hover {
     background-color: #484848;

@@ -48,7 +48,6 @@ const SelectOptions = styled.ul`
   top: 20px;
   left: 0;
   width: 100%;
-  max-height: 100px;
   background-color: #fff;
   z-index: 1;
 `;
@@ -57,7 +56,9 @@ const SelectOption = styled.li`
   padding: 8px;
   font-size: 14px;
   color: #333;
+  background-color: #fbfbfb;
   cursor: pointer;
+
   white-space: nowrap;
   font-weight: 500;
   transition: scale 0.1s ease-in;
@@ -83,26 +84,25 @@ function NavSelect({ label, options = [] }) {
 
   return (
     <SelectWrapper>
-      <SelectLabel
-        onClick={() => setIsOpen((is) => !is)}
-      >
-        {label}
-      </SelectLabel>
+      <SelectLabel onClick={() => setIsOpen((is) => !is)}>{label}</SelectLabel>
       <SelectArrow />
       {isOpen && (
         <SelectOptions onMouseLeave={() => setIsOpen((is) => !is)}>
-          {options.map((option, i) => (
-            <SelectOption
-              as={motion.li}
-              initial={{ y: -10, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              transition={{ delay: `.${i}` }}
-              key={option.value}
-              onClick={() => handleSelect(option)}
-            >
-              {option.label}
-            </SelectOption>
-          ))}
+          {options.map(
+            (option, i) =>
+              i < 4 && (
+                <SelectOption
+                  as={motion.li}
+                  initial={{ y: -10, opacity: 0 }}
+                  animate={{ y: 0, opacity: 1 }}
+                  transition={{ delay: `.${i}` }}
+                  key={option.value}
+                  onClick={() => handleSelect(option)}
+                >
+                  {option.label}
+                </SelectOption>
+              )
+          )}
         </SelectOptions>
       )}
     </SelectWrapper>

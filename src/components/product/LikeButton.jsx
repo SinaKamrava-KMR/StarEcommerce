@@ -16,13 +16,14 @@ const LikeWrapper = styled.div`
   justify-content: center;
   border-radius: 50%;
   cursor: pointer;
-  &:hover{
+  &:hover {
     background-color: #c3c3c3;
   }
 `;
-const LikeButton = ({ onLike }) => {
-  const [isLike, setIsLike] = useState(false);
-  const handleLike = () => {
+const LikeButton = ({ onLike, init = false }) => {
+  const [isLike, setIsLike] = useState(init);
+  const handleLike = (e) => {
+    e.preventDefault();
     setIsLike((s) => !s);
     onLike(!isLike);
   };
@@ -38,6 +39,7 @@ const LikeButton = ({ onLike }) => {
 };
 
 LikeButton.propTypes = {
-  onLike: PropTypes.node,
+  onLike: PropTypes.func,
+  init: PropTypes.bool,
 };
 export default LikeButton;

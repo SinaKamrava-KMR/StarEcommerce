@@ -1,4 +1,4 @@
-// import PropTypes from "prop-types";
+import PropTypes from "prop-types";
 import { styled } from "styled-components";
 import { Title } from "../common/Title";
 import useProduct from "../../hooks/useProduct";
@@ -30,7 +30,7 @@ const Container = styled.div`
   grid-template-rows: repeat(2, minmax(250px, 320px));
 `;
 
-function MultiProductsPreview() {
+function MultiProductsPreview({ wishList = [] }) {
   const { isLoading, products } = useProduct(1, 1000);
   const [list, setList] = useState([]);
 
@@ -38,7 +38,9 @@ function MultiProductsPreview() {
     if (id === "") {
       setList(products?.data?.products);
     } else {
-      setList(() => products?.data?.products.filter((item) => item.subcategory === id));
+      setList(() =>
+        products?.data?.products.filter((item) => item.subcategory === id)
+      );
     }
   };
 
@@ -49,7 +51,6 @@ function MultiProductsPreview() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isLoading]);
 
-  console.log(list);
   return (
     <Wrapper>
       <HeaderContainer>
@@ -60,15 +61,25 @@ function MultiProductsPreview() {
         {!isLoading &&
           list?.map(
             (product, i) =>
-              !(i > 9) && <ProductCard key={product?._id} product={product} />
+              !(i > 9) && (
+                <ProductCard
+                  key={product?._id}
+                  isLike={
+                    wishList.find((item) => item._id === product._id)
+                      ? true
+                      : false
+                  }
+                  product={product}
+                />
+              )
           )}
       </Container>
     </Wrapper>
   );
 }
 
-// MultiProductsPreview.propTypes = {
-//   title: PropTypes.string,
-//   data: PropTypes.array,
-// };
+MultiProductsPreview.propTypes = {
+  title: PropTypes.string,
+  wishList: PropTypes.array,
+};
 export default MultiProductsPreview;
