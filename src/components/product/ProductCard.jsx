@@ -22,7 +22,7 @@ function ProductCard({ product, isLike = false }) {
   const dispatch = useDispatch();
   const handleAdToCart = (e) => {
     e.preventDefault();
-    dispatch(addProduct(product));
+    dispatch(addProduct({ ...product, productCount: 1 ,color:"#333"}));
   };
   const handleLike = (state) => {
     if (state) {
