@@ -5,12 +5,12 @@ import Loading from "../components/common/Loading";
 import ProductSlider from "../components/product/ProductSlider";
 
 const ProductStyled = styled.div`
-  height: 100vh;
-
+  height: 110vh;
   display: flex;
   flex-wrap: wrap;
   padding: 3rem;
   gap: 3rem;
+  justify-content: center;
   align-items: center;
 `;
 const Container = styled.div`
