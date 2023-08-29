@@ -6,6 +6,7 @@ import ProductSlider from "../components/product/ProductSlider";
 import { HiChevronLeft } from "react-icons/hi2";
 import ChooseSize from "../components/product/ChooseSize";
 import ChooseColor from "../components/product/ChooseColor";
+import ProductCount from "../components/product/ProductCount";
 
 const ProductStyled = styled.div`
   display: flex;
@@ -40,6 +41,9 @@ const Description = styled.div`
 `;
 const Row = styled.div`
   display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
 `;
 
 function Product() {
@@ -65,7 +69,7 @@ function Product() {
         <ChooseSize />
         <Row>
           <ChooseColor />
-          
+          <ProductCount />
         </Row>
       </Container>
     </ProductStyled>
