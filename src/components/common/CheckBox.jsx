@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { styled } from "styled-components";
 import { GoHorizontalRule, GoCheck } from "react-icons/go";
 const Wrapper = styled.div`
@@ -8,7 +8,8 @@ const Wrapper = styled.div`
   height: 2rem;
   border: 1px solid ${(props) => (props.checked ? "#ffffff" : "#d1d1d1")};
   background-color: ${(props) => (props.checked ? "#3d3d43" : "#fff")};
-  color: ${(props) => (props.parentCheck ? "rgb(36, 36, 41)" : "#fff")};
+  color: ${(props) =>
+    props.parentCheck && !props.checked ? "rgb(36, 36, 41)" : "#fff"};
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -16,12 +17,23 @@ const Wrapper = styled.div`
   font-size: 14px;
 `;
 
-const CheckBox = ({ parentCheck = false, onCheck }) => {
+const CheckBox = ({ parentCheck = false, onCheck, initCheck = false }) => {
   const [checked, setChecked] = useState(false);
+
+  useEffect(() => {
+    setChecked(initCheck);
+  }, [initCheck]);
+
+  useEffect(() => {
+    if (parentCheck) {
+      setChecked(false);
+    }
+  }, [parentCheck]);
+
   return (
     <Wrapper
       onClick={(e) => {
-        e.stopPropagation()
+        e.stopPropagation();
         onCheck(!checked);
         setChecked((s) => !s);
       }}
@@ -37,5 +49,6 @@ const CheckBox = ({ parentCheck = false, onCheck }) => {
 CheckBox.propTypes = {
   onCheck: PropTypes.func,
   parentCheck: PropTypes.bool,
+  initCheck: PropTypes.bool,
 };
 export default CheckBox;

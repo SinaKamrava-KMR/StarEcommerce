@@ -30,7 +30,7 @@ const IconWrapper = styled.div`
   transition: all 0.1s ease-in-out;
   transform: ${(props) => (props.rotate ? "rotate(-90deg)" : "rotate(0)")};
 `;
-const ItemWrapper = ({ name, children, onCheck, delay = 0 }) => {
+const ItemWrapper = ({ name, children, onCheck, delay = 0,parentCheck=false ,initCheck}) => {
   const [select, setSelect] = useState(false);
 
   return (
@@ -41,7 +41,7 @@ const ItemWrapper = ({ name, children, onCheck, delay = 0 }) => {
       transition={{ delay }}
     >
       <Row onClick={() => setSelect((s) => !s)}>
-        <CheckBox onCheck={onCheck} />
+        <CheckBox onCheck={onCheck} parentCheck={parentCheck} initCheck={initCheck} />
         <Text>{name}</Text>
         <span style={{ flex: 1 }}></span>
         {children && (
@@ -60,6 +60,8 @@ ItemWrapper.propTypes = {
   onCheck: PropTypes.func,
   name: PropTypes.string,
   delay: PropTypes.string,
+  parentCheck: PropTypes.bool,
+  initCheck: PropTypes.bool,
 };
 
 export default ItemWrapper;

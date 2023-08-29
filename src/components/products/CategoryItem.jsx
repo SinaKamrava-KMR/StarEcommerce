@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useSelector } from "react-redux";
 
 import ItemWrapper from "./ItemWrapper";
+import { useReducer } from "react";
 
 const Wrapper = styled.div`
   max-height: 400px;
@@ -78,17 +79,83 @@ const mergeCategoriesAndSunCategories = (categories, subCategories) => {
     return { ...category, subcategories: [...relatedSubcategories] };
   });
 };
+
+const initialState = {
+  categories: [],
+  subcategories: [],
+};
+
+const reducer = (state, action) => {
+  const { payload } = action;
+  switch (action.type) {
+    case "check/add":
+      if (payload.category && !payload.subcategory) {
+        return {
+          ...state,
+          categories: [...state.categories, payload.category],
+        };
+      }
+      if (payload.subcategory) {
+        return {
+          ...state,
+          categories: [
+            ...state.categories.filter((item) => item !== payload.category),
+          ],
+          subcategories: [...state.subcategories, payload.subcategory],
+        };
+      }
+      break;
+    case "check/remove":
+      if (payload.category) {
+        return {
+          ...state,
+          categories: [
+            ...state.categories.filter((item) => item !== payload.category),
+          ],
+        };
+      }
+      if (payload.subcategory) {
+        return {
+          ...state,
+          subcategories: [
+            ...state.subcategories.filter(
+              (item) => item !== payload.subcategory
+            ),
+          ],
+        };
+      }
+      break;
+  }
+};
+
 const CategoryItem = () => {
+  const [checkState, dispatch] = useReducer(reducer, initialState);
   const [select, setSelect] = useState(false);
   // const [filteredItems,setFilteredItems] = useState([])
   const categories = useSelector((state) => state.categories.categories);
   const subCategories = useSelector((state) => state.categories.subcategories);
 
   const items = mergeCategoriesAndSunCategories(categories, subCategories);
-  console.log(items);
 
   const handleCheck = ({ check, category, subcategory }) => {
     console.log(check, category, subcategory);
+    if (check) {
+      dispatch({
+        type: "check/add",
+        payload: {
+          category,
+          subcategory,
+        },
+      });
+    } else {
+      dispatch({
+        type: "check/remove",
+        payload: {
+          category,
+          subcategory,
+        },
+      });
+    }
   };
 
   return (
@@ -102,11 +169,15 @@ const CategoryItem = () => {
       {select && (
         <Container>
           {items.map((category, cIndex) => {
+            const categoryChecked = !!checkState?.categories?.find(
+              (item) => item === category._id
+            );
             return (
               <ItemWrapper
                 delay={`.${cIndex}`}
                 key={cIndex}
                 name={category.name}
+                initCheck={categoryChecked}
                 onCheck={(check) =>
                   handleCheck({ check, category: category?._id })
                 }
@@ -116,12 +187,12 @@ const CategoryItem = () => {
                     <ItemWrapper
                       key={subIndex}
                       name={subcategory.name}
-              
+                      parentCheck={categoryChecked}
                       delay={`.${subIndex}`}
                       onCheck={(check) =>
                         handleCheck({
                           check,
-                          category: category?._id,
+                          category: category._id,
                           subcategory: subcategory?._id,
                         })
                       }
