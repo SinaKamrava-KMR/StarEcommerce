@@ -7,6 +7,8 @@ import { HiChevronLeft } from "react-icons/hi2";
 import ChooseSize from "../components/product/ChooseSize";
 import ChooseColor from "../components/product/ChooseColor";
 import ProductCount from "../components/product/ProductCount";
+import { convertToPersianNumber } from "../utils/helper";
+import { useState } from "react";
 
 const ProductStyled = styled.div`
   display: flex;
@@ -45,12 +47,32 @@ const Row = styled.div`
   justify-content: space-between;
   width: 100%;
 `;
+const AddToCartBtn = styled.div`
+  color: #f8f8f8;
+  background-color: #222;
+  padding: 1rem;
+  max-width: 50%;
+  text-align: center;
+  border-radius: 50px;
+  flex: 1;
+  &:hover{
+    background-color: #0b0b0b;
+  }
+  cursor: pointer;
+`;
+const Price = styled.p`
+  color: #ff6c6c;
+  font-size: 3rem;
+`;
 
 function Product() {
   let { productId } = useParams();
+  const [count, setCount] = useState(1);
   const { isLoading, product } = useProductById(productId);
 
-  console.log(product);
+  const handleProductCount = (c) => {
+    setCount(c);
+  };
 
   if (isLoading) return <Loading />;
   return (
@@ -69,7 +91,17 @@ function Product() {
         <ChooseSize />
         <Row>
           <ChooseColor />
-          <ProductCount />
+          <ProductCount
+            quantity={product.quantity}
+            onCount={handleProductCount}
+          />
+        </Row>
+        <span style={{ flex: 1 }}></span>
+        <Row>
+          <AddToCartBtn>افزودن به سبد خرید</AddToCartBtn>
+          <Price>
+            {`${convertToPersianNumber(product.price * count)} تومان`}
+          </Price>
         </Row>
       </Container>
     </ProductStyled>

@@ -36,21 +36,26 @@ const Row = styled.div`
   align-self: flex-end;
   overflow: hidden;
 `;
+const Text = styled.p`
+  color: #fd7d7d;
+  font-size: 1.7rem;
+`;
 
-
-function ProductCount({ quantity = 5, onCount }) {
+function ProductCount({ quantity = 0, onCount }) {
   const [count, setCount] = useState(1);
 
   const handleCountChange = (value) => {
     if (!(value > quantity) && value !== 0) {
       setCount(value);
-      onCount(value)
+      onCount(value);
     }
   };
+
+  if (quantity === 0) return <Text>این محصول به اتمام رسید</Text>;
+
   return (
     <Wrapper>
       <Title> تعداد محصول</Title>
-  
 
       <Row>
         <BtnWrapper
