@@ -2,6 +2,7 @@ import PropTypes from "prop-types";
 import { useState } from "react";
 import { styled } from "styled-components";
 import { HiPlus, HiOutlineMinus } from "react-icons/hi2";
+import { convertToPersianNumber } from "../../utils/helper";
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
@@ -64,7 +65,7 @@ function ProductCount({ quantity = 0, onCount }) {
         >
           <HiPlus />
         </BtnWrapper>
-        <CountText>{count}</CountText>
+        <CountText>{convertToPersianNumber(count)}</CountText>
         <BtnWrapper
           onClick={() => handleCountChange(count - 1)}
           active={count === 1}

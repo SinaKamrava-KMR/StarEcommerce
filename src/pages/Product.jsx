@@ -9,6 +9,13 @@ import ChooseColor from "../components/product/ChooseColor";
 import ProductCount from "../components/product/ProductCount";
 import { convertToPersianNumber } from "../utils/helper";
 import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { addProduct } from "../redux/reducer/cart/cartSlice";
+import LikeButton from "../components/product/LikeButton";
+import {
+  addFavoriteProduct,
+  removeFavoriteProduct,
+} from "../redux/reducer/wishlist/wishlistSlice";
 
 const ProductStyled = styled.div`
   display: flex;
@@ -17,6 +24,12 @@ const ProductStyled = styled.div`
   margin-top: 8rem;
   gap: 3rem;
   justify-content: center;
+  position: relative;
+`;
+const LikeWrapper = styled.div`
+  position: absolute;
+  left: 2rem;
+  top: 0;
 `;
 const Container = styled.div`
   flex: 1;
@@ -49,34 +62,60 @@ const Row = styled.div`
 `;
 const AddToCartBtn = styled.div`
   color: #f8f8f8;
-  background-color: #222;
+  background-color: ${(props) => (props.isActive ? "#999" : "#222")};
   padding: 1rem;
   max-width: 50%;
   text-align: center;
   border-radius: 50px;
   flex: 1;
-  &:hover{
-    background-color: #0b0b0b;
+  &:hover {
+    background-color: ${(props) => (props.isActive ? "#999" : "#000000")};
   }
-  cursor: pointer;
+
+  cursor: ${(props) => (props.isActive ? " not-allowed" : "pointer")};
 `;
 const Price = styled.p`
-  color: #ff6c6c;
+  color: ${(props) => (props.isActive ? "#a9a9a9" : "#ff6c6c")};
   font-size: 3rem;
 `;
 
 function Product() {
   let { productId } = useParams();
+  const dispatch = useDispatch();
   const [count, setCount] = useState(1);
+  const [color, setColor] = useState("#646464");
   const { isLoading, product } = useProductById(productId);
-
+  const wishList = useSelector((state) => state.wishlist.products);
   const handleProductCount = (c) => {
     setCount(c);
+  };
+
+  const handleLike = (state) => {
+    if (state) {
+      dispatch(addFavoriteProduct(product));
+    } else {
+      dispatch(removeFavoriteProduct({ id: product._id }));
+    }
+  };
+
+  const handleAddToCart = () => {
+    console.log({ ...product, productCount: count, color });
+    if (product.quantity !== 0) {
+      dispatch(addProduct({ ...product, productCount: count, color }));
+    }
   };
 
   if (isLoading) return <Loading />;
   return (
     <ProductStyled>
+      <LikeWrapper>
+        <LikeButton
+          onLike={handleLike}
+          init={
+            wishList.find((item) => item._id === product._id) ? true : false
+          }
+        />
+      </LikeWrapper>
       <ProductSlider images={product.images} />
       <Container>
         <Title>{product.name}</Title>
@@ -90,7 +129,7 @@ function Product() {
         />
         <ChooseSize />
         <Row>
-          <ChooseColor />
+          <ChooseColor onColor={setColor} />
           <ProductCount
             quantity={product.quantity}
             onCount={handleProductCount}
@@ -98,8 +137,13 @@ function Product() {
         </Row>
         <span style={{ flex: 1 }}></span>
         <Row>
-          <AddToCartBtn>افزودن به سبد خرید</AddToCartBtn>
-          <Price>
+          <AddToCartBtn
+            isActive={product.quantity === 0}
+            onClick={handleAddToCart}
+          >
+            افزودن به سبد خرید
+          </AddToCartBtn>
+          <Price isActive={product.quantity === 0}>
             {`${convertToPersianNumber(product.price * count)} تومان`}
           </Price>
         </Row>
