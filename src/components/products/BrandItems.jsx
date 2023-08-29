@@ -38,7 +38,7 @@ const BrandItems = () => {
       <Row onClick={() => setSelect((s) => !s)}>
         <Title>برند ها</Title>
         <IconWrapper rotate={select}>
-          <HiOutlineChevronLeft fontSize={23} />
+          <HiOutlineChevronLeft fontSize={18} />
         </IconWrapper>
       </Row>
     </Wrapper>
