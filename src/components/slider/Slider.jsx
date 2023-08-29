@@ -23,7 +23,15 @@ const Wrapper = styled.div`
 
 const Slider = forwardRef(
   (
-    { onSlideChange = () => {}, autoPlay = false, slidesPerView=1, spaceBetween=0,children },
+    {
+      onSlideChange = () => {},
+      style = {},
+      autoPlay = false,
+      slidesPerView = 1,
+      spaceBetween = 0,
+      children,
+      initialSlide=0
+    },
     ref
   ) => {
     const swiperRef = useRef(null);
@@ -58,9 +66,10 @@ const Slider = forwardRef(
           pagination={{
             clickable: true,
           }}
+          initialSlide={initialSlide}
           scrollbar={{ draggable: true }}
           onSlideChange={onSlideChange}
-          style={{ width: "100%", height: "100%" }}
+          style={{ width: "100%", height: "100%", ...style }}
           ref={swiperRef}
           autoplay={autoPlay}
         >
@@ -76,9 +85,11 @@ Slider.propTypes = {
   onActiveSlide: PropTypes.func,
   effect: PropTypes.string,
   autoPlay: PropTypes.object,
+  style: PropTypes.object,
   children: PropTypes.node,
   render: PropTypes.node,
   slidesPerView: PropTypes.number,
+  initialSlide: PropTypes.number,
   spaceBetween: PropTypes.number,
 };
 
