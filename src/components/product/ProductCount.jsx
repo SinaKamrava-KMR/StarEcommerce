@@ -2,6 +2,7 @@ import PropTypes from "prop-types";
 import { useState } from "react";
 import { styled } from "styled-components";
 import { HiPlus, HiOutlineMinus } from "react-icons/hi2";
+import { convertToPersianNumber } from "../../utils/helper";
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
@@ -36,21 +37,26 @@ const Row = styled.div`
   align-self: flex-end;
   overflow: hidden;
 `;
+const Text = styled.p`
+  color: #fd7d7d;
+  font-size: 1.7rem;
+`;
 
-
-function ProductCount({ quantity = 5, onCount }) {
+function ProductCount({ quantity = 0, onCount }) {
   const [count, setCount] = useState(1);
 
   const handleCountChange = (value) => {
     if (!(value > quantity) && value !== 0) {
       setCount(value);
-      onCount(value)
+      onCount(value);
     }
   };
+
+  if (quantity === 0) return <Text>این محصول به اتمام رسید</Text>;
+
   return (
     <Wrapper>
       <Title> تعداد محصول</Title>
-  
 
       <Row>
         <BtnWrapper
@@ -59,7 +65,7 @@ function ProductCount({ quantity = 5, onCount }) {
         >
           <HiPlus />
         </BtnWrapper>
-        <CountText>{count}</CountText>
+        <CountText>{convertToPersianNumber(count)}</CountText>
         <BtnWrapper
           onClick={() => handleCountChange(count - 1)}
           active={count === 1}

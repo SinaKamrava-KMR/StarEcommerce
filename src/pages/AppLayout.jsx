@@ -3,7 +3,7 @@ import Header from "../components/header/Header";
 import { styled } from "styled-components";
 import { USER_ID } from "../configs/constants";
 import Cookies from "js-cookie";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { userData } from "../redux/reducer/user/userThunk";
 import {
   addCategories,
@@ -15,7 +15,6 @@ import { getCategories, getSubcategories } from "../services/api/categoryApi";
 import Footer from "../components/footer/Footer";
 import { useEffect } from "react";
 import { initCart } from "../redux/reducer/cart/cartSlice";
-import { show } from "../redux/reducer/toast/toastSlice";
 
 const MainLayout = styled.main`
   flex: 1;
@@ -30,7 +29,7 @@ const AppLayoutStyle = styled.main`
 
 function AppLayout() {
   const userId = Cookies.get(USER_ID);
-  const cartsMessage = useSelector((state) => state.cart.message);
+
   const dispatch = useDispatch();
 
   const { isLoading: isCategoryLoading, data: categories } = useQuery({
@@ -59,17 +58,7 @@ function AppLayout() {
     dispatch(initCart(cart));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-  useEffect(() => {
-    if (cartsMessage !== "") {
-      dispatch(
-        show({
-          message: cartsMessage,
-          status: "error",
-        })
-      );
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [cartsMessage]);
+
 
   return (
     <AppLayoutStyle>

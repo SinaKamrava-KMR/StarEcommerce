@@ -1,4 +1,5 @@
 import { useState } from "react";
+import PropTypes from "prop-types";
 import { styled } from "styled-components";
 import { HiCheck } from "react-icons/hi2";
 const Wrapper = styled.div`
@@ -39,7 +40,7 @@ const Color = styled.div`
 
 const colors = ["#3f96ff", "#fd6e6e", "#43d089", "#f1e55f", "#a9a9a9"];
 
-function ChooseColor() {
+function ChooseColor({ onColor }) {
   const [active, setActive] = useState("#3f96ff");
 
   return (
@@ -49,7 +50,14 @@ function ChooseColor() {
       <ColorsWrapper>
         {colors.map((color, i) => {
           return (
-            <Color key={i} color={color} onClick={() => setActive(color)}>
+            <Color
+              key={i}
+              color={color}
+              onClick={() => {
+                onColor(color);
+                setActive(color);
+              }}
+            >
               {color === active && <HiCheck />}
             </Color>
           );
@@ -59,4 +67,7 @@ function ChooseColor() {
   );
 }
 
+ChooseColor.propTypes = {
+  onColor: PropTypes.func,
+};
 export default ChooseColor;
