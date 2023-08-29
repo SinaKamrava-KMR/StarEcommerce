@@ -57,19 +57,26 @@ export async function handleMedias(images) {
 }
 
 
- export function convertToPersianNumber(number) {
+export function convertToPersianNumber(number) {
   const persianDigits = ["۰", "۱", "۲", "۳", "۴", "۵", "۶", "۷", "۸", "۹"];
-  
+
   const englishDigits = number.toString().split("");
   let persianNumber = "";
-  
-  for (let i = 0; i < englishDigits.length; i++) {
+
+  let counter = 0;
+  for (let i = englishDigits.length - 1; i >= 0; i--) {
     if (!isNaN(englishDigits[i])) {
-      persianNumber += persianDigits[englishDigits[i]];
+      persianNumber = persianDigits[englishDigits[i]] + persianNumber;
+      counter++;
     } else {
-      persianNumber += englishDigits[i];
+      persianNumber = englishDigits[i] + persianNumber;
+    }
+
+    if (counter === 3 && i > 0) {
+      persianNumber = "," + persianNumber;
+      counter = 0;
     }
   }
-  
+
   return persianNumber;
 }
