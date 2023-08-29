@@ -1,23 +1,23 @@
-import { Link } from "react-router-dom"
-import { styled } from "styled-components"
+import { styled } from "styled-components";
+import FilterItems from "../components/products/FilterItems";
+import ProductsContainer from "../components/products/ProductsContainer";
 
 const ProductsStyled = styled.div`
-  height: 100%;
   display: flex;
-  flex-direction: column;
   gap: 3rem;
   align-items: center;
-  justify-content: center;
-`
-function Products() {
+  margin-top: 8rem;
+  padding: 0 3rem;
+  position: relative;
+`;
+
+const Products = () => {
   return (
     <ProductsStyled>
-      <h1>صفحه دسته بندی  کالا ها</h1>
-      <Link to="/product/glkggfmvb">
-        رفتن به صفحه محصول
-      </Link>
+      <FilterItems />
+      <ProductsContainer />
     </ProductsStyled>
-  )
-}
+  );
+};
 
-export default Products
+export default Products;
