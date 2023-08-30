@@ -17,13 +17,15 @@ const Row = styled.div`
   padding-inline: 1rem;
   cursor: pointer;
 `;
-const Text = styled.div``;
+const Text = styled.div`
+    font-size: 1.4rem;
+`;
 const Container = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
   gap: 1rem;
-  padding-right: 1.5rem;
+  padding-right: 2.5rem;
 `;
 const IconWrapper = styled.div`
   color: #545454;

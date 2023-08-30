@@ -80,3 +80,15 @@ export function convertToPersianNumber(number) {
 
   return persianNumber;
 }
+
+
+
+export const mergeCategoriesAndSunCategories = (categories, subCategories) => {
+  return categories.map((category) => {
+    const relatedSubcategories = subCategories.filter(
+      (sub) => sub.category === category._id
+    );
+
+    return { ...category, subcategories: [...relatedSubcategories] };
+  });
+};
