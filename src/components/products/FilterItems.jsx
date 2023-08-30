@@ -1,7 +1,7 @@
 import { styled } from "styled-components";
 import CategoryItem from "./CategoryItem";
 import BrandItems from "./BrandItems";
-import PriceRange from "./PriceRange";
+import PriceRangeComponent from "./PriceRangeComponent";
 import { useReducer } from "react";
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
@@ -10,7 +10,8 @@ import { useBrands } from "../../hooks/useBrands";
 
 const Wrapper = styled.div`
   width: 300px;
-  height: 530px;
+  max-height: 530px;
+  min-height: 330px;
   border-radius: 0.8rem;
   padding: 2rem 1.5rem;
   /* border: 1px solid #e3e3e3; */
@@ -112,7 +113,7 @@ const FilterItems = () => {
 
   return (
     <Wrapper>
-      <PriceRange />
+      <PriceRangeComponent />
       <CategoryItem checkState={checkState} dispatch={dispatch} items={items} />
       <BrandItems dispatch={dispatch} brands={brands} />
     </Wrapper>
