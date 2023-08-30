@@ -1,37 +1,26 @@
-import { styled } from "styled-components";
 import { HiOutlineChevronLeft } from "react-icons/hi2";
 import { useState } from "react";
+import PropTypes from "prop-types";
 
-const Wrapper = styled.div``;
+import ItemWrapper from "./ItemWrapper";
+import {
+  Container,
+  IconWrapper,
+  Row,
+  Title,
+  Wrapper,
+} from "./CategoryItemStyled";
 
-const Row = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1rem;
-  padding: 0.8rem 1rem;
-  background-color: #f3f3f375;
-  border-radius: 0.5rem;
-  color: #838383;
-  font-size: 1.4rem;
-  cursor: pointer;
-  &:hover {
-    background-color: #f5f5f5;
-  }
-`;
-
-const Title = styled.p`
-  font-weight: 600;
-  color: #545454;
-`;
-
-const IconWrapper = styled.div`
-  color: #545454;
-  transition: all 0.1s ease-in-out;
-  transform: ${(props) => (props.rotate ? "rotate(-90deg)" : "rotate(0)")};
-`;
-const BrandItems = () => {
+const BrandItems = ({ dispatch, brands, checkState }) => {
   const [select, setSelect] = useState(false);
+
+  const handleSelect = ({ check, brand }) => {
+    if (check) {
+      dispatch({ type: "brand/add", payload: { brand } });
+    } else {
+      dispatch({ type: "brand/remove", payload: { brand } });
+    }
+  };
 
   return (
     <Wrapper>
@@ -41,8 +30,32 @@ const BrandItems = () => {
           <HiOutlineChevronLeft fontSize={18} />
         </IconWrapper>
       </Row>
+      {select && (
+        <Container>
+          {brands.map((brand, idx) => {
+            const brandChecked = !!checkState?.brands?.find(
+              (item) => item === brand
+            );
+            return (
+              <ItemWrapper
+                key={idx}
+                name={brand}
+                delay={`.0${idx}`}
+                initCheck={brandChecked}
+                onCheck={(check) => handleSelect({ check, brand })}
+              />
+            );
+          })}
+        </Container>
+      )}
     </Wrapper>
   );
+};
+
+BrandItems.propTypes = {
+  checkState: PropTypes.object,
+  dispatch: PropTypes.func,
+  brands: PropTypes.array,
 };
 
 export default BrandItems;
