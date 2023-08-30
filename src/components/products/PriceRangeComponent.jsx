@@ -1,5 +1,7 @@
 import { useState } from "react";
 import styled from "styled-components";
+import { convertToPersianNumber } from "../../utils/helper";
+import PropTypes from "prop-types";
 
 const Wrapper = styled.div`
   display: flex;
@@ -29,6 +31,15 @@ const Progress = styled.div`
   background-color: #797979;
   border-radius: 5rem;
 `;
+const Row = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+`;
+const PriceFiled = styled.p`
+  font-size: 1.3rem;
+  color: #f56161;
+`;
 
 const PriceRangeInput = styled.input`
   border-radius: 3px;
@@ -37,7 +48,7 @@ const PriceRangeInput = styled.input`
   left: -5px;
   top: 50%;
   transform: translateY(-50%);
-  width: 101%;
+  width: 103%;
   appearance: none;
   pointer-events: none;
   background: none;
@@ -52,7 +63,7 @@ const PriceRangeInput = styled.input`
     width: 14px;
     height: 14px;
     border-radius: 50%;
-    background-color: #1a1a30;
+    background-color: #4a4a50;
     pointer-events: auto;
     cursor: pointer;
   }
@@ -71,19 +82,21 @@ const PriceRangeInput = styled.input`
 
 const max = 10000000;
 
-const PriceRangeComponent = () => {
-  const [maxValue, setMaxValue] = useState(500000);
-  const [minValue, setMinValue] = useState(0);
+const PriceRangeComponent = ({ onChange }) => {
+  const [maxValue, setMaxValue] = useState(5000000);
+  const [minValue, setMinValue] = useState(100000);
 
   const handleChangeMax = (e) => {
     if (e.target.value > minValue) {
       setMaxValue(e.target.value);
+      onChange({ max: maxValue, min: minValue });
     }
   };
 
   const handleChangeMin = (e) => {
     if (e.target.value < maxValue) {
       setMinValue(e.target.value);
+      onChange({ max: maxValue, min: minValue });
     }
   };
 
@@ -101,22 +114,29 @@ const PriceRangeComponent = () => {
           }}
         />
         <PriceRangeInput
-          value={maxValue <= minValue ? minValue : maxValue}
+          value={maxValue}
           onChange={handleChangeMax}
           type="range"
           min="0"
           max={max}
         />
         <PriceRangeInput
-          value={minValue >= maxValue ? maxValue : minValue}
+          value={minValue}
           onChange={handleChangeMin}
           type="range"
           min="0"
           max={max}
         />
       </PriceRangeWrapper>
+      <Row>
+        <PriceFiled>{convertToPersianNumber(minValue)} تومان</PriceFiled>
+        <PriceFiled>{convertToPersianNumber(maxValue)} تومان</PriceFiled>
+      </Row>
     </Wrapper>
   );
 };
 
+PriceRangeComponent.propTypes = {
+  onChange: PropTypes.func,
+};
 export default PriceRangeComponent;

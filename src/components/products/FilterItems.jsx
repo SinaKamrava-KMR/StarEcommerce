@@ -111,9 +111,13 @@ const FilterItems = () => {
     console.log(checkState);
   }, [checkState]);
 
+  const handleChangePrice = ({ max, min }) => {
+    console.log(max, min);
+  };
+
   return (
     <Wrapper>
-      <PriceRangeComponent />
+      <PriceRangeComponent onChange={handleChangePrice} />
       <CategoryItem checkState={checkState} dispatch={dispatch} items={items} />
       <BrandItems dispatch={dispatch} brands={brands} />
     </Wrapper>
