@@ -56,15 +56,14 @@ const reducer = (state, action) => {
       if (payload.category && !payload.subcategory) {
         return {
           ...state,
-          categories: [...state.categories, payload.category],
+          categories: [payload.category],
+          subcategories: [],
         };
       }
       if (payload.subcategory) {
         return {
           ...state,
-          categories: [
-            ...state.categories.filter((item) => item !== payload.category),
-          ],
+          categories: [payload.category],
           subcategories: [...state.subcategories, payload.subcategory],
         };
       }
@@ -76,6 +75,7 @@ const reducer = (state, action) => {
           categories: [
             ...state.categories.filter((item) => item !== payload.category),
           ],
+          subcategories: [],
         };
       }
       if (payload.subcategory) {
@@ -91,7 +91,7 @@ const reducer = (state, action) => {
       break;
 
     case "brand/add":
-      return { ...state, brands: [...state.brands, payload.brand] };
+      return { ...state, brands: [payload.brand] };
     case "brand/remove":
       return {
         ...state,
@@ -119,7 +119,7 @@ const FilterItems = () => {
     <Wrapper>
       <PriceRangeComponent onChange={handleChangePrice} />
       <CategoryItem checkState={checkState} dispatch={dispatch} items={items} />
-      <BrandItems dispatch={dispatch} brands={brands} />
+      <BrandItems checkState={checkState} dispatch={dispatch} brands={brands} />
     </Wrapper>
   );
 };

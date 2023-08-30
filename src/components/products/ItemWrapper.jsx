@@ -18,7 +18,7 @@ const Row = styled.div`
   cursor: pointer;
 `;
 const Text = styled.div`
-    font-size: 1.4rem;
+  font-size: 1.4rem;
 `;
 const Container = styled.div`
   width: 100%;
@@ -32,8 +32,16 @@ const IconWrapper = styled.div`
   transition: all 0.1s ease-in-out;
   transform: ${(props) => (props.rotate ? "rotate(-90deg)" : "rotate(0)")};
 `;
-const ItemWrapper = ({ name, children, onCheck, delay = 0,parentCheck=false ,initCheck}) => {
+const ItemWrapper = ({
+  name,
+  children,
+  onCheck,
+  delay = 0,
+  parentCheck = false,
+  initCheck,
+}) => {
   const [select, setSelect] = useState(false);
+  
 
   return (
     <Wrapper
@@ -43,7 +51,11 @@ const ItemWrapper = ({ name, children, onCheck, delay = 0,parentCheck=false ,ini
       transition={{ delay }}
     >
       <Row onClick={() => setSelect((s) => !s)}>
-        <CheckBox onCheck={onCheck} parentCheck={parentCheck} initCheck={initCheck} />
+        <CheckBox
+          onCheck={onCheck}
+          parentCheck={parentCheck}
+          initCheck={initCheck}
+        />
         <Text>{name}</Text>
         <span style={{ flex: 1 }}></span>
         {children && (

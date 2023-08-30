@@ -1,23 +1,26 @@
-
 import { HiOutlineChevronLeft } from "react-icons/hi2";
 import { useState } from "react";
 import PropTypes from "prop-types";
 
 import ItemWrapper from "./ItemWrapper";
-import { Container, IconWrapper, Row, Title, Wrapper } from "./CategoryItemStyled";
+import {
+  Container,
+  IconWrapper,
+  Row,
+  Title,
+  Wrapper,
+} from "./CategoryItemStyled";
 
-
-
-const BrandItems = ( {dispatch,brands} ) => {
+const BrandItems = ({ dispatch, brands, checkState }) => {
   const [select, setSelect] = useState(false);
 
-  const handleSelect = ({ check, brand })=>{
+  const handleSelect = ({ check, brand }) => {
     if (check) {
-      dispatch({type:"brand/add",payload:{brand}})
+      dispatch({ type: "brand/add", payload: { brand } });
     } else {
-      dispatch({type:"brand/remove",payload:{brand}})
+      dispatch({ type: "brand/remove", payload: { brand } });
     }
-  }
+  };
 
   return (
     <Wrapper>
@@ -30,11 +33,15 @@ const BrandItems = ( {dispatch,brands} ) => {
       {select && (
         <Container>
           {brands.map((brand, idx) => {
+            const brandChecked = !!checkState?.brands?.find(
+              (item) => item === brand
+            );
             return (
               <ItemWrapper
                 key={idx}
                 name={brand}
                 delay={`.0${idx}`}
+                initCheck={brandChecked}
                 onCheck={(check) => handleSelect({ check, brand })}
               />
             );

@@ -1,17 +1,17 @@
-
 import { HiOutlineChevronLeft } from "react-icons/hi2";
 import { useState } from "react";
 
 import ItemWrapper from "./ItemWrapper";
 import PropTypes from "prop-types";
-import { Container, IconWrapper, Row, Title, Wrapper } from "./CategoryItemStyled";
+import {
+  Container,
+  IconWrapper,
+  Row,
+  Title,
+  Wrapper,
+} from "./CategoryItemStyled";
 
-
-
-
-
-const CategoryItem = ({checkState,dispatch,items}) => {
-  
+const CategoryItem = ({ checkState, dispatch, items }) => {
   const [select, setSelect] = useState(false);
   const handleCheck = ({ check, category, subcategory }) => {
     if (check) {
@@ -54,15 +54,22 @@ const CategoryItem = ({checkState,dispatch,items}) => {
                 name={category.name}
                 initCheck={categoryChecked}
                 onCheck={(check) =>
-                  handleCheck({ check, category: category?._id })
+                  handleCheck({
+                    check,
+                    category: category?._id,
+                  })
                 }
               >
                 {category.subcategories.map((subcategory, subIndex) => {
+                  const subcategoryChecked = !!checkState?.subcategories?.find(
+                    (item) => item === subcategory._id
+                  );
                   return (
                     <ItemWrapper
                       key={subIndex}
                       name={subcategory.name}
                       parentCheck={categoryChecked}
+                      initCheck={subcategoryChecked}
                       delay={`.${subIndex}`}
                       onCheck={(check) =>
                         handleCheck({
@@ -87,5 +94,5 @@ CategoryItem.propTypes = {
   checkState: PropTypes.object,
   dispatch: PropTypes.func,
   items: PropTypes.array,
-}
+};
 export default CategoryItem;
