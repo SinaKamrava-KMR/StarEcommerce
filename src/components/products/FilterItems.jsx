@@ -1,12 +1,14 @@
 import { styled } from "styled-components";
+import PropTypes from "prop-types";
 import CategoryItem from "./CategoryItem";
 import BrandItems from "./BrandItems";
 import PriceRangeComponent from "./PriceRangeComponent";
 import { useReducer } from "react";
-import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { mergeCategoriesAndSunCategories } from "../../utils/helper";
-import { useBrands } from "../../hooks/useBrands";
+import { useState } from "react";
+import { useSearchParams } from "react-router-dom";
+
 
 const Wrapper = styled.div`
   width: 300px;
@@ -17,8 +19,7 @@ const Wrapper = styled.div`
   /* border: 1px solid #e3e3e3; */
   box-shadow: 0 0 10px #8e8e8e8c;
   position: sticky;
-  top: 4rem;
-  bottom: 2rem;
+  top: 8rem;
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
@@ -117,31 +118,74 @@ const reducer = (state, action) => {
   }
 };
 
-const FilterItems = () => {
+
+const FilterItems = ({ onParams }) => {
   const [checkState, dispatch] = useReducer(reducer, initialState);
-  const brands = useBrands();
+  const brands = useSelector(state=>state.brands.brands);
+  const [priceRange, setPriceRange] = useState({ min: 0, max: 0 });
   const categories = useSelector((state) => state.categories.categories);
   const subCategories = useSelector((state) => state.categories.subcategories);
   const items = mergeCategoriesAndSunCategories(categories, subCategories);
 
-  useEffect(() => {
-    console.log(checkState);
-  }, [checkState]);
+  // eslint-disable-next-line no-unused-vars
+  const [searchParams, setSearchParams] = useSearchParams();
 
-  const handleChangePrice = ({ max, min }) => {
-    console.log(max, min);
+  const handleAddFiltered = () => {
+    let params = {
+      subcategories: checkState.subcategories,
+      filter: {},
+    };
+
+    if (priceRange.max !== 0 && priceRange.min !== 0) {
+      params = {
+        ...params,
+        filter: {
+          ...params.filter,
+          "price[lt]": priceRange.max,
+          "price[gt]": priceRange.min,
+        },
+      };
+    }
+
+    if (checkState.categories.length > 0) {
+      params = {
+        ...params,
+        filter: {
+          ...params.filter,
+          category: checkState.categories.at(0),
+        },
+      };
+    }
+
+    if (checkState.brands.length > 0) {
+      params = {
+        ...params,
+        filter: {
+          ...params.filter,
+          brand: checkState.brands.at(0),
+        },
+      };
+    }
+
+    setSearchParams(params.filter);
+    onParams(params);
   };
 
   return (
     <Wrapper>
-      <PriceRangeComponent onChange={handleChangePrice} />
+      <PriceRangeComponent
+        onChange={({ max, min }) => setPriceRange({ max, min })}
+      />
       <CategoryItem checkState={checkState} dispatch={dispatch} items={items} />
       <BrandItems checkState={checkState} dispatch={dispatch} brands={brands} />
 
       <span style={{ flex: 1 }}></span>
-      <Button>اعمال فیلتر</Button>
+      <Button onClick={handleAddFiltered}>اعمال فیلتر</Button>
     </Wrapper>
   );
 };
 
+FilterItems.propTypes = {
+  onParams: PropTypes.func,
+};
 export default FilterItems;

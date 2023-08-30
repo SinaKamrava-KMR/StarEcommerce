@@ -3,7 +3,7 @@ import getProducts from "../services/api/getProducts";
 import { useEffect, useState } from "react";
 
 export default function useProduct(defaultPage = 1, limit = 10) {
-  const [params, setParams] = useState({ page: defaultPage });
+  const [params, setParams] = useState({ page: defaultPage, limit });
   // const queryClient = useQueryClient();
   const {
     isLoading,
@@ -13,7 +13,7 @@ export default function useProduct(defaultPage = 1, limit = 10) {
     error,
   } = useQuery({
     queryKey: ["products"],
-    queryFn: () => getProducts({ ...params, limit }),
+    queryFn: () => getProducts({ ...params}),
   });
 
   useEffect(() => {
