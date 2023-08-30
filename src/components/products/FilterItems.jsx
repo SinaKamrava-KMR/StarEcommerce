@@ -11,7 +11,7 @@ import { useBrands } from "../../hooks/useBrands";
 const Wrapper = styled.div`
   width: 300px;
   max-height: 530px;
-  min-height: 330px;
+  min-height: 430px;
   border-radius: 0.8rem;
   padding: 2rem 1.5rem;
   /* border: 1px solid #e3e3e3; */
@@ -21,7 +21,7 @@ const Wrapper = styled.div`
   bottom: 2rem;
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 1.5rem;
   overflow-y: scroll;
   overflow-x: hidden;
   /* width*/
@@ -40,6 +40,23 @@ const Wrapper = styled.div`
   &::-webkit-scrollbar-thumb {
     background: #f9f9f9;
     border-radius: 10px;
+  }
+`;
+const Button = styled.p`
+  background-color: #333;
+  color: white;
+  font-size: 1.5rem;
+  font-weight: bold;
+  border-radius: 5rem;
+  padding: 0.8rem;
+  position: sticky;
+  bottom: 0;
+  z-index: 20;
+  width: 100%;
+  text-align: center;
+  cursor: pointer;
+  &:hover {
+    background-color: #272727;
   }
 `;
 
@@ -120,6 +137,9 @@ const FilterItems = () => {
       <PriceRangeComponent onChange={handleChangePrice} />
       <CategoryItem checkState={checkState} dispatch={dispatch} items={items} />
       <BrandItems checkState={checkState} dispatch={dispatch} brands={brands} />
+
+      <span style={{ flex: 1 }}></span>
+      <Button>اعمال فیلتر</Button>
     </Wrapper>
   );
 };
