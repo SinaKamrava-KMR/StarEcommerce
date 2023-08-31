@@ -7,8 +7,6 @@ import { useReducer } from "react";
 import { useSelector } from "react-redux";
 import { mergeCategoriesAndSunCategories } from "../../utils/helper";
 import { useState } from "react";
-import { useSearchParams } from "react-router-dom";
-
 
 const Wrapper = styled.div`
   width: 300px;
@@ -118,22 +116,18 @@ const reducer = (state, action) => {
   }
 };
 
-
 const FilterItems = ({ onParams }) => {
   const [checkState, dispatch] = useReducer(reducer, initialState);
-  const brands = useSelector(state=>state.brands.brands);
+  const brands = useSelector((state) => state.brands.brands);
   const [priceRange, setPriceRange] = useState({ min: 0, max: 0 });
   const categories = useSelector((state) => state.categories.categories);
   const subCategories = useSelector((state) => state.categories.subcategories);
   const items = mergeCategoriesAndSunCategories(categories, subCategories);
 
-  // eslint-disable-next-line no-unused-vars
-  const [searchParams, setSearchParams] = useSearchParams();
-
   const handleAddFiltered = () => {
     let params = {
       subcategories: checkState.subcategories,
-      filter: {},
+      filter: { page: 1 },
     };
 
     if (priceRange.max !== 0 && priceRange.min !== 0) {
@@ -167,7 +161,6 @@ const FilterItems = ({ onParams }) => {
       };
     }
 
-    setSearchParams(params.filter);
     onParams(params);
   };
 

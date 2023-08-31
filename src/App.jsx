@@ -6,6 +6,9 @@ import { useEffect } from "react";
 import Toast from "./components/common/Toast";
 import { useDispatch, useSelector } from "react-redux";
 import { hide } from "./redux/reducer/toast/toastSlice";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+
+
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -32,7 +35,7 @@ function App() {
   
   return (
     <QueryClientProvider client={queryClient}>
-      
+       <ReactQueryDevtools initialIsOpen={false} />
       {toast.visible && <Toast message={toast.message} status={toast.status} />}
       <RouterProvider router={routes} />
       <GlobalStyles />

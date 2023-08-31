@@ -23,8 +23,9 @@ export default async function getProducts({
   if (equalQuantity) query_params.quantity = equalQuantity;
   if (lowerThanQuantity) query_params["quantity[lt]"] = lowerThanQuantity;
   if (greaterThanQuantity) query_params["quantity[gt]"] = greaterThanQuantity;
-  if (lowerThanQuantity) query_params["price[lt]"] = lowerThanPrice;
-  if (greaterThanQuantity) query_params["price[gt]"] = greaterThanPrice;
+  if (lowerThanPrice) query_params["price[lt]"] = lowerThanPrice;
+  if (greaterThanPrice) query_params["price[gt]"] = greaterThanPrice;
+
 
   const res = await privateAxios.get("/products", {
     params: query_params,

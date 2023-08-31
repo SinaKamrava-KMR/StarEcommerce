@@ -15,75 +15,109 @@ const ProductsStyled = styled.div`
 
 const Products = () => {
   const { isLoading, products, setParams } = useProduct();
-  const [params] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams();
 
   const handlePArams = (filtered) => {
     console.log(filtered);
+    setSearchParams(filtered.filter);
   };
 
   useEffect(() => {
-    setParams({ limit: 15 });
+    async function fetchParams() {
+      // Retrieve and set the query parameters
+      const category = searchParams.get("category");
+      const brand = searchParams.get("brand");
+      const lowerThanPrice = searchParams.get("price[lt]");
+      const greaterThanPrice = searchParams.get("price[gt]");
+      const page = searchParams.get("page") || 1;
+      const sort = searchParams.get("sort");
+      const newParams = {
+        limit: 15,
+        page,
+        sort: sort || "price",
+        category: category || undefined,
+        brand: brand || undefined,
+        lowerThanPrice: lowerThanPrice || undefined,
+        greaterThanPrice: greaterThanPrice || undefined,
+      };
 
-    if (params.get("category")) {
-      setParams({ limit: 15, category: params.get("category") });
-    }
-    if (params.get("brand")) {
-      setParams({ limit: 15, brand: params.get("brand") });
-    }
-    if (params.get("brand") && params.get("category")) {
-      setParams({
-        limit: 15,
-        brand: params.get("brand"),
-        category: params.get("category"),
-      });
-    }
-    if (params.get("price[lt]")) {
-      setParams({
-        limit: 15,
-        lowerThanPrice: params.get("price[lt]"),
-        greaterThanPrice: params.get("price[gt]"),
-      });
-    }
-    if (params.get("price[lt]") && params.get("category")) {
-      setParams({
-        limit: 15,
-        lowerThanPrice: params.get("price[lt]"),
-        greaterThanPrice: params.get("price[gt]"),
-        category: params.get("category"),
-      });
-    }
-    if (params.get("price[lt]") && params.get("brand")) {
-      setParams({
-        limit: 15,
-        lowerThanPrice: params.get("price[lt]"),
-        greaterThanPrice: params.get("price[gt]"),
-        brand: params.get("brand"),
-      });
+      await setParams(newParams);
     }
 
-    if (
-      params.get("price[lt]") &&
-      params.get("category") &&
-      params.get("brand")
-    ) {
-      setParams({
-        limit: 15,
-        lowerThanPrice: params.get("price[lt]"),
-        greaterThanPrice: params.get("price[gt]"),
-        brand: params.get("brand"),
-        category: params.get("category"),
-      });
-    }
+    fetchParams();
+  }, [searchParams, setParams]);
 
-    // setParams((params) => ({ ...params, limit: 15, page: params.get("page") }));
+  // useEffect(() => {
 
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [params]);
+  //   if (searchParams.get("category")) {
+  //     setParams({ limit: 15, category: searchParams.get("category") });
+  //   }
+  //   if (searchParams.get("brand")) {
+  //     setParams({ limit: 15, brand: searchParams.get("brand") });
+  //   }
+  //   if (searchParams.get("brand") && searchParams.get("category")) {
+  //     setParams({
+  //       limit: 15,
+  //       brand: searchParams.get("brand"),
+  //       category: searchParams.get("category"),
+  //     });
+  //   }
+  //   if (searchParams.get("price[lt]")) {
+  //     setParams({
+  //       limit: 15,
+  //       lowerThanPrice: searchParams.get("price[lt]"),
+  //       greaterThanPrice: searchParams.get("price[gt]"),
+  //     });
+  //   }
+  //   if (searchParams.get("price[lt]") && searchParams.get("category")) {
+  //     setParams({
+  //       limit: 15,
+  //       lowerThanPrice: searchParams.get("price[lt]"),
+  //       greaterThanPrice: searchParams.get("price[gt]"),
+  //       category: searchParams.get("category"),
+  //     });
+  //   }
+  //   if (searchParams.get("price[lt]") && searchParams.get("brand")) {
+  //     setParams({
+  //       limit: 15,
+  //       lowerThanPrice: searchParams.get("price[lt]"),
+  //       greaterThanPrice: searchParams.get("price[gt]"),
+  //       brand: searchParams.get("brand"),
+  //     });
+  //   }
+
+  //   if (
+  //     searchParams.get("price[lt]") &&
+  //     searchParams.get("category") &&
+  //     searchParams.get("brand")
+  //   ) {
+  //     setParams({
+  //       limit: 15,
+  //       lowerThanPrice: searchParams.get("price[lt]"),
+  //       greaterThanPrice: searchParams.get("price[gt]"),
+  //       brand: searchParams.get("brand"),
+  //       category: searchParams.get("category"),
+  //     });
+  //   }
+
+  //   const page = searchParams.get("page") || 1;
+  //   setParams((params) => ({
+  //     ...params,
+  //     limit: 15,
+  //     page,
+  //   }));
+
+  // }, [searchParams,setParams]);
 
   return (
     <ProductsStyled>
       <FilterItems onParams={handlePArams} />
-      <ProductsContainer isLoading={isLoading} products={products} />
+      <ProductsContainer
+        categoryId={searchParams.get("category") || "all"}
+        brand={searchParams.get("brand") || ""}
+        isLoading={isLoading}
+        products={products}
+      />
     </ProductsStyled>
   );
 };
