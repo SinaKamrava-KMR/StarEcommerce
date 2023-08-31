@@ -19,13 +19,13 @@ const HeaderStyled = styled.header`
   gap: 1.6rem;
   align-items: center;
   background-color: ${(props) =>
-    props.position > 80 ? "#fff" : "transparent"};
+    props.position > 70 ? "#fff" : "transparent"};
   z-index: 99999;
   position: fixed;
   top: 0;
-  left: 3rem;
-  right: 3rem;
-  padding: 1.2rem 0;
+  left: 0rem;
+  right: 0rem;
+  padding: 1.2rem 1rem;
   grid-template-columns: repeat(auto-fill, maxmin(50px, 1fr));
   @media (min-width: 800px) {
     grid-template-columns: 1fr 1fr;

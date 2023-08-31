@@ -7,6 +7,7 @@ import Loading from "../common/Loading";
 import { useMemo, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { useEffect } from "react";
+import { BiFilter } from "react-icons/bi";
 
 const Wrapper = styled.div`
   flex: 1;
@@ -35,23 +36,36 @@ const Title = styled.p`
 const SortByPrice = styled.div`
   z-index: 30;
   position: absolute;
-  left: 5rem;
+  left: 3.5rem;
   top: 0;
-  padding: 0 1rem;
-  background-color: #fff;
+  padding: 1rem;
 
+  min-width: 150px;
+  background-color: #fff;
+  box-shadow: 0 0 10px #d8d8d8;
+  border-radius: 0.8rem;
   display: flex;
   flex-direction: column;
+  align-items: center;
 
   & > p {
     cursor: pointer;
-    background-color: #ebebeb;
-    padding: 0.8rem 1rem;
+    padding: 1rem;
+    width: 100%;
+    border-radius: 0.5rem;
+    &:hover {
+      background-color: #f2f2f2;
+    }
   }
 `;
 
 const SortTitle = styled.div`
+  width: 100%;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  padding-right: 1rem;
+  gap: 1rem;
 `;
 
 const sorts = [
@@ -61,11 +75,17 @@ const sorts = [
   },
   {
     params: "-price",
-    text: "'گرانترین",
+    text: "گرانترین",
   },
 ];
 
-const ProductsContainer = ({ categoryId, brand = "", isLoading, products }) => {
+const ProductsContainer = ({
+  subcategories,
+  categoryId,
+  brand = "",
+  isLoading,
+  products,
+}) => {
   const wishList = useSelector((state) => state.wishlist.products);
   const categories = useSelector((state) => state.categories.categories);
   // eslint-disable-next-line no-unused-vars
@@ -107,7 +127,10 @@ const ProductsContainer = ({ categoryId, brand = "", isLoading, products }) => {
     <Wrapper>
       <Title>{title}</Title>
       <SortByPrice>
-        <SortTitle onClick={() => setShowSort((s) => !s)}>فیلتر قیمت</SortTitle>
+        <SortTitle onClick={() => setShowSort((s) => !s)}>
+          <BiFilter fontSize={20} />
+          <p>فیلتر قیمت</p>
+        </SortTitle>
         {showSort &&
           sorts.map((item) => {
             return (
@@ -120,6 +143,25 @@ const ProductsContainer = ({ categoryId, brand = "", isLoading, products }) => {
       <DataContainer>
         {!isLoading &&
           products?.data.products.map((product) => {
+            if (subcategories.length > 0) {
+              const sub = subcategories.find(
+                (item) => item === product.subcategory
+              );
+
+              return (
+                sub && (
+                  <ProductCard
+                    key={product._id}
+                    product={product}
+                    isLike={
+                      wishList.find((item) => item._id === product._id)
+                        ? true
+                        : false
+                    }
+                  />
+                )
+              );
+            }
             return (
               <ProductCard
                 key={product._id}
@@ -150,5 +192,6 @@ ProductsContainer.propTypes = {
   isLoading: PropTypes.bool,
   categoryId: PropTypes.string,
   brand: PropTypes.string,
+  subcategories: PropTypes.array,
 };
 export default ProductsContainer;

@@ -2,7 +2,7 @@ import { styled } from "styled-components";
 import FilterItems from "../components/products/FilterItems";
 import ProductsContainer from "../components/products/ProductsContainer";
 import useProduct from "../hooks/useProduct";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 
 const ProductsStyled = styled.div`
@@ -16,10 +16,12 @@ const ProductsStyled = styled.div`
 const Products = () => {
   const { isLoading, products, setParams } = useProduct();
   const [searchParams, setSearchParams] = useSearchParams();
+  const [subcategoriesSelected, setSubcategoriesSelected] = useState([]);
 
   const handlePArams = (filtered) => {
     console.log(filtered);
     setSearchParams(filtered.filter);
+    setSubcategoriesSelected(filtered.subcategories);
   };
 
   useEffect(() => {
@@ -35,10 +37,10 @@ const Products = () => {
         limit: 15,
         page,
         sort: sort || "price",
-        category: category || undefined,
-        brand: brand || undefined,
-        lowerThanPrice: lowerThanPrice || undefined,
-        greaterThanPrice: greaterThanPrice || undefined,
+        category: category,
+        brand: brand,
+        lowerThanPrice: lowerThanPrice,
+        greaterThanPrice: greaterThanPrice,
       };
 
       await setParams(newParams);
@@ -46,6 +48,59 @@ const Products = () => {
 
     fetchParams();
   }, [searchParams, setParams]);
+
+  return (
+    <ProductsStyled>
+      <FilterItems onParams={handlePArams} />
+      <ProductsContainer
+        subcategories={subcategoriesSelected}
+        categoryId={searchParams.get("category") || "all"}
+        brand={searchParams.get("brand") || ""}
+        isLoading={isLoading}
+        products={products}
+      />
+    </ProductsStyled>
+  );
+};
+
+export default Products;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
   // useEffect(() => {
 
@@ -108,18 +163,3 @@ const Products = () => {
   //   }));
 
   // }, [searchParams,setParams]);
-
-  return (
-    <ProductsStyled>
-      <FilterItems onParams={handlePArams} />
-      <ProductsContainer
-        categoryId={searchParams.get("category") || "all"}
-        brand={searchParams.get("brand") || ""}
-        isLoading={isLoading}
-        products={products}
-      />
-    </ProductsStyled>
-  );
-};
-
-export default Products;

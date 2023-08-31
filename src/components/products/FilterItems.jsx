@@ -14,8 +14,8 @@ const Wrapper = styled.div`
   min-height: 430px;
   border-radius: 0.8rem;
   padding: 2rem 1.5rem;
-  /* border: 1px solid #e3e3e3; */
-  box-shadow: 0 0 10px #8e8e8e8c;
+
+  box-shadow: 0 0 7px #8e8e8e33;
   position: sticky;
   top: 8rem;
   display: flex;
@@ -31,13 +31,13 @@ const Wrapper = styled.div`
 
   /* Track */
   &::-webkit-scrollbar-track {
-    background-color: #ffffff9a;
+    background-color: #ffffff;
     border-radius: 10px;
   }
 
   /* Handle */
   &::-webkit-scrollbar-thumb {
-    background: #f9f9f9;
+    background: #ffffff;
     border-radius: 10px;
   }
 `;
