@@ -1,6 +1,7 @@
 import { styled } from "styled-components";
 import { Title } from "../common/Title";
 import { HiArrowLongLeft } from "react-icons/hi2";
+import { Link } from "react-router-dom";
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
@@ -34,7 +35,7 @@ const Image = styled.img`
   transition: all 0.3s ease-in-out;
   cursor: pointer;
   &:hover {
-    transform: scale(1.5) translate(-20px , 20px);
+    transform: scale(1.5) translate(-20px, 20px);
   }
 `;
 const FloatButton = styled.p`
@@ -73,26 +74,33 @@ function HomeCategories() {
               <HiArrowLongLeft fontSize={20} />
             </FloatButton>
           </Item>
+
           <Item>
             <Image src="./public/categories/w2.jpg" />
-            <FloatButton>
-              <p> لباس کژوال </p>
-              <HiArrowLongLeft fontSize={20} />
-            </FloatButton>
+            <Link to={"/products?category=64ec453c6953de44bc52926e"}>
+              <FloatButton>
+                <p> لباس کژوال </p>
+                <HiArrowLongLeft fontSize={20} />
+              </FloatButton>
+            </Link>
           </Item>
           <Item>
             <Image src="./public/categories/w3.jpg" />
-            <FloatButton>
-              <p> لباس خانم ها </p>
-              <HiArrowLongLeft fontSize={20} />
-            </FloatButton>
+            <Link to={"/products?category=64d78de9c3591a7ddbe60eb1"}>
+              <FloatButton>
+                <p> لباس خانم ها </p>
+                <HiArrowLongLeft fontSize={20} />
+              </FloatButton>
+            </Link>
           </Item>
           <Item>
             <Image src="./public/categories/w4.jpg" />
-            <FloatButton>
-              <p> لباس کودکان </p>
-              <HiArrowLongLeft fontSize={20} />
-            </FloatButton>
+            <Link to={"/products?category=64da398b40368270f54bd808"}>
+              <FloatButton>
+                <p> لباس مجلسی </p>
+                <HiArrowLongLeft fontSize={20} />
+              </FloatButton>
+            </Link>
           </Item>
         </ItemsWrapper>
       </Container>
