@@ -122,6 +122,8 @@ const ProductsContainer = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  
+
   if (isLoading) return <Loading />;
   return (
     <Wrapper>
