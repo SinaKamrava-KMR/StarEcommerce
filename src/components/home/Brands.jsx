@@ -12,60 +12,82 @@ const Wrapper = styled.div`
   gap: 4rem;
 `;
 
+// 0
+// : 
+// "پادامیر"
+// 1
+// : 
+// "سنجاق"
+// 2
+// : 
+// "الپا"
+// 3
+// : 
+// "اسپینر"
+// 4
+// : 
+// "ادیداس"
+// 5
+// : 
+// "نایک"
+// 6
+// : 
+// "تک"
 const brands = [
   {
-    brand: "chanel",
+    brand: "پادامیر",
     src: "./public/brands/brand1.png",
     color: "#1cf2e45a",
   },
   {
-    brand: "luis",
+    brand: "سنجاق",
     src: "./public/brands/brand2.png",
     color: "#1c92f25a",
   },
   {
-    brand: "chanse",
+    brand: "الپا",
     src: "./public/brands/brand4.png",
     color: "#a41cf25a",
   },
   {
-    brand: "creative",
+    brand: "اسپینر",
     src: "./public/brands/brand5.png",
     color: "#1cf2755a",
   },
   {
-    brand: "addidas",
+    brand: "ادیداس",
     src: "./public/brands/brand6.png",
     color: "#f21c1c5a",
   },
   {
-    brand: "jordan",
+    brand: "نایک",
     src: "./public/brands/brand7.png",
     color: "#f2eb1c5a",
   },
   {
-    brand: "nike",
+    brand: "تک",
     src: "./public/brands/brand8.png",
     color: "#1c27f25a",
   },
   {
-    brand: "puma",
+    brand: "پادامیر",
     src: "./public/brands/brand9.png",
     color: "#1cf2b55a",
   },
   {
-    brand: "reebok",
+    brand: "سنجاق",
     src: "./public/brands/brand10.png",
     color: "#f21c1c5a",
   },
   {
-    brand: "fashion",
+    brand: "ادیداس",
     src: "./public/brands/brand2.png",
     color: "#f4f86f5a",
   },
 ];
 
 const Brands = () => {
+  
   return (
     <Wrapper>
       <Title>برند های محبوب</Title>

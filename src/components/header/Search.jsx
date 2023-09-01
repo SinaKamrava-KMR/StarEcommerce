@@ -4,6 +4,8 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { useEffect } from "react";
 import PropTypes from "prop-types";
+import { useDispatch, useSelector } from "react-redux";
+import { setSearch } from "../../redux/reducer/search/searchSlice";
 
 const SearchStyled = styled.div`
   width: 100%;
@@ -32,7 +34,9 @@ const Input = styled.input`
   outline: 0 !important;
 `;
 
-function Search({ value, setValue }) {
+function Search() {
+  const dispatch = useDispatch();
+  const value = useSelector((state) => state.search.value);
   const navigate = useNavigate();
   const [focus, setFocus] = useState(false);
   const query = useLocation().search;
@@ -49,7 +53,7 @@ function Search({ value, setValue }) {
         type="text"
         placeholder="جستجو"
         value={value}
-        onChange={(e) => setValue(e.target.value)}
+        onChange={(e) => dispatch(setSearch(e.target.value))}
       />
     </SearchStyled>
   );
