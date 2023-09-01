@@ -41,7 +41,7 @@ function ProductsPreview({ title, data, categoryId, wishList=[] }) {
     <Wrapper>
       <HeaderContainer>
         <Title>{title}</Title>
-        <Link to={`/products?category=${categoryId}`}>
+        <Link to={`/products?category=${categoryId}&page=1`}>
           <SeeMoreTag>دیدن محصولات</SeeMoreTag>
         </Link>
         <span style={{ flex: 1 }}></span>

@@ -16,6 +16,9 @@ import Footer from "../components/footer/Footer";
 import { useEffect } from "react";
 import { initCart } from "../redux/reducer/cart/cartSlice";
 
+import { addBrands } from "../redux/reducer/brands/brandSlice";
+import getProducts from "../services/api/getProducts";
+
 const MainLayout = styled.main`
   flex: 1;
 `;
@@ -31,7 +34,7 @@ function AppLayout() {
   const userId = Cookies.get(USER_ID);
 
   const dispatch = useDispatch();
-
+ 
   const { isLoading: isCategoryLoading, data: categories } = useQuery({
     queryKey: ["category"],
     queryFn: getCategories,
@@ -59,6 +62,15 @@ function AppLayout() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  useEffect(() => {
+    getProducts({ page: 1, limit: 1000 }).then((res) => {
+      if (res.data.products) {
+        const brands = res.data.products.map((product) => product.brand);
+        dispatch(addBrands([...new Set(brands)]));
+      }
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <AppLayoutStyle>

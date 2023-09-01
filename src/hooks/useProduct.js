@@ -3,8 +3,9 @@ import getProducts from "../services/api/getProducts";
 import { useEffect, useState } from "react";
 
 export default function useProduct(defaultPage = 1, limit = 10) {
-  const [params, setParams] = useState({ page: defaultPage });
+  const [params, setParams] = useState({ page: defaultPage, limit });
   // const queryClient = useQueryClient();
+
   const {
     isLoading,
     isFetching,
@@ -12,13 +13,14 @@ export default function useProduct(defaultPage = 1, limit = 10) {
     data: products,
     error,
   } = useQuery({
-    queryKey: ["products"],
-    queryFn: () => getProducts({ ...params, limit }),
+    queryKey: ["products",params.page],
+    queryFn: () => getProducts({ ...params }),
   });
 
   useEffect(() => {
     refetch();
-  }, [params, refetch]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [params]);
 
   return { isLoading, refetch, isFetching, products, error, setParams };
 }

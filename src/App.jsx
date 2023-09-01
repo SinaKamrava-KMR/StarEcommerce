@@ -6,33 +6,31 @@ import { useEffect } from "react";
 import Toast from "./components/common/Toast";
 import { useDispatch, useSelector } from "react-redux";
 import { hide } from "./redux/reducer/toast/toastSlice";
+// import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
-        staleTime:0
-      }
-    }
-})
-
-
+      staleTime: 0,
+    },
+  },
+});
 
 function App() {
   const toast = useSelector((state) => state.toast);
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   useEffect(() => {
     if (toast.visible) {
       setTimeout(() => {
-        dispatch(hide())
+        dispatch(hide());
       }, 6000);
     }
-  }, [toast.visible,dispatch]);
+  }, [toast.visible, dispatch]);
 
-  
   return (
     <QueryClientProvider client={queryClient}>
-      
+      {/* <ReactQueryDevtools initialIsOpen={false} /> */}
       {toast.visible && <Toast message={toast.message} status={toast.status} />}
       <RouterProvider router={routes} />
       <GlobalStyles />

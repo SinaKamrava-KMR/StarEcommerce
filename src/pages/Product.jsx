@@ -40,6 +40,9 @@ const Container = styled.div`
 const Title = styled.p`
   font-weight: bold;
   font-size: 2.5rem;
+  display: flex;
+  align-items: center;
+  gap: 2rem;
 `;
 
 const RouteContainer = styled.div`
@@ -53,6 +56,13 @@ const RouteContainer = styled.div`
 `;
 const Description = styled.div`
   width: 80%;
+`;
+const Brand = styled.p`
+  font-size: 1.4rem;
+  color: #4b4b4b;
+  background-color: #fff9cb;
+  border-radius: 2rem;
+  padding: .5rem 2rem;
 `;
 const Row = styled.div`
   display: flex;
@@ -108,6 +118,7 @@ function Product() {
   if (isLoading) return <Loading />;
   return (
     <ProductStyled>
+      
       <LikeWrapper>
         <LikeButton
           onLike={handleLike}
@@ -118,7 +129,10 @@ function Product() {
       </LikeWrapper>
       <ProductSlider images={product.images} />
       <Container>
-        <Title>{product.name}</Title>
+        <Title>
+          {product.name}
+          <Brand>{product.brand}</Brand>
+        </Title>
         <RouteContainer>
           <p>{product.category.name}</p>
           <HiChevronLeft />

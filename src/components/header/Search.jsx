@@ -3,6 +3,9 @@ import SearchIcon from "@mui/icons-material/Search";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { useEffect } from "react";
+import PropTypes from "prop-types";
+import { useDispatch, useSelector } from "react-redux";
+import { setSearch } from "../../redux/reducer/search/searchSlice";
 
 const SearchStyled = styled.div`
   width: 100%;
@@ -32,6 +35,8 @@ const Input = styled.input`
 `;
 
 function Search() {
+  const dispatch = useDispatch();
+  const value = useSelector((state) => state.search.value);
   const navigate = useNavigate();
   const [focus, setFocus] = useState(false);
   const query = useLocation().search;
@@ -47,9 +52,16 @@ function Search() {
         onFocus={() => setFocus((s) => !s)}
         type="text"
         placeholder="جستجو"
+        value={value}
+        onChange={(e) => dispatch(setSearch(e.target.value))}
       />
     </SearchStyled>
   );
 }
+
+Search.propTypes = {
+  setValue: PropTypes.func,
+  value: PropTypes.string,
+};
 
 export default Search;

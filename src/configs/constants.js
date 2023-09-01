@@ -5,3 +5,4 @@ export const REFRESH_TOKEN_KEY = "refreshToken";
 export const USER_ID = "userId";
 export const USER_AUTH_THUNK_KEY = "user/auth";
 export const USER_DATA_THUNK_KEY = "user/data";
+export const SEARCH_HISTORY = "search_history";

@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 import { styled } from "styled-components";
-
+import { Link } from "react-router-dom";
 const Wrapper = styled.div`
   position: relative;
   display: flex;
@@ -30,10 +30,12 @@ const Logo = styled.img`
 
 const Brand = ({ brand }) => {
   return (
-    <Wrapper>
+    <Link to={`/products?brand=${brand.brand}`}>
+      <Wrapper>
       <Logo src={brand.src} />
       <Shape color={brand.color} />
     </Wrapper>
+    </Link>
   );
 };
 

@@ -1,4 +1,3 @@
-import { styled } from "styled-components";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import PersonIcon from "@mui/icons-material/Person";
 import Logo from "../common/Logo";
@@ -8,75 +7,33 @@ import Search from "./Search";
 import { useEffect } from "react";
 import { useState } from "react";
 import { useSelector } from "react-redux";
+import Cookies from "js-cookie";
+import PropTypes from "prop-types";
+import { ACCESS_TOKEN_KEY } from "../../configs/constants";
+import LoginIcon from "@mui/icons-material/Login";
+import {
+  BadgeIcon,
+  Flex1,
+  HeaderStyled,
+  IconWrapper,
+  Row,
+  SearchWrapper,
+} from "./HeaderStyled";
+import SearchDropDown from "./SearchDropDown";
 
-// import Cookies from "js-cookie";
-// import { ACCESS_TOKEN_KEY } from "../../configs/constants";
-// import LoginIcon from "@mui/icons-material/Login";
-const HeaderStyled = styled.header`
-  padding-block: 10px;
-  margin-inline: auto;
-  display: grid;
-  gap: 1.6rem;
-  align-items: center;
-  background-color: ${(props) =>
-    props.position > 80 ? "#fff" : "transparent"};
-  z-index: 99999;
-  position: fixed;
-  top: 0;
-  left: 3rem;
-  right: 3rem;
-  padding: 1.2rem 0;
-  grid-template-columns: repeat(auto-fill, maxmin(50px, 1fr));
-  @media (min-width: 800px) {
-    grid-template-columns: 1fr 1fr;
-  }
-`;
-
-const BadgeIcon = styled.span`
-  position: absolute;
-  top: -10px;
-  right: -10px;
-  background-color: #f85b5b;
-  color: white;
-  font-size: 12px;
-  width: 16px;
-  height: 16px;
-  padding: 9px;
-  display: flex;
-  border-radius: 50%;
-  align-items: center;
-  justify-content: center;
-  & p {
-    margin-top: 2px;
-  }
-`;
-const IconWrapper = styled.div`
-  position: relative;
-`;
-
-const Row = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 2rem;
-`;
-
-const Flex1 = styled.div`
-  flex: 1;
-
-  @media (max-width: 1200px) {
-    display: none;
-  }
-`;
-
-function Header() {
-  // const accessToken = Cookies.get(ACCESS_TOKEN_KEY);
-  const carts = useSelector(state=>state.cart.products)
+const Header = () => {
+ 
+  const accessToken = Cookies.get(ACCESS_TOKEN_KEY);
+  const carts = useSelector((state) => state.cart.products);
   const [scrollPosition, setScrollPosition] = useState(0);
+
   const handleScroll = () => {
     const position = window.pageYOffset;
     setScrollPosition(position);
   };
+
+
+
   useEffect(() => {
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => {
@@ -89,13 +46,16 @@ function Header() {
     <HeaderStyled position={scrollPosition}>
       <Row>
         <Logo />
-
         <NavBar />
       </Row>
 
       <Row>
         <Flex1 />
-        <Search />
+        <SearchWrapper>
+          <Search  />
+          <SearchDropDown/>
+        </SearchWrapper>
+
         <Link to="/cart">
           <IconWrapper>
             {carts.length > 0 && (
@@ -108,12 +68,7 @@ function Header() {
           </IconWrapper>
         </Link>
 
-        <Link to="/account">
-          <IconWrapper>
-            <PersonIcon sx={{ fontSize: "25px" }} />
-          </IconWrapper>
-        </Link>
-        {/* {accessToken ? (
+        {accessToken ? (
           <Link to="/account">
             <IconWrapper>
               <PersonIcon sx={{ fontSize: "25px" }} />
@@ -125,10 +80,14 @@ function Header() {
               <LoginIcon sx={{ fontSize: "25px" }} />
             </IconWrapper>
           </Link>
-        )} */}
+        )}
       </Row>
     </HeaderStyled>
   );
-}
+};
+
+Header.propTypes = {
+  onSearch: PropTypes.func,
+};
 
 export default Header;
