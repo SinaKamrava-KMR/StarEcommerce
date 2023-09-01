@@ -42,7 +42,7 @@ function Search() {
   const query = useLocation().search;
 
   useEffect(() => {
-    if (focus && query === "") navigate("/products");
+    // if (focus && query === "") navigate("/products");
   }, [focus, navigate, query]);
 
   return (
