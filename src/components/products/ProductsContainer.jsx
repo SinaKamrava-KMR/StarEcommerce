@@ -1,13 +1,14 @@
 import { styled } from "styled-components";
 import PropTypes from "prop-types";
 import ProductCard from "../product/ProductCard";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import StarPagination from "../common/StarPagination";
 import Loading from "../common/Loading";
 import { useMemo, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { useEffect } from "react";
 import { BiFilter } from "react-icons/bi";
+import { addProduct } from "../../redux/reducer/cart/cartSlice";
 
 const Wrapper = styled.div`
   flex: 1;
@@ -91,6 +92,7 @@ const ProductsContainer = ({
   // eslint-disable-next-line no-unused-vars
   const [searchParams, setSearchParams] = useSearchParams();
   const [showSort, setShowSort] = useState(false);
+  const dispatch = useDispatch();
 
   const title = useMemo(() => {
     if (categoryId === "all") {
@@ -105,6 +107,7 @@ const ProductsContainer = ({
     }
   }, [categoryId, brand, categories]);
 
+
   const handlePagination = (page) => {
     setSearchParams({ page });
   };
@@ -112,6 +115,10 @@ const ProductsContainer = ({
   const handleChangeSort = (params) => {
     searchParams.set("sort", params);
     setSearchParams(searchParams);
+  };
+
+  const handleAdToCart = (product) => {
+    dispatch(addProduct(product));
   };
 
   useEffect(() => {
@@ -155,6 +162,7 @@ const ProductsContainer = ({
                   <ProductCard
                     key={product._id}
                     product={product}
+                    addToCart={handleAdToCart}
                     isLike={
                       wishList.find((item) => item._id === product._id)
                         ? true
@@ -168,6 +176,7 @@ const ProductsContainer = ({
               <ProductCard
                 key={product._id}
                 product={product}
+                addToCart={handleAdToCart}
                 isLike={
                   wishList.find((item) => item._id === product._id)
                     ? true
