@@ -1,5 +1,5 @@
-import { Link } from "react-router-dom"
-import { styled } from "styled-components"
+import { styled } from "styled-components";
+import OrderStatus from "../components/cart/OrderStatus";
 
 const CartStyled = styled.div`
   height: 100%;
@@ -8,20 +8,14 @@ const CartStyled = styled.div`
   gap: 3rem;
   align-items: center;
   justify-content: center;
-
-`
-
-
+`;
 
 function Cart() {
   return (
     <CartStyled>
-      <h1>صفحه سبد خرید </h1>
-      <Link to="/shipping">
-      پرداخت نهایی محصول 
-      </Link>
+      <OrderStatus state={0} />
     </CartStyled>
-  )
+  );
 }
 
-export default Cart
+export default Cart;
