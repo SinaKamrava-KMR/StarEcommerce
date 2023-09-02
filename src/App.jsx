@@ -5,7 +5,8 @@ import routes from "./routes/routes";
 import { useEffect } from "react";
 import Toast from "./components/common/Toast";
 import { useDispatch, useSelector } from "react-redux";
-import { hide } from "./redux/reducer/toast/toastSlice";
+import { hide, show } from "./redux/reducer/toast/toastSlice";
+import { cleanMessage } from "./redux/reducer/cart/cartSlice";
 // import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
 const queryClient = new QueryClient({
@@ -18,15 +19,30 @@ const queryClient = new QueryClient({
 
 function App() {
   const toast = useSelector((state) => state.toast);
+  const cartMessage = useSelector((state) => state.cart.message);
+
+
   const dispatch = useDispatch();
+
+  if (cartMessage.message !== "") {
+    dispatch(
+      show({
+        message: cartMessage.message,
+        status: cartMessage.status,
+      })
+    );
+  }
 
   useEffect(() => {
     if (toast.visible) {
       setTimeout(() => {
         dispatch(hide());
+        if (cartMessage.message !== "") {
+          dispatch(cleanMessage());
+        }
       }, 6000);
     }
-  }, [toast.visible, dispatch]);
+  }, [toast.visible, dispatch, cartMessage.message]);
 
   return (
     <QueryClientProvider client={queryClient}>

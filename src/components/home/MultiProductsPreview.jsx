@@ -6,6 +6,8 @@ import PreviewFilter from "./PreviewFilter";
 import ProductCard from "../product/ProductCard";
 import { useState } from "react";
 import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { addProduct } from "../../redux/reducer/cart/cartSlice";
 
 const Wrapper = styled.div`
   width: 100%;
@@ -31,6 +33,7 @@ const Container = styled.div`
 `;
 
 function MultiProductsPreview({ wishList = [] }) {
+  const dispatch = useDispatch();
   const { isLoading, products } = useProduct(1, 1000);
   const [list, setList] = useState([]);
 
@@ -42,6 +45,10 @@ function MultiProductsPreview({ wishList = [] }) {
         products?.data?.products.filter((item) => item.subcategory === id)
       );
     }
+  };
+
+  const handleAdToCart = (product) => {
+    dispatch(addProduct(product));
   };
 
   useEffect(() => {
@@ -69,6 +76,7 @@ function MultiProductsPreview({ wishList = [] }) {
                       ? true
                       : false
                   }
+                  addToCart={handleAdToCart}
                   product={product}
                 />
               )

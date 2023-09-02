@@ -85,17 +85,4 @@ privateAxios.interceptors.response.use(
 );
 
 
-// {
-//   "category": "",
-//   "subcategory": "",
-//   "name": "  ",
-//   "price": ,
-//   "quantity": ,
-//   "brand": "",
-//   "description": "",
-//   "thumbnail": "",
-//   "images": [
-//       ""
-//   ],
-// }
 export default privateAxios;

@@ -58,7 +58,8 @@ function BannerSlider() {
       activeIndex={activeSlide}
       length={4}
       colors={colors}
-    />
+      />
+ 
     <SeeMore
       as={motion.div}
       initial={{ transform: "scale(2)", opacity: 0 }}
@@ -67,7 +68,8 @@ function BannerSlider() {
     >
       <p>دیدن</p>
       <p>محصولات</p>
-    </SeeMore>
+      </SeeMore>
+      
     <DiscountAd>
       <p>۲۵٪</p>
       <p>تخفیف</p>
