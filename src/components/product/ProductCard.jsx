@@ -11,19 +11,21 @@ import {
   AddButton,
 } from "./ProductCardStyle";
 import { Link } from "react-router-dom";
-import { addProduct } from "../../redux/reducer/cart/cartSlice";
+// import { addProduct } from "../../redux/reducer/cart/cartSlice";
 import { useDispatch } from "react-redux";
 import {
   addFavoriteProduct,
   removeFavoriteProduct,
 } from "../../redux/reducer/wishlist/wishlistSlice";
 
-function ProductCard({ product, isLike = false }) {
+function ProductCard({ product, isLike = false,addToCart }) {
   const dispatch = useDispatch();
-  const handleAdToCart = (e) => {
-    e.preventDefault();
-    dispatch(addProduct({ ...product, productCount: 1 ,color:"#333"}));
-  };
+
+  // const handleAdToCart = (e) => {
+  //   e.preventDefault();
+  //   dispatch(addProduct({ ...product, productCount: 1 ,color:"#333"}));
+  // };
+
   const handleLike = (state) => {
     if (state) {
       dispatch(addFavoriteProduct(product));
@@ -31,6 +33,7 @@ function ProductCard({ product, isLike = false }) {
       dispatch(removeFavoriteProduct({ id: product._id }));
     }
   };
+
   return (
     <Link to={`/product/${product._id}`}>
       <Wrapper>
@@ -49,7 +52,10 @@ function ProductCard({ product, isLike = false }) {
           <p>تومان</p>
         </PriceWrapper>
 
-        <AddButton onClick={handleAdToCart}>
+        <AddButton onClick={(e) => {
+          e.preventDefault();
+          addToCart({ ...product, productCount: 1 ,color:"#333"})
+        }}>
           <HiOutlinePlus />
           <p>افزودن به سبد</p>
         </AddButton>
@@ -63,5 +69,6 @@ ProductCard.propTypes = {
   children: PropTypes.node,
   isLike: PropTypes.bool,
   product: PropTypes.object,
+  addToCart: PropTypes.func,
 };
 export default ProductCard;

@@ -32,17 +32,18 @@ const AppLayoutStyle = styled.main`
 
 function AppLayout() {
   const userId = Cookies.get(USER_ID);
-
   const dispatch = useDispatch();
- 
+
   const { isLoading: isCategoryLoading, data: categories } = useQuery({
     queryKey: ["category"],
     queryFn: getCategories,
   });
+
   const { isLoading: isSubCategoryLoading, data: subcategories } = useQuery({
     queryKey: ["subcategories"],
     queryFn: getSubcategories,
   });
+
 
   if (!isCategoryLoading && categories) {
     dispatch(addCategories(categories.data.categories));
@@ -51,26 +52,33 @@ function AppLayout() {
     dispatch(addSubcategories(subcategories.data.subcategories));
   }
 
-  if (userId) {
-    dispatch(userData(userId));
-  }
+
 
   useEffect(() => {
-    let cart = localStorage.getItem("cart") || "[]";
-    cart = JSON.parse(cart);
-    dispatch(initCart(cart));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
-  useEffect(() => {
     getProducts({ page: 1, limit: 1000 }).then((res) => {
       if (res.data.products) {
         const brands = res.data.products.map((product) => product.brand);
         dispatch(addBrands([...new Set(brands)]));
       }
     });
+
+// ====================================
+    let cart = localStorage.getItem("cart") || "[]";
+    cart = JSON.parse(cart);
+    dispatch(initCart(cart));
+// ====================================
+
+    if (userId) {
+      dispatch(userData(userId));
+    }
+
+
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+
 
   return (
     <AppLayoutStyle>

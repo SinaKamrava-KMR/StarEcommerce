@@ -7,6 +7,8 @@ import ProductCard from "../product/ProductCard";
 import PreviewNavigation from "./PreviewNavigation";
 import { useRef } from "react";
 import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { addProduct } from "../../redux/reducer/cart/cartSlice";
 
 const Wrapper = styled.div`
   width: 100%;
@@ -34,8 +36,15 @@ const SeeMoreTag = styled.p`
 `;
 
 function ProductsPreview({ title, data, categoryId, wishList=[] }) {
+  const dispatch = useDispatch();
   const sliderRef = useRef(null);
   let filteredList = data?.filter((item) => item.category === categoryId);
+
+  
+  const handleAdToCart = (product) => {
+    dispatch(addProduct(product));
+  };
+
 
   return (
     <Wrapper>
@@ -57,6 +66,7 @@ function ProductsPreview({ title, data, categoryId, wishList=[] }) {
               <SwiperSlide key={idx}>
                 <ProductCard
                   product={product}
+                  addToCart={handleAdToCart}
                   isLike={
                     wishList.find((item) => item._id === product._id)
                       ? true
