@@ -40,8 +40,12 @@ const TableHeader = styled.div`
   }
 `;
 const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
   overflow: auto;
   max-height: 400px;
+  
   /* width*/
   &::-webkit-scrollbar {
     width: 7px;
