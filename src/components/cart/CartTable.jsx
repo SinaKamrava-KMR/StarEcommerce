@@ -61,16 +61,16 @@ const Container = styled.div`
   }
 `;
 
-const CartTable = ({ children }) => {
+const CartTable = ({ children,onCheckAll,isActive,onRemove }) => {
   return (
     <Wrapper>
       <Hero>
         <p>سبد خرید</p>
         <span style={{ flex: 1 }}></span>
-        <DeleteProductButton/>
+        <DeleteProductButton active={ isActive} onClick={onRemove} />
       </Hero>
       <TableHeader>
-        <CheckBox />
+        <CheckBox onCheck={onCheckAll} />
         <p>محصولات</p>
         <p>تعداد</p>
         <p>قیمت</p>
@@ -82,6 +82,9 @@ const CartTable = ({ children }) => {
 
 CartTable.propTypes = {
   children: PropTypes.node,
+  onRemove: PropTypes.func,
   wishList: PropTypes.array,
+  onCheckAll: PropTypes.func,
+  isActive: PropTypes.bool,
 };
 export default CartTable;

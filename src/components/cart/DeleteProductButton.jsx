@@ -23,7 +23,7 @@ const Wrapper = styled.div`
 
 const DeleteProductButton = ({ active = false, onClick }) => {
   return (
-    <Wrapper active={active} onClick={active && onClick}>
+    <Wrapper active={active} onClick={onClick}>
       <TbTrashFilled />
       <p>حذف</p>
     </Wrapper>
