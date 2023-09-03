@@ -1,6 +1,7 @@
 import PropTypes from "prop-types";
 import { styled } from "styled-components";
 import CheckBox from "../common/CheckBox";
+import DeleteProductButton from "./DeleteProductButton";
 
 const Wrapper = styled.div`
   padding: 1rem;
@@ -15,7 +16,7 @@ const Hero = styled.div`
   display: flex;
   align-items: center;
   position: sticky;
-  width: 92%;
+
   padding: 0 2rem;
   font-weight: bold;
   & p:first-child{
@@ -66,7 +67,7 @@ const CartTable = ({ children }) => {
       <Hero>
         <p>سبد خرید</p>
         <span style={{ flex: 1 }}></span>
-        <p>حذف</p>
+        <DeleteProductButton/>
       </Hero>
       <TableHeader>
         <CheckBox />

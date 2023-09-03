@@ -2,12 +2,13 @@ import { styled } from "styled-components";
 
 export const Wrapper = styled.div`
   min-width: 350px;
-  height: 420px;
+  height: 480px;
   box-shadow: 0 0 7px #8e8e8e60;
   border-radius: 1rem;
   padding: 2rem;
   display: flex;
   flex-direction: column;
+  transform: translateY(2.5rem);
   gap: 1rem;
 `;
 export const Row = styled.div`
