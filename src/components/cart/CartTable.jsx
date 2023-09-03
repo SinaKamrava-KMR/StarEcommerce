@@ -1,6 +1,7 @@
 import PropTypes from "prop-types";
 import { styled } from "styled-components";
 import CheckBox from "../common/CheckBox";
+import DeleteProductButton from "./DeleteProductButton";
 
 const Wrapper = styled.div`
   padding: 1rem;
@@ -15,7 +16,7 @@ const Hero = styled.div`
   display: flex;
   align-items: center;
   position: sticky;
-  width: 92%;
+
   padding: 0 2rem;
   font-weight: bold;
   & p:first-child{
@@ -39,8 +40,12 @@ const TableHeader = styled.div`
   }
 `;
 const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
   overflow: auto;
   max-height: 400px;
+  
   /* width*/
   &::-webkit-scrollbar {
     width: 7px;
@@ -60,16 +65,16 @@ const Container = styled.div`
   }
 `;
 
-const CartTable = ({ children }) => {
+const CartTable = ({ children,onCheckAll,isActive,onRemove }) => {
   return (
     <Wrapper>
       <Hero>
         <p>سبد خرید</p>
         <span style={{ flex: 1 }}></span>
-        <p>حذف</p>
+        <DeleteProductButton active={ isActive} onClick={onRemove} />
       </Hero>
       <TableHeader>
-        <CheckBox />
+        <CheckBox onCheck={onCheckAll} />
         <p>محصولات</p>
         <p>تعداد</p>
         <p>قیمت</p>
@@ -81,6 +86,9 @@ const CartTable = ({ children }) => {
 
 CartTable.propTypes = {
   children: PropTypes.node,
+  onRemove: PropTypes.func,
   wishList: PropTypes.array,
+  onCheckAll: PropTypes.func,
+  isActive: PropTypes.bool,
 };
 export default CartTable;

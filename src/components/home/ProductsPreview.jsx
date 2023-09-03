@@ -38,6 +38,7 @@ const SeeMoreTag = styled.p`
 function ProductsPreview({ title, data, categoryId, wishList=[] }) {
   const dispatch = useDispatch();
   const sliderRef = useRef(null);
+  
   let filteredList = data?.filter((item) => item.category === categoryId);
 
   

@@ -17,10 +17,11 @@ import {
   addFavoriteProduct,
   removeFavoriteProduct,
 } from "../../redux/reducer/wishlist/wishlistSlice";
+import { useCategoryById } from "../../hooks/useCategoryById";
 
-function ProductCard({ product, isLike = false,addToCart }) {
+function ProductCard({ product, isLike = false, addToCart }) {
   const dispatch = useDispatch();
-
+  const categoryObj = useCategoryById(product.category);
   // const handleAdToCart = (e) => {
   //   e.preventDefault();
   //   dispatch(addProduct({ ...product, productCount: 1 ,color:"#333"}));
@@ -52,10 +53,17 @@ function ProductCard({ product, isLike = false,addToCart }) {
           <p>تومان</p>
         </PriceWrapper>
 
-        <AddButton onClick={(e) => {
-          e.preventDefault();
-          addToCart({ ...product, productCount: 1 ,color:"#333"})
-        }}>
+        <AddButton
+          onClick={(e) => {
+            e.preventDefault();
+            addToCart({
+              ...product,
+              category: categoryObj.category,
+              productCount: 1,
+              color: "#333",
+            });
+          }}
+        >
           <HiOutlinePlus />
           <p>افزودن به سبد</p>
         </AddButton>

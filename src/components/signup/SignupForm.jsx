@@ -83,7 +83,7 @@ function SignupForm() {
         <InputWrapper>
           <ForwardedInput
             label="شماره تماس"
-            name="lastname"
+            name="phoneNumber"
             rightIcon={<PhoneIcon fontSize="large" />}
             isEmpty={true}
           />
