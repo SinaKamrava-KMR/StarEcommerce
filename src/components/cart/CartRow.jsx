@@ -2,6 +2,7 @@ import { styled } from "styled-components";
 import CheckBox from "../common/CheckBox";
 import PropTypes from "prop-types";
 import { convertToPersianNumber } from "../../utils/helper";
+import CartCounter from "./CartCounter";
 
 const Wrapper = styled.div`
   width: 100%;
@@ -48,7 +49,7 @@ const Image = styled.img`
   border-radius: 0.5rem;
 `;
 
-const CartRow = ({ product, onCheck, initCheck }) => {
+const CartRow = ({ product, onCheck, initCheck, setCount }) => {
   return (
     <Wrapper>
       <CheckBox
@@ -67,7 +68,11 @@ const CartRow = ({ product, onCheck, initCheck }) => {
           </Row>
         </Column>
       </ProductContent>
-      <p> {convertToPersianNumber(product.productCount)}</p>
+      <CartCounter
+        total={product.quantity}
+        init={product.productCount}
+        setCount={(value)=>setCount({...product,productCount:value})}
+      />
       <p>
         {convertToPersianNumber(product.productCount * product.price)} تومان
       </p>
@@ -78,6 +83,7 @@ const CartRow = ({ product, onCheck, initCheck }) => {
 CartRow.propTypes = {
   product: PropTypes.object,
   onCheck: PropTypes.func,
+  setCount: PropTypes.func,
   initCheck: PropTypes.bool,
 };
 export default CartRow;

@@ -24,6 +24,18 @@ const cartSlice = createSlice({
         state.message.status = "error";
       }
     },
+    updateProduct: (state, { payload }) => {
+      state.products = state.products.map((product) =>
+        product._id === payload._id ? payload : product
+      );
+      localStorage.setItem("cart", JSON.stringify(state.products));
+    },
+    deleteProducts: (state, { payload }) => {
+      state.products = state.products.filter(
+        (product) => !payload.includes(product._id)
+      );
+      localStorage.setItem("cart", JSON.stringify(state.products));
+    },
     initCart: (state, { payload }) => {
       state.products = payload;
       state.message.message = "";
@@ -36,6 +48,12 @@ const cartSlice = createSlice({
   },
 });
 
-export const { addProduct, initCart, cleanMessage } = cartSlice.actions;
+export const {
+  addProduct,
+  initCart,
+  cleanMessage,
+  updateProduct,
+  deleteProducts,
+} = cartSlice.actions;
 
 export default cartSlice.reducer;

@@ -23,6 +23,7 @@ export const Row = styled.div`
   font-weight: bold;
   & p:last-child {
     color: ${(props) => (props.discount ? "#ff5b5b" : "#6c6c6c")};
+    font-weight: ${(props) => (props.discount ? "500" : "bold")};
   }
 `;
 export const DiscountInput = styled.input`
