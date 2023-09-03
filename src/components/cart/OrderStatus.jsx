@@ -31,7 +31,6 @@ const ItemWrapper = styled.div`
   flex-direction: column;
   align-items: center;
   transition: all 0.5s ease-in-out;
-  cursor: ${(props) => (props.state ? "pointer" : "not-allowed")};
   gap: 1rem;
   color: ${(props) => (props.state ? "#ffffff" : "#979797")};
   & > p {
