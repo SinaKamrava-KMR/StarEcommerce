@@ -11,6 +11,7 @@ import { convertToPersianNumber } from "../../utils/helper";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { show } from "../../redux/reducer/toast/toastSlice";
+import { Link } from "react-router-dom";
 
 const shippingCost = 5000;
 const CartAside = ({ carts = [] }) => {
@@ -23,19 +24,23 @@ const CartAside = ({ carts = [] }) => {
 
   const handleChackDiscount = () => {
     if (value === "sina") {
-      dispatch(show({
-        message: "تخفیف شما اعمال شد",
-        status:"success"
-      }))
-      setDiscountPrice((pricesSum * 1 / 4));
-      setValue("")
+      dispatch(
+        show({
+          message: "تخفیف شما اعمال شد",
+          status: "success",
+        })
+      );
+      setDiscountPrice((pricesSum * 1) / 4);
+      setValue("");
     } else {
-      dispatch(show({
-        message: "کد تخفیف نامعتبر است",
-        status:"error"
-      }))
+      dispatch(
+        show({
+          message: "کد تخفیف نامعتبر است",
+          status: "error",
+        })
+      );
     }
-  }
+  };
   return (
     <Wrapper>
       <Row>
@@ -55,7 +60,11 @@ const CartAside = ({ carts = [] }) => {
         <p>{convertToPersianNumber(discountPrice)} تومان</p>
       </Row>
       <Row input>
-        <DiscountInput value={value} onChange={(e)=>setValue(e.target.value)} placeholder="کد تخفیف" />
+        <DiscountInput
+          value={value}
+          onChange={(e) => setValue(e.target.value)}
+          placeholder="کد تخفیف"
+        />
         <IconWrapper onClick={handleChackDiscount}>
           <HiOutlineCheck />
         </IconWrapper>
@@ -68,7 +77,9 @@ const CartAside = ({ carts = [] }) => {
           تومان
         </p>
       </Row>
-      <SubmitButton>ثبت سفارش</SubmitButton>
+      <Link to="/purchase">
+        <SubmitButton>ثبت سفارش</SubmitButton>
+      </Link>
     </Wrapper>
   );
 };
