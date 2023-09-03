@@ -1,26 +1,41 @@
-import { styled } from "styled-components";
-
-
-const Wrapper = styled.div`
-  min-width: 350px;
-  height: 420px;
-  box-shadow: 0 0 7px #8e8e8e60;
-  border-radius: .5rem;
-  padding: 1rem;
-  
-
-`
-
-
+import { HiOutlineCheck } from "react-icons/hi2";
+import {
+  DiscountInput,
+  IconWrapper,
+  Row,
+  SubmitButton,
+  Wrapper,
+} from "./CartAsideStyle";
 
 const CartAside = () => {
-  return <Wrapper>
- اطلاعات سفارش
-  </Wrapper>;
+  return (
+    <Wrapper>
+      <Row>
+        <p>تعداد محصولات</p>
+        <p>۲ کالا</p>
+      </Row>
+      <Row>
+        <p>قیمت کل</p>
+        <p>۲۰۰۰ تومان</p>
+      </Row>
+      <Row>
+        <p>هزینه ارسال</p>
+        <p>۵۰۰۰ تومان</p>
+      </Row>
+      <Row discount>
+        <p>تخفیف</p>
+        <p>۰</p>
+      </Row>
+      <Row input>
+        <DiscountInput placeholder="کد تخفیف" />
+        <IconWrapper>
+          <HiOutlineCheck />
+        </IconWrapper>
+      </Row>
+      <span style={{ flex: 1 }}></span>
+      <SubmitButton>ثبت سفارش</SubmitButton>
+    </Wrapper>
+  );
 };
 
 export default CartAside;
-
-
-
-
