@@ -14,6 +14,7 @@ const initialState = {
   name: "",
   lastName: "",
   userName: "",
+
   address: "",
   phoneNumber: "",
   role: "",
@@ -34,7 +35,6 @@ const userSlice = createSlice({
 
     addUser: (state, { payload }) => {
       state.isLoading = false;
-
       const {
         _id: userId,
         firstname,
@@ -42,6 +42,7 @@ const userSlice = createSlice({
         username,
         phoneNumber,
         address,
+    
         role,
       } = payload.data.user;
       state.message = "شما با موفقیت وارد شدید";
@@ -51,6 +52,7 @@ const userSlice = createSlice({
       state.phoneNumber = phoneNumber;
       state.address = address;
       state.role = role;
+  
 
       // set accessToken and refreshToken on cookies
       Cookies.set(ACCESS_TOKEN_KEY, payload.token.accessToken);
@@ -59,9 +61,10 @@ const userSlice = createSlice({
     },
 
     editUser: (state, { payload }) => {
-  
+   
       const {
         firstname,
+  
         lastname,
         username,
         phoneNumber,
@@ -74,19 +77,25 @@ const userSlice = createSlice({
       state.phoneNumber = phoneNumber;
       state.address = address;
       state.role = role;
-
+  
     },
   },
-  
-  extraReducers: (builder) => {
 
+  extraReducers: (builder) => {
     builder.addCase(userData.pending, (state) => {
       state.isLoading = true;
     });
 
     builder.addCase(userData.fulfilled, (state, { payload }) => {
-      const { firstname, lastname, username, phoneNumber, address, role } =
-        payload.data.user;
+      console.log(payload);
+      const {
+        firstname,
+        lastname,
+        username,
+        phoneNumber,
+        address,
+        role,
+      } = payload.data.user;
       state.message = "شما با موفقیت وارد شدید";
       state.name = firstname;
       state.lastName = lastname;
@@ -106,5 +115,5 @@ const userSlice = createSlice({
   },
 });
 
-export const { logout, addUser,editUser } = userSlice.actions;
+export const { logout, addUser, editUser } = userSlice.actions;
 export default userSlice.reducer;
