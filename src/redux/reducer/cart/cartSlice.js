@@ -6,6 +6,8 @@ const initialState = {
     message: "",
     status: "",
   },
+  deliveryDate: "",
+  deliveryState: true,
 };
 
 const cartSlice = createSlice({
@@ -41,6 +43,10 @@ const cartSlice = createSlice({
       state.message.message = "";
       state.message.status = "";
     },
+    addDelivery: (state, { payload })=> {
+      state.deliveryDate = payload.deliveryDate;
+      state.deliveryState = payload.deliveryState;
+    },
     cleanMessage: (state) => {
       state.message.message = "";
       state.message.status = "";
@@ -53,6 +59,7 @@ export const {
   initCart,
   cleanMessage,
   updateProduct,
+  addDelivery,
   deleteProducts,
 } = cartSlice.actions;
 

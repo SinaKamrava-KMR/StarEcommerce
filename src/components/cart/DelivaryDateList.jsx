@@ -32,8 +32,6 @@ const Date = styled.div`
 const DelivaryDateList = ({ onDate }) => {
   const threeDayies = getThreeDayies();
 
-  console.log(threeDayies);
-
   return (
     <Wrapper>
       {threeDayies.map((date, i) => {

@@ -110,7 +110,7 @@ export function getThreeDayies() {
 
   for (let index = 0; index < 6; index++) {
     const today = new Date();
-    today.setDate(today.getDate() + index + 1);
+    today.setDate(today.getDate() + index);
     const formattedDate = today.toLocaleDateString("fa-IR", {
       year: "numeric",
       month: "2-digit",

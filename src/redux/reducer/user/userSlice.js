@@ -57,6 +57,25 @@ const userSlice = createSlice({
       Cookies.set(REFRESH_TOKEN_KEY, payload.token.refreshToken);
       Cookies.set(USER_ID, userId);
     },
+
+    editUser: (state, { payload }) => {
+  
+      const {
+        firstname,
+        lastname,
+        username,
+        phoneNumber,
+        address,
+        role,
+      } = payload.data.user;
+      state.name = firstname;
+      state.lastName = lastname;
+      state.userName = username;
+      state.phoneNumber = phoneNumber;
+      state.address = address;
+      state.role = role;
+
+    },
   },
   
   extraReducers: (builder) => {
@@ -87,5 +106,5 @@ const userSlice = createSlice({
   },
 });
 
-export const { logout, addUser } = userSlice.actions;
+export const { logout, addUser,editUser } = userSlice.actions;
 export default userSlice.reducer;

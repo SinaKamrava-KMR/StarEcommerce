@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import "react-modern-calendar-datepicker/lib/DatePicker.css";
+import "@hassanmojab/react-modern-calendar-datepicker/lib/DatePicker.css";
 
 import { useState } from "react";
 import { styled } from "styled-components";

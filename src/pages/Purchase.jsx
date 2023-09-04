@@ -7,31 +7,44 @@ import {
   TbCurrentLocation,
   TbCalendarTime,
 } from "react-icons/tb";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import StarMap from "../components/common/StarMap";
 import StarDatePicker from "../components/common/StarDatePicker";
 import { useState } from "react";
 import DelivaryDateList from "../components/cart/DelivaryDateList";
 import OrderStatus from "../components/cart/OrderStatus";
-import { Column, DateWrapper, Form, Row, SubmitButton, Title, Wrapper } from "../components/cart/PurchaseStyle";
-
-
-
-
+import {
+  Column,
+  DateWrapper,
+  Form,
+  Row,
+  SubmitButton,
+  Title,
+  Wrapper,
+} from "../components/cart/PurchaseStyle";
+import { useNavigate } from "react-router-dom";
+import { useUpdateUser } from "../hooks/useUpdateUser";
+import { addDelivery } from "../redux/reducer/cart/cartSlice";
+import Cookies from "js-cookie";
+import { editUser } from "../redux/reducer/user/userSlice";
 
 const Purchase = () => {
   const [openCalender, setOpenCalender] = useState(false);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { mutate } = useUpdateUser(onSuccess);
   const { name, lastName, address, phoneNumber } = useSelector(
     (state) => state.user
   );
 
   const initialValues = {
-    firstname:name,
-    lastname:lastName,
+    firstname: name,
+    lastname: lastName,
     address,
     phoneNumber,
     deliveryDate: "",
   };
+
   const {
     register,
     handleSubmit,
@@ -43,7 +56,10 @@ const Purchase = () => {
   const formsValues = watch();
 
   const onSub = (data) => {
+    const id = Cookies.get("userId");
+    delete data.deliveryDate;
     console.log(data);
+    mutate({id,data})
   };
 
   const onSelectAddress = (address) => {
@@ -64,10 +80,21 @@ const Purchase = () => {
     setOpenCalender(s);
   }
 
+  function onSuccess(user) {
+    dispatch(editUser(user));
+    dispatch(
+      addDelivery({
+        deliveryDate: formsValues.deliveryDate,
+        deliveryState: true,
+      })
+    );
+    navigate("/shipping")
+  }
+
   return (
     <Wrapper>
-       <OrderStatus state={1} />
-      <Title>  تکمیل اطلاعات مشتری</Title>
+      <OrderStatus state={1} />
+      <Title> تکمیل اطلاعات مشتری</Title>
       <Form>
         <Row>
           <ForwardedInput
@@ -194,12 +221,10 @@ const Purchase = () => {
 
               {openCalender && <StarDatePicker onDate={handleSelectDate} />}
             </DateWrapper>
-            <DelivaryDateList onDate={handleSelectDate}/>
+            <DelivaryDateList onDate={handleSelectDate} />
 
             <span style={{ flex: 1 }}></span>
-            <SubmitButton onClick={handleSubmit(onSub)}>
-                 ثبت سفارش
-            </SubmitButton>
+            <SubmitButton onClick={handleSubmit(onSub)}>ثبت سفارش</SubmitButton>
           </Column>
         </Row>
       </Form>
