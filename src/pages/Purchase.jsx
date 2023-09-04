@@ -27,7 +27,7 @@ import { useUpdateUser } from "../hooks/useUpdateUser";
 import { addDelivery } from "../redux/reducer/cart/cartSlice";
 import Cookies from "js-cookie";
 import { editUser } from "../redux/reducer/user/userSlice";
-
+const password = '$2a$12$xPQMbi7ZYqDdT6/W4Eh4uuHoxfZOtzmIjhYPTXL7R/SyPIPoF0giG';
 const Purchase = () => {
   const [openCalender, setOpenCalender] = useState(false);
   const navigate = useNavigate();
@@ -37,11 +37,13 @@ const Purchase = () => {
     (state) => state.user
   );
 
+
   const initialValues = {
     firstname: name,
     lastname: lastName,
     address,
     phoneNumber,
+    password,
     deliveryDate: "",
   };
 
@@ -59,7 +61,7 @@ const Purchase = () => {
     const id = Cookies.get("userId");
     delete data.deliveryDate;
     console.log(data);
-    mutate({id,data})
+    mutate({ id, data });
   };
 
   const onSelectAddress = (address) => {
