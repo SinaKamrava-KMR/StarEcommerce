@@ -79,6 +79,25 @@ export function convertToPersianNumber(number) {
   return persianNumber;
 }
 
+export function convertToP(number) {
+  const persianDigits = ["۰", "۱", "۲", "۳", "۴", "۵", "۶", "۷", "۸", "۹"];
+
+  const englishDigits = number.toString().split("");
+  let persianNumber = "";
+
+  for (let i = englishDigits.length - 1; i >= 0; i--) {
+    if (!isNaN(englishDigits[i])) {
+      persianNumber = persianDigits[englishDigits[i]] + persianNumber;
+      
+    } else {
+      persianNumber = englishDigits[i] + persianNumber;
+    }
+
+  }
+
+  return persianNumber;
+}
+
 export const mergeCategoriesAndSunCategories = (categories, subCategories) => {
   return categories.map((category) => {
     const relatedSubcategories = subCategories.filter(
