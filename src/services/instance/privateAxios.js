@@ -41,6 +41,7 @@ const privateAxios = axios.create({
 privateAxios.interceptors.request.use(
   (config) => {
     const accessToken = Cookies.get(ACCESS_TOKEN_KEY);
+
     if (accessToken) {
       config.headers.Authorization = `Bearer ${accessToken}`;
     }

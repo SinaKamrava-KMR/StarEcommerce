@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+
 import { styled } from "styled-components";
 
 const ShiipingStyled = styled.div`
@@ -13,8 +13,7 @@ const ShiipingStyled = styled.div`
 function Shipping() {
   return (
     <ShiipingStyled>
-      <h1> پرداخت محصولات در سبد خرید</h1>
-      <Link to="/">تکمیل خرید محصول و بازگشت</Link>
+      
     </ShiipingStyled>
   );
 }

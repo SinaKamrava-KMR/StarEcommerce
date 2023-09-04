@@ -5,6 +5,7 @@ import PropTypes from "prop-types";
 
 Input.propTypes = {
   rightIconClick: PropTypes.func,
+  onFocus: PropTypes.func,
   label: PropTypes.string,
   rest: PropTypes.array,
   errorMessage: PropTypes.string,
@@ -115,13 +116,19 @@ function Input(
     errorMessage = "",
     leftIcon,
     rightIcon,
-    rightIconClick,
+    rightIconClick = () => {},
     isEmpty,
+    onFocus = () => {},
     ...rest
   },
   ref
 ) {
   const [focus, setFocus] = useState(false);
+
+  const handleFouces = (state) => {
+    onFocus(state);
+    setFocus(state);
+  };
 
   return (
     <InputWrapper>
@@ -139,11 +146,12 @@ function Input(
         {label}
       </Label>
       <StyledInput
+        autoComplete="off"
         hasPadding={rightIcon !== undefined}
         {...rest}
         error={errorMessage !== ""}
         onBlur={() => setFocus(false)}
-        onFocus={() => setFocus(true)}
+        onFocus={() => handleFouces(true)}
         ref={ref}
       />
       {errorMessage !== "" && (

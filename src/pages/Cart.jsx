@@ -7,6 +7,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { useState } from "react";
 import { deleteProducts, updateProduct } from "../redux/reducer/cart/cartSlice";
 
+const StateWrapper = styled.div`
+  width: 50%;
+`;
+
 const CartStyled = styled.div`
   display: flex;
   flex-direction: column;
@@ -25,7 +29,7 @@ const Container = styled.div`
 
 function Cart() {
   const carts = useSelector((state) => state.cart.products);
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const [checkAll, setCheckAll] = useState(false);
   const [removeList, setRemoveList] = useState([]);
   const handleCheckProduct = (state, id) => {
@@ -48,15 +52,17 @@ function Cart() {
   const handleRemoveProducs = () => {
     if (removeList.length > 0) {
       dispatch(deleteProducts(removeList));
-      setRemoveList([])
+      setRemoveList([]);
     }
   };
   const handleSetProductCount = (product) => {
-    dispatch(updateProduct(product))
+    dispatch(updateProduct(product));
   };
   return (
     <CartStyled>
-      <OrderStatus state={0} />
+      <StateWrapper>
+        <OrderStatus state={0} />
+      </StateWrapper>
       <Container>
         <CartTable
           onRemove={handleRemoveProducs}

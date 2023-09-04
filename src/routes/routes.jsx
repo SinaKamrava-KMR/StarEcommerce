@@ -3,7 +3,7 @@ import { createBrowserRouter } from "react-router-dom";
 import AppLayout from "../pages/AppLayout";
 import NotFound from "../pages/NotFound";
 import Home from "../pages/home";
-import Cart from "../pages/cart";
+
 import Product from "../pages/product";
 import Products from "../pages/Products";
 import DashboardLayout from "../pages/dashboard/DashboardLayout";
@@ -23,6 +23,7 @@ import ProductsOverview from "../pages/dashboard/ProductsOverView";
 import ProtectedDashboard from "../components/router/ProtectedDashboard";
 import Categories from "../pages/dashboard/Categories";
 import Purchase from "../pages/Purchase";
+import Cart from "../pages/Cart";
 
 const routes = createBrowserRouter([
   //================== store routes ==================

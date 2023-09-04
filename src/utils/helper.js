@@ -1,4 +1,3 @@
-
 const convertToPersianNumbers = (text) => {
   const persianNumerals = ["۰", "۱", "۲", "۳", "۴", "۵", "۶", "۷", "۸", "۹"];
 
@@ -56,7 +55,6 @@ export async function handleMedias(images) {
   }
 }
 
-
 export function convertToPersianNumber(number) {
   const persianDigits = ["۰", "۱", "۲", "۳", "۴", "۵", "۶", "۷", "۸", "۹"];
 
@@ -81,8 +79,6 @@ export function convertToPersianNumber(number) {
   return persianNumber;
 }
 
-
-
 export const mergeCategoriesAndSunCategories = (categories, subCategories) => {
   return categories.map((category) => {
     const relatedSubcategories = subCategories.filter(
@@ -92,3 +88,44 @@ export const mergeCategoriesAndSunCategories = (categories, subCategories) => {
     return { ...category, subcategories: [...relatedSubcategories] };
   });
 };
+
+export function convertToEnglishNumber(number) {
+  const persianDigits = ["۰", "۱", "۲", "۳", "۴", "۵", "۶", "۷", "۸", "۹"];
+  let englishNumber = "";
+
+  for (let i = 0; i < number.length; i++) {
+    const digit = persianDigits.indexOf(number[i]);
+    if (digit !== -1) {
+      englishNumber += digit;
+    } else {
+      englishNumber += number[i];
+    }
+  }
+
+  return englishNumber;
+}
+
+export function getThreeDayies() {
+  let dates = [];
+
+  for (let index = 0; index < 6; index++) {
+    const today = new Date();
+    today.setDate(today.getDate() + index);
+    const formattedDate = today.toLocaleDateString("fa-IR", {
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
+    });
+    dates.push(formattedDate.split("/"));
+  }
+
+  dates = dates.map((day) => {
+    return {
+      year: convertToEnglishNumber(day[0]),
+      month: convertToEnglishNumber(day[1]),
+      day: convertToEnglishNumber(day[2]),
+    };
+  });
+
+  return dates;
+}

@@ -11,7 +11,7 @@ const Wrapper = styled.div`
   align-items: center;
   justify-content: space-between;
   position: relative;
-  width: 50%;
+  width: 100%;
 `;
 
 const Line = styled.div`
