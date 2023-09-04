@@ -1,4 +1,3 @@
-import { styled } from "styled-components";
 import ForwardedInput from "../components/common/Input";
 import { useForm } from "react-hook-form";
 import {
@@ -6,73 +5,69 @@ import {
   TbUsers,
   TbPhonePause,
   TbCurrentLocation,
-  TbCalendarTime
+  TbCalendarTime,
 } from "react-icons/tb";
 import { useSelector } from "react-redux";
 import StarMap from "../components/common/StarMap";
+import StarDatePicker from "../components/common/StarDatePicker";
+import { useState } from "react";
+import DelivaryDateList from "../components/cart/DelivaryDateList";
+import OrderStatus from "../components/cart/OrderStatus";
+import { Column, DateWrapper, Form, Row, SubmitButton, Title, Wrapper } from "../components/cart/PurchaseStyle";
 
-const Wrapper = styled.div`
-  width: 60%;
-  height: 100vh;
-  margin-top: 10rem;
-  margin-inline: auto;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 3rem;
 
-  overflow: auto;
 
-  /* width*/
-  &::-webkit-scrollbar {
-    width: 7px;
-    height: 7px;
-  }
 
-  /* Track */
-  &::-webkit-scrollbar-track {
-    background-color: #d1d1d19a;
-    border-radius: 10px;
-  }
-
-  /* Handle */
-  &::-webkit-scrollbar-thumb {
-    background: #616264;
-    border-radius: 10px;
-  }
-`;
-const Title = styled.p`
-  font-weight: bold;
-  font-size: 1.8rem;
-`;
-const Row = styled.div`
-  display: flex;
-  gap: 3rem;
-`;
-const Form = styled.form`
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  gap: 2rem;
-`;
 
 const Purchase = () => {
-  const user = useSelector((state) => state.user);
+  const [openCalender, setOpenCalender] = useState(false);
+  const { name, lastName, address, phoneNumber } = useSelector(
+    (state) => state.user
+  );
+
+  const initialValues = {
+    firstname:name,
+    lastname:lastName,
+    address,
+    phoneNumber,
+    deliveryDate: "",
+  };
   const {
     register,
     handleSubmit,
     watch,
+    setValue,
+    setError,
     formState: { errors },
-  } = useForm();
+  } = useForm({ defaultValues: initialValues });
   const formsValues = watch();
 
-  function onSub(data) {
+  const onSub = (data) => {
     console.log(data);
+  };
+
+  const onSelectAddress = (address) => {
+    setValue("address", address);
+    setError("address", "");
+    console.log(address);
+  };
+
+  const handleSelectDate = (date) => {
+    console.log(date);
+    setValue("deliveryDate", `${date.year}/${date.month}/${date.day}`);
+    setError("deliveryDate", "");
+    setOpenCalender(false);
+  };
+
+  function handlefouces(s) {
+    console.log(s);
+    setOpenCalender(s);
   }
 
   return (
     <Wrapper>
-      <Title>نهایی کردن خرید</Title>
+       <OrderStatus state={1} />
+      <Title>  تکمیل اطلاعات مشتری</Title>
       <Form>
         <Row>
           <ForwardedInput
@@ -156,7 +151,7 @@ const Purchase = () => {
                 message: "شماره تماس  نباید کمتر از ۱۱ عدد باشد",
               },
               pattern: {
-                value: /^\d{10}$/,
+                value: /^\d{11}$/,
                 message: "فرمت شماره تماس درست نیست ",
               },
             })}
@@ -166,31 +161,46 @@ const Purchase = () => {
           />
         </Row>
         <Row>
-          <StarMap />
+          <StarMap onMap={onSelectAddress} />
 
-          <ForwardedInput
-            name="deliveryDate"
-            label="تاریخ تحویل"
-            rightIcon={<TbCalendarTime fontSize="large" />}
-            isEmpty={
-              formsValues?.deliveryDate == undefined ||
-              formsValues.deliveryDate === ""
-            }
-            {...register("deliveryDate", {
-              required: {
-                value: true,
-                message: "  تاریخ تحویل نباید خالی باشد",
-              },
+          <Column>
+            <DateWrapper>
+              <ForwardedInput
+                name="deliveryDate"
+                label="تاریخ تحویل"
+                rightIcon={<TbCalendarTime fontSize="large" />}
+                isEmpty={
+                  formsValues?.deliveryDate == undefined ||
+                  formsValues.deliveryDate === ""
+                }
+                {...register("deliveryDate", {
+                  required: {
+                    value: true,
+                    message: "  تاریخ تحویل نباید خالی باشد",
+                  },
 
-              pattern: {
-                value: /^(\d{4})\/(\d{1,2})\/(\d{1,2})$/,
-                message: "فرمت  تاریخ درست نیست ",
-              },
-            })}
-            errorMessage={
-              errors?.deliveryDate?.message ? errors.deliveryDate.message : ""
-            }
-          />
+                  pattern: {
+                    value: /^(\d{4})\/(\d{1,2})\/(\d{1,2})$/,
+                    message: "فرمت  تاریخ درست نیست ",
+                  },
+                })}
+                errorMessage={
+                  errors?.deliveryDate?.message
+                    ? errors.deliveryDate.message
+                    : ""
+                }
+                onFocus={handlefouces}
+              />
+
+              {openCalender && <StarDatePicker onDate={handleSelectDate} />}
+            </DateWrapper>
+            <DelivaryDateList onDate={handleSelectDate}/>
+
+            <span style={{ flex: 1 }}></span>
+            <SubmitButton onClick={handleSubmit(onSub)}>
+                 ثبت سفارش
+            </SubmitButton>
+          </Column>
         </Row>
       </Form>
     </Wrapper>

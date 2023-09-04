@@ -2,6 +2,7 @@ import Mapir from "mapir-react-component";
 import { MAP_API_TOKEN } from "../../configs/constants";
 import { useState } from "react";
 import { styled } from "styled-components";
+import PropTypes from "prop-types";
 
 const Wrapper = styled.div`
   max-width: 395px;
@@ -25,7 +26,7 @@ const Map = Mapir.setToken({
 });
 const coord = [51.42, 35.72];
 
-const StarMap = () => {
+const StarMap = ({onMap}) => {
   const [markerArray, setMarkerArray] = useState([]);
 
   function reverseFunction(map, e) {
@@ -37,11 +38,15 @@ const StarMap = () => {
       },
     })
       .then((response) => response.json())
-      .then((data) => console.log(data));
+      .then((data) => {
+        onMap(data.address_compact)
+        
+      });
     const array = [];
   
     array.push(
       <Mapir.Marker
+        key={e.lngLat.lng}
         coordinates={[e.lngLat.lng, e.lngLat.lat]}
         anchor="top"
       />
@@ -59,4 +64,10 @@ const StarMap = () => {
   );
 };
 
+
+StarMap.propTypes = {
+  
+  onMap: PropTypes.func,
+
+}
 export default StarMap;
