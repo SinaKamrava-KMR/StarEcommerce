@@ -6,8 +6,10 @@ import {
   TbUsers,
   TbPhonePause,
   TbCurrentLocation,
+  TbCalendarTime
 } from "react-icons/tb";
 import { useSelector } from "react-redux";
+import StarMap from "../components/common/StarMap";
 
 const Wrapper = styled.div`
   width: 60%;
@@ -55,7 +57,7 @@ const Form = styled.form`
 `;
 
 const Purchase = () => {
-  const user = useSelector(state => state.user);
+  const user = useSelector((state) => state.user);
   const {
     register,
     handleSubmit,
@@ -118,8 +120,7 @@ const Purchase = () => {
           />
         </Row>
         <Row>
-
-        <ForwardedInput
+          <ForwardedInput
             name="address"
             label="ادرس"
             rightIcon={<TbCurrentLocation fontSize="large" />}
@@ -136,7 +137,6 @@ const Purchase = () => {
               errors?.address?.message ? errors.address.message : ""
             }
           />
-
 
           <ForwardedInput
             name="phoneNumber"
@@ -164,10 +164,33 @@ const Purchase = () => {
               errors?.phoneNumber?.message ? errors.phoneNumber.message : ""
             }
           />
+        </Row>
+        <Row>
+          <StarMap />
 
+          <ForwardedInput
+            name="deliveryDate"
+            label="تاریخ تحویل"
+            rightIcon={<TbCalendarTime fontSize="large" />}
+            isEmpty={
+              formsValues?.deliveryDate == undefined ||
+              formsValues.deliveryDate === ""
+            }
+            {...register("deliveryDate", {
+              required: {
+                value: true,
+                message: "  تاریخ تحویل نباید خالی باشد",
+              },
 
-
-          
+              pattern: {
+                value: /^(\d{4})\/(\d{1,2})\/(\d{1,2})$/,
+                message: "فرمت  تاریخ درست نیست ",
+              },
+            })}
+            errorMessage={
+              errors?.deliveryDate?.message ? errors.deliveryDate.message : ""
+            }
+          />
         </Row>
       </Form>
     </Wrapper>
