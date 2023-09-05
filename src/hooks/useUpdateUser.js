@@ -10,12 +10,12 @@ export function useUpdateUser(onSuccess) {
   const { isLoading, mutate } = useMutation({
     mutationFn: ({id, data}) =>updateUser(id, data),
     onSuccess: (res) => {
-      dispatch(
-        show({
-          message: "اطلاعات  با موفقیت ثبت  شد  ",
-          status: "success",
-        })
-      );
+      // dispatch(
+      //   show({
+      //     message: "اطلاعات  با موفقیت ثبت  شد  ",
+      //     status: "success",
+      //   })
+      // );
 
       onSuccess(res);
     },
