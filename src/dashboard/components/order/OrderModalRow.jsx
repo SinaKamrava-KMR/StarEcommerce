@@ -1,11 +1,18 @@
 import { styled } from "styled-components";
 import PropTypes from "prop-types";
 import { convertToP, convertToPersianNumber } from "../../../utils/helper";
-import { useProductById } from "../../../hooks/useProductById";
+import useProduct from "../../../hooks/useProduct";
 OrderModalRow.propTypes = {
   product: PropTypes.object,
   row: PropTypes.number,
 };
+
+const Name = styled.div`
+ 
+  text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+`
 const TableRowStyle = styled.div`
   width: 100%;
   display: grid;
@@ -26,15 +33,19 @@ const TableRowStyle = styled.div`
 `;
 function OrderModalRow({ product, row }) {
  
-  const { isFetching, product: good } = useProductById(product.product);
-  if (isFetching) return <p>در حال دریافت اطلاعات</p>;
+  const { isLoading,products  } = useProduct(1, 10000);
   
-  if (!good) return <p> محصول وجود ندارد</p>;
+if(isLoading) return <p>در حال دریافت اطلاعات</p>
+  const good = products.data.products.find(item => item._id === product.product);
+
+  console.log(good);
+  if(!good) return false
+
   return (
     <TableRowStyle>
       <p>{convertToP(row)}</p>
-      <p>{good?.data?.product.name}</p>
-      <p>{convertToPersianNumber(good?.data?.product.price)} تومان</p>
+      <Name>{good?.name}</Name>
+      <p>{convertToPersianNumber(good?.price)} تومان</p>
       <p>{convertToP(product.count)}</p>
     </TableRowStyle>
   );
