@@ -3,13 +3,13 @@ import { styled } from "styled-components";
 import { HiPencilSquare, HiTrash } from "react-icons/hi2";
 import ChangeInput from "../../dashboard/components/productsManagement/ChangeInput";
 import PropTypes from "prop-types";
-
 import AddProductModal from "../../dashboard/components/addProduct/AddProductModal";
 import Modal from "./Modal";
-
 import { useCategoryById } from "../../hooks/useCategoryById";
 import { useState } from "react";
 import DeleteModal from "../../dashboard/common/DeleteModal";
+
+
 TableRow.propTypes = {
   delay: PropTypes.number,
   product: PropTypes.object,
@@ -36,7 +36,6 @@ const TableRowStyle = styled.div`
     text-align: start;
   }
 `;
-
 const BtnWrapper = styled.div`
   width: 37px;
   height: 37px;
@@ -58,12 +57,12 @@ const ButtonGroup = styled.div`
 
 function TableRow({ delay, product, row, state, dispatch, onDelete }) {
   const inputValues = state.inputs.find((item) => item?.id === product?._id);
-  // console.log(inputValues);
+
+
   const [isDeleting, setIsDeleting] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
   const { category } = useCategoryById(product.category);
 
-  // console.log(category);
 
   function handleChangePrice(value) {
     dispatch({

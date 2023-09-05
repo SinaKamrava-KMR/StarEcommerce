@@ -12,6 +12,7 @@ import TimelapseIcon from "@mui/icons-material/Timelapse";
 import OrderRow from "../../dashboard/components/order/OrderRow";
 import useOrder from "../../hooks/useOrder";
 import Spinner from "../../components/common/Spinner";
+import { useSearchParams } from "react-router-dom";
 
 const OrdersLayout = styled(Box)({
   width: "100%",
@@ -45,7 +46,7 @@ const headerItems = [
   "مشتری",
   "مجموع مبلغ",
   "زمان ثبت سفارش",
-  "کالا",
+  "تعداد کالا",
   "برسی",
 ];
 
@@ -61,11 +62,19 @@ const categoryItems = [
 ];
 
 function OrdersManagement() {
-  const { isLoading, orders } = useOrder();
+  // eslint-disable-next-line no-unused-vars
+  const [searchParams, setSearchParams] = useSearchParams();
+  const { isLoading, orders, setParams } = useOrder(searchParams.get("page"));
 
   function handleClick(item) {
     console.log(item);
   }
+
+  function handleChangePage(page) {
+    setParams({ page });
+    setSearchParams({ page });
+  }
+
   return (
     <OrdersLayout>
       <TopLayout>
@@ -99,12 +108,21 @@ function OrdersManagement() {
           {isLoading && <Spinner />}
           {!isLoading &&
             orders?.data?.orders.map((order, idx) => (
-              <OrderRow key={order?._id} delay={idx} />
+              <OrderRow
+                row={idx + 1}
+                key={order?._id}
+                delay={idx}
+                order={order}
+              />
             ))}
         </Table>
       </TableWrapper>
 
-      <StarPagination />
+      <StarPagination
+        defualtPage={+searchParams.get("page")}
+        count={orders?.total_pages}
+        onChange={handleChangePage}
+      />
     </OrdersLayout>
   );
 }

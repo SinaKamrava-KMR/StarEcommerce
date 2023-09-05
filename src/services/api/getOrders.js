@@ -1,11 +1,17 @@
 import privateAxios from "../instance/privateAxios";
 
+export default async function getOrders({ page = 1, limit }) {
 
-export default async function getOrders() {
+  const query_params = { page };
+  if (limit) query_params.limit = limit;
+
+  const res = await privateAxios.get("/orders", {
+    params: query_params,
+  });
+
+
+  if (res.data.status !== "success") throw new Error("خطا در اتصال به شبکه");
+
   
-  const res = await privateAxios.get("/orders");
-
-  if(res.data.status!=="success") throw new Error("خطا در اتصال به شبکه")
-
-  return res.data
+  return res.data;
 }
