@@ -24,6 +24,7 @@ import ProtectedDashboard from "../components/router/ProtectedDashboard";
 import Categories from "../pages/dashboard/Categories";
 import Purchase from "../pages/Purchase";
 import Cart from "../pages/Cart";
+import ShippingResult from "../pages/ShippingResult";
 
 const routes = createBrowserRouter([
   //================== store routes ==================
@@ -52,6 +53,14 @@ const routes = createBrowserRouter([
         element: (
           <PrivateRoute>
             <Shipping />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "/payment/:status",
+        element: (
+          <PrivateRoute>
+            <ShippingResult />
           </PrivateRoute>
         ),
       },

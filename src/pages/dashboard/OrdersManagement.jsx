@@ -12,6 +12,9 @@ import TimelapseIcon from "@mui/icons-material/Timelapse";
 import OrderRow from "../../dashboard/components/order/OrderRow";
 import useOrder from "../../hooks/useOrder";
 import Spinner from "../../components/common/Spinner";
+import { useSearchParams } from "react-router-dom";
+import { useUsers } from "../../hooks/useUsers";
+import { useEffect } from "react";
 
 const OrdersLayout = styled(Box)({
   width: "100%",
@@ -45,7 +48,7 @@ const headerItems = [
   "مشتری",
   "مجموع مبلغ",
   "زمان ثبت سفارش",
-  "کالا",
+  "تعداد کالا",
   "برسی",
 ];
 
@@ -61,11 +64,28 @@ const categoryItems = [
 ];
 
 function OrdersManagement() {
-  const { isLoading, orders } = useOrder();
+  // eslint-disable-next-line no-unused-vars
+  const [searchParams, setSearchParams] = useSearchParams();
+  const { isLoading, orders, setParams } = useOrder(searchParams.get("page"));
+  const { isLoading: isGettingUsers, users } = useUsers();
 
   function handleClick(item) {
     console.log(item);
   }
+
+  function handleChangePage(page) {
+    setParams({ page });
+    searchParams.set("page", page);
+    setSearchParams(searchParams);
+  }
+
+  useEffect(() => {
+    setParams({
+      deliveryStatus: searchParams.get("state") === "inprogress",
+      page: searchParams.get("page") || 1,
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [searchParams]);
   return (
     <OrdersLayout>
       <TopLayout>
@@ -96,15 +116,32 @@ function OrdersManagement() {
 
       <TableWrapper>
         <Table headerItems={headerItems}>
-          {isLoading && <Spinner />}
+          {isLoading && isGettingUsers && <Spinner />}
           {!isLoading &&
-            orders?.data?.orders.map((order, idx) => (
-              <OrderRow key={order?._id} delay={idx} />
-            ))}
+            !isGettingUsers &&
+            orders?.data?.orders.map((order, idx) => {
+              return (
+                order.deliveryStatus && (
+                  <OrderRow
+                    row={idx + 1}
+                    key={order?._id}
+                    delay={idx}
+                    order={order}
+                    user={users.data.users.find(
+                      (item) => item._id === order.user
+                    )}
+                  />
+                )
+              );
+            })}
         </Table>
       </TableWrapper>
 
-      <StarPagination />
+      <StarPagination
+        defualtPage={+searchParams.get("page")}
+        count={orders?.total_pages}
+        onChange={handleChangePage}
+      />
     </OrdersLayout>
   );
 }

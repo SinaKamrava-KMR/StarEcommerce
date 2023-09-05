@@ -27,7 +27,9 @@ import { useUpdateUser } from "../hooks/useUpdateUser";
 import { addDelivery } from "../redux/reducer/cart/cartSlice";
 import Cookies from "js-cookie";
 import { editUser } from "../redux/reducer/user/userSlice";
-const password = '$2a$12$xPQMbi7ZYqDdT6/W4Eh4uuHoxfZOtzmIjhYPTXL7R/SyPIPoF0giG';
+
+const password = 'sinakam1234';
+
 const Purchase = () => {
   const [openCalender, setOpenCalender] = useState(false);
   const navigate = useNavigate();
@@ -47,6 +49,7 @@ const Purchase = () => {
     deliveryDate: "",
   };
 
+
   const {
     register,
     handleSubmit,
@@ -55,6 +58,7 @@ const Purchase = () => {
     setError,
     formState: { errors },
   } = useForm({ defaultValues: initialValues });
+  
   const formsValues = watch();
 
   const onSub = (data) => {

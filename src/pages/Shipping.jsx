@@ -122,10 +122,12 @@ function Shipping() {
             {convertToPersianNumber(products.length)} 
           </Content>
         </Row>
-        <span style={{flex:1}}></span>
+        <span style={{ flex: 1 }}></span>
+        <a href="http://localhost:5174/">
         <PayButton>
           پرداخت 
         </PayButton>
+        </a>
       </Box>
     </ShiipingStyled>
   );

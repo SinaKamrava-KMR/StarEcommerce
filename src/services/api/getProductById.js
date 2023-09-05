@@ -9,6 +9,6 @@ export async function getProductById(id) {
     }
     return res.data.data.product;
   } catch (error) {
-    throw new Error("خطا در دریافت محصول با شناسه موردنظر");
+    return {}
   }
 }

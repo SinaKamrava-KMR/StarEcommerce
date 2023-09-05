@@ -5,7 +5,9 @@ import { useState } from "react";
 import Modal from "../../../components/common/Modal";
 import OrderModal from "./OrderModal";
 import { memo } from "react";
+import { convertToPersianNumber } from "../../../utils/helper";
 
+// import * as shamsi from 'shamsi-date-converter';
 const TableRowStyle = styled.div`
   width: 100%;
   display: grid;
@@ -43,8 +45,14 @@ const SeeDetails = styled.button`
   }
 `;
 
+
 // eslint-disable-next-line react/display-name
-const MotionRow = memo(({ delay, children }) => {
+const MotionRow = memo(({ delay, children, order,row,user }) => {
+ 
+  const d= new Date(order.createdAt)
+  let date = new Intl.DateTimeFormat('fa-IR').format(d)
+  
+
   return (
     <TableRowStyle
       as={motion.div}
@@ -55,28 +63,29 @@ const MotionRow = memo(({ delay, children }) => {
       initial={{ y: 500 }}
       animate={{ y: 0 }}
     >
-      <p>۱</p>
-      <p>سینا کامروا</p>
-      <p>col 3</p>
-      <p>col 4</p>
-      <p>col 5</p>
+      <p>{convertToPersianNumber(row) }</p>
+      <p>{`${user.firstname} ${user.lastname}` }</p>
+      <p>{convertToPersianNumber(order.totalPrice)} تومان</p>
+      <p>{ date}</p>
+      <p>{ convertToPersianNumber(order.products.length)}</p>
       {children}
     </TableRowStyle>
   );
 });
 
-function OrderRow({ delay }) {
+function OrderRow({ delay,order,row,user }) {
   const [showModal, setShowModal] = useState(false);
 
+ 
   return (
     <>
       {showModal && (
         <Modal>
-          <OrderModal onCloseModal={() => setShowModal(false)} />
+          <OrderModal order={order} user={user} onCloseModal={() => setShowModal(false)} />
         </Modal>
       )}
 
-      <MotionRow delay={delay}>
+      <MotionRow delay={delay} order={order} row={row} user={user}>
         <SeeDetails onClick={() => setShowModal(true)}>برسی سفارش</SeeDetails>
       </MotionRow>
     </>
@@ -85,11 +94,19 @@ function OrderRow({ delay }) {
 
 MotionRow.propTypes = {
   delay: PropTypes.number,
+  row: PropTypes.number,
   children: PropTypes.node,
+  order: PropTypes.object,
+  user: PropTypes.object,
 };
 
 OrderRow.propTypes = {
   delay: PropTypes.number,
+  order: PropTypes.object,
+  row: PropTypes.number,
+  user: PropTypes.object,
 };
+
+
 
 export default OrderRow;

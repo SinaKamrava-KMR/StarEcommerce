@@ -173,6 +173,7 @@ function ProductsManagement() {
   const [filterBy, setFilterBy] = useState("");
   const { isDeleting, deleteProduct } = useDeleteProduct();
   const queryClient = useQueryClient();
+  
   function handleClick(item) {
     if (item?.tag) {
       setParams((params) => ({ ...params, [item.tag]: item.value }));
@@ -180,6 +181,7 @@ function ProductsManagement() {
       setFilterBy(item.value);
     }
   }
+
   function handleSave() {
     console.log(state);
 

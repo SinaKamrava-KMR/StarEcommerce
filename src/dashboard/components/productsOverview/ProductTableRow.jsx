@@ -7,6 +7,7 @@ import DeleteModal from "../../common/DeleteModal";
 import { useState } from "react";
 import AddProductModal from "../addProduct/AddProductModal";
 import Modal from "../../../components/common/Modal";
+import { convertToP, convertToPersianNumber } from "../../../utils/helper";
 ProductTableRow.propTypes = {
   delay: PropTypes.number,
   product: PropTypes.object,
@@ -91,13 +92,13 @@ function ProductTableRow({ delay, product, row, onDelete }) {
           }}
         />
       )}
-      <p>{row}</p>
+      <p>{convertToPersianNumber(row)}</p>
       <Image
         src={`http://localhost:8000/images/products/images/${product.images[0]}`}
       />
       <p>{product.name}</p>
       <p>{category?.name}</p>
-      <p>{product?.quantity}</p>
+      <p>{convertToP(product?.quantity)}</p>
       <ButtonGroup>
         <BtnWrapper onClick={() => setIsDeleting(true)} color="#ff6969">
           <HiTrash />

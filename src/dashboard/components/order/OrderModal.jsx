@@ -1,12 +1,15 @@
 import styled from "@emotion/styled";
 import { Box, Typography } from "@mui/material";
 import { motion } from "framer-motion";
-import PropTypes from "prop-types";
 import { HiOutlineXMark } from "react-icons/hi2";
 import Table from "../../../components/common/Table";
 import OrderModalRow from "./OrderModalRow";
+import { convertToP } from "../../../utils/helper";
+import PropTypes from "prop-types";
 OrderModal.propTypes = {
   onCloseModal: PropTypes.func,
+  order: PropTypes.object,
+  user: PropTypes.object,
 };
 
 const Wrapper = styled(Box)`
@@ -23,7 +26,7 @@ const Wrapper = styled(Box)`
   align-items: center;
 
   padding: 2rem 1rem;
- 
+
   box-shadow: 0 0 10px #6c6c6c;
 `;
 const CloseWrapper = styled(Box)`
@@ -67,8 +70,8 @@ const BtnWrapper = styled("button")`
   border: 0;
   border-radius: 0.5rem;
   padding: 0.5rem 1rem;
-  margin-top: .5rem;
-  &:hover{
+  margin-top: 0.5rem;
+  &:hover {
     background-color: #0e9f52;
   }
   &:focus {
@@ -79,7 +82,11 @@ const BtnWrapper = styled("button")`
 
 const tabelHeader = ["ردیف", "کالا", "قیمت", "تعداد"];
 
-function OrderModal({ onCloseModal }) {
+function OrderModal({ onCloseModal, order, user }) {
+  const d = new Date(order.createdAt);
+  let date = new Intl.DateTimeFormat("fa-IR").format(d);
+  const delivaryDate = order.deliveryDate.split("T")[0].split("-").map(item => convertToP(item)).join("/");
+
   return (
     <Wrapper component={motion.div} initial={{ y: -100 }} animate={{ y: 0 }}>
       <CloseWrapper onClick={onCloseModal}>
@@ -91,43 +98,41 @@ function OrderModal({ onCloseModal }) {
       <Container>
         <Row>
           <p>نام مشتری :</p>
-          <p> سینا کامروا</p>
+          <p>  {`${user.firstname} ${user.lastname}` }</p>
         </Row>
         <Row>
           <p> ادرس :</p>
-          <p> مازندران, تنکابن ,کریم اباد</p>
+          <p> {user.address} </p>
         </Row>
         <Row>
           <p> تلفن :</p>
-          <p> ۰۹۲۱۶۳۴۳۱۱۸ </p>
+          <p> {convertToP(user.phoneNumber)} </p>
         </Row>
         <Row>
           <p> زمان تحویل :</p>
           <Tag>
-            <p> ۱۲ خرداد ۱۴۰۲ ساعت ۱۳:۴۳ </p>
+            <p> {delivaryDate} </p>
           </Tag>
         </Row>
         <Row>
           <p> زمان سفارش :</p>
           <Tag>
-            <p> ۵ خرداد ۱۴۰۲ ساعت ۵:۰۸ </p>
+            <p> {date}</p>
           </Tag>
         </Row>
       </Container>
       <Table headerItems={tabelHeader}>
-        <OrderModalRow />
-        <OrderModalRow />
-        <OrderModalRow />
-        <OrderModalRow />
-        <OrderModalRow />
-        <OrderModalRow />
-        <OrderModalRow />
-        <OrderModalRow />
-        <OrderModalRow />
-        <OrderModalRow />
+        {order.products.map((product,i) => {
+          return  <OrderModalRow product={product} row={i+1} key={i}/>
+        })}
+       
       </Table>
-    
-      <BtnWrapper variant="contained"> تحویل داده شد</BtnWrapper>
+
+      {order.deliveryStatus ? (
+        <BtnWrapper variant="contained"> تحویل داده شد</BtnWrapper>
+      ) : (
+        <p> زمان تحویل : {delivaryDate} </p>
+      )}
     </Wrapper>
   );
 }
