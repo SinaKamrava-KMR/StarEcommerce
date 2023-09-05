@@ -81,9 +81,7 @@ const ShippingResult = () => {
 
   const requestObj = {
     user: userId,
-
     products: newList,
-
     deliveryDate: delivary.date,
     deliveryStatus: true,
   };
@@ -96,6 +94,7 @@ const ShippingResult = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [status, newList, isLoading, mutate, isFirstTime]);
 
+  
   if (!isLoading && isFirstTime && status === "success") {
     return <Loading />;
   }
