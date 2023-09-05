@@ -5,6 +5,7 @@ import { useEffect } from "react";
 export function useProductById(id) {
   const {
     isLoading,
+    isFetching,
     data: product,
     error,
     refetch,
@@ -17,5 +18,6 @@ export function useProductById(id) {
   }, [id, refetch]);
 
 
-  return { isLoading, product, error };
+
+  return { isLoading, product,isFetching, error };
 }

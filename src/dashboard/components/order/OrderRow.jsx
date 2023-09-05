@@ -47,11 +47,11 @@ const SeeDetails = styled.button`
 
 
 // eslint-disable-next-line react/display-name
-const MotionRow = memo(({ delay, children, order,row }) => {
+const MotionRow = memo(({ delay, children, order,row,user }) => {
  
   const d= new Date(order.createdAt)
   let date = new Intl.DateTimeFormat('fa-IR').format(d)
-  console.log(date);
+  
 
   return (
     <TableRowStyle
@@ -63,8 +63,8 @@ const MotionRow = memo(({ delay, children, order,row }) => {
       initial={{ y: 500 }}
       animate={{ y: 0 }}
     >
-      <p>{row }</p>
-      <p>سینا کامروا</p>
+      <p>{convertToPersianNumber(row) }</p>
+      <p>{`${user.firstname} ${user.lastname}` }</p>
       <p>{convertToPersianNumber(order.totalPrice)} تومان</p>
       <p>{ date}</p>
       <p>{ convertToPersianNumber(order.products.length)}</p>
@@ -73,7 +73,7 @@ const MotionRow = memo(({ delay, children, order,row }) => {
   );
 });
 
-function OrderRow({ delay,order,row }) {
+function OrderRow({ delay,order,row,user }) {
   const [showModal, setShowModal] = useState(false);
 
  
@@ -81,11 +81,11 @@ function OrderRow({ delay,order,row }) {
     <>
       {showModal && (
         <Modal>
-          <OrderModal onCloseModal={() => setShowModal(false)} />
+          <OrderModal order={order} user={user} onCloseModal={() => setShowModal(false)} />
         </Modal>
       )}
 
-      <MotionRow delay={delay} order={order} row={row}>
+      <MotionRow delay={delay} order={order} row={row} user={user}>
         <SeeDetails onClick={() => setShowModal(true)}>برسی سفارش</SeeDetails>
       </MotionRow>
     </>
@@ -97,12 +97,14 @@ MotionRow.propTypes = {
   row: PropTypes.number,
   children: PropTypes.node,
   order: PropTypes.object,
+  user: PropTypes.object,
 };
 
 OrderRow.propTypes = {
   delay: PropTypes.number,
   order: PropTypes.object,
   row: PropTypes.number,
+  user: PropTypes.object,
 };
 
 

@@ -1,5 +1,11 @@
 import { styled } from "styled-components";
-
+import PropTypes from "prop-types";
+import { convertToP, convertToPersianNumber } from "../../../utils/helper";
+import { useProductById } from "../../../hooks/useProductById";
+OrderModalRow.propTypes = {
+  product: PropTypes.object,
+  row: PropTypes.number,
+};
 const TableRowStyle = styled.div`
   width: 100%;
   display: grid;
@@ -18,13 +24,18 @@ const TableRowStyle = styled.div`
     text-align: start;
   }
 `;
-function OrderModalRow() {
+function OrderModalRow({ product, row }) {
+ 
+  const { isFetching, product: good } = useProductById(product.product);
+  if (isFetching) return <p>در حال دریافت اطلاعات</p>;
+  
+  if (!good) return <p> محصول وجود ندارد</p>;
   return (
     <TableRowStyle>
-      <p>۱</p>
-      <p>کفش ادیداس</p>
-      <p>۲۰۰۰۰</p>
-      <p>۲</p>
+      <p>{convertToP(row)}</p>
+      <p>{good?.data?.product.name}</p>
+      <p>{convertToPersianNumber(good?.data?.product.price)} تومان</p>
+      <p>{convertToP(product.count)}</p>
     </TableRowStyle>
   );
 }

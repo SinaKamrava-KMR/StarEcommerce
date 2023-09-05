@@ -8,6 +8,7 @@ import Modal from "./Modal";
 import { useCategoryById } from "../../hooks/useCategoryById";
 import { useState } from "react";
 import DeleteModal from "../../dashboard/common/DeleteModal";
+import { convertToPersianNumber } from "../../utils/helper";
 
 
 TableRow.propTypes = {
@@ -111,7 +112,7 @@ function TableRow({ delay, product, row, state, dispatch, onDelete }) {
           }}
         />
       )}
-      <p>{row}</p>
+      <p>{convertToPersianNumber(row)}</p>
       <p>{product.name}</p>
       <p>{category?.name}</p>
       <ChangeInput
