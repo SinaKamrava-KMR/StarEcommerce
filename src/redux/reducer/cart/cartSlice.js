@@ -42,15 +42,24 @@ const cartSlice = createSlice({
       state.products = payload;
       state.message.message = "";
       state.message.status = "";
+      localStorage.setItem("cart", JSON.stringify([]));
     },
-    addDelivery: (state, { payload })=> {
+    addDelivery: (state, { payload }) => {
       state.deliveryDate = payload.deliveryDate;
       state.deliveryState = payload.deliveryState;
+      localStorage.setItem(
+        "delivery",
+        JSON.stringify({
+          date: payload.deliveryDate,
+          status: payload.deliveryState,
+        })
+      );
     },
     cleanMessage: (state) => {
       state.message.message = "";
       state.message.status = "";
     },
+
   },
 });
 

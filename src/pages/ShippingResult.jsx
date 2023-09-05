@@ -1,6 +1,12 @@
 import { motion } from "framer-motion";
-import { useParams } from "react-router-dom";
+import Cookies from "js-cookie";
+import { useSelector } from "react-redux";
+import { Link, useParams } from "react-router-dom";
 import { styled } from "styled-components";
+import { useCreateOrder } from "../hooks/useCreateOrder";
+import Loading from "../components/common/Loading";
+import { useEffect } from "react";
+import { useState } from "react";
 
 const Wrapper = styled.div`
   height: 100vh;
@@ -35,15 +41,15 @@ const Text = styled.p`
 const Button = styled.p`
   font-weight: 600;
   color: #ffffff;
-  
-  background-color: ${props=>props.error?"#ff8080":"#07ca65"};
+
+  background-color: ${(props) => (props.error ? "#ff8080" : "#07ca65")};
   cursor: pointer;
   &:hover {
-    background-color: ${props=>props.error?"#f84f4f":"#07ab56"};
+    background-color: ${(props) => (props.error ? "#f84f4f" : "#07ab56")};
   }
   text-align: center;
   border-radius: 5rem;
-  width: 60%;
+  width: 250px;
   padding: 1rem;
 `;
 
@@ -60,7 +66,40 @@ const data = {
 
 const ShippingResult = () => {
   const { status } = useParams();
-  console.log(status);
+
+  const [isFirstTime, setIsFirstTime] = useState(true);
+  const { isLoading, mutate } = useCreateOrder();
+  let { products } = useSelector((state) => state.cart);
+
+  let delivary = localStorage.getItem("delivery") || "";
+  delivary = JSON.parse(delivary);
+  const userId = Cookies.get("userId");
+
+  const newList = products.map((item) => {
+    return { product: item._id, count: item.productCount };
+  });
+
+  const requestObj = {
+    user: userId,
+
+    products: newList,
+
+    deliveryDate: delivary.date,
+    deliveryStatus: true,
+  };
+
+  useEffect(() => {
+    if (status === "success" && isFirstTime && newList.length > 0 && !isLoading) {
+      mutate(requestObj);
+      setIsFirstTime(false);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [status, newList, isLoading, mutate, isFirstTime]);
+
+  if (!isLoading && isFirstTime && status === "success") {
+    return <Loading />;
+  }
+
   return (
     <Wrapper>
       <Box
@@ -69,14 +108,36 @@ const ShippingResult = () => {
         animate={{ transform: "scale(1)", opacity: 1 }}
       >
         <Image src={data[status].src} />
-        <Text>
-            {data[status].message}
-        </Text>
+        <Text>{data[status].message}</Text>
         <span style={{ flex: 1 }}></span>
-        <Button error={"rejected"===status}>بازگشت به سایت</Button>
+        <Link to="/">
+          <Button error={"rejected" === status}>بازگشت به سایت</Button>
+        </Link>
       </Box>
     </Wrapper>
   );
 };
 
 export default ShippingResult;
+
+// const result = {
+//   deliveryDate: "1402/06/14",
+//     deliveryStatus: true,
+//   products: [
+//     { product: '64de64ebd61576ab0ede3f0d', count: 1 },
+
+//     { product: '64de5dc4d61576ab0ede3c73', count: 1 },
+
+//     { product: '64db219d6e488759aa74fe1b', count: 5 },
+
+//     { product: '64dcb07099b778fda0212551', count: 5 },
+
+//     { product: '64ef5ede81929bec3097c6d4', count: 1 },
+
+//     { product: '64de60c2d61576ab0ede3dad', count: 1 },
+
+//     { product: '64dca42c99b778fda021057e', count: 1 },
+//   ],
+//   user: "64ca07da21987c0c3caece07"
+
+// }
