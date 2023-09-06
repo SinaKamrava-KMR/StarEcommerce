@@ -85,6 +85,7 @@ const ShippingResult = () => {
     deliveryDate: delivary.date,
     deliveryStatus: true,
   };
+  console.log(requestObj);
 
   useEffect(() => {
     if (status === "success" && isFirstTime && newList.length > 0 && !isLoading) {
