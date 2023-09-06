@@ -6,6 +6,7 @@ import Table from "../../../components/common/Table";
 import OrderModalRow from "./OrderModalRow";
 import { convertToP } from "../../../utils/helper";
 import PropTypes from "prop-types";
+import { useUpdateOrder } from "../../../hooks/useUpdateOrder";
 OrderModal.propTypes = {
   onCloseModal: PropTypes.func,
   order: PropTypes.object,
@@ -83,9 +84,25 @@ const BtnWrapper = styled("button")`
 const tabelHeader = ["ردیف", "کالا", "قیمت", "تعداد"];
 
 function OrderModal({ onCloseModal, order, user }) {
+  const { mutate } = useUpdateOrder();
   const d = new Date(order.createdAt);
   let date = new Intl.DateTimeFormat("fa-IR").format(d);
-  const delivaryDate = order.deliveryDate.split("T")[0].split("-").map(item => convertToP(item)).join("/");
+
+
+  const delivaryDate = order.deliveryDate
+    .split("T")[0]
+    .split("-")
+    .map((item) => convertToP(item))
+    .join("/");
+
+  const handleChangeState = () => {
+    mutate({
+      id: order._id,
+      data: {
+        deliveryStatus: false,
+      },
+    });
+  };
 
   return (
     <Wrapper component={motion.div} initial={{ y: -100 }} animate={{ y: 0 }}>
@@ -98,7 +115,7 @@ function OrderModal({ onCloseModal, order, user }) {
       <Container>
         <Row>
           <p>نام مشتری :</p>
-          <p>  {`${user.firstname} ${user.lastname}` }</p>
+          <p> {`${user.firstname} ${user.lastname}`}</p>
         </Row>
         <Row>
           <p> ادرس :</p>
@@ -122,14 +139,16 @@ function OrderModal({ onCloseModal, order, user }) {
         </Row>
       </Container>
       <Table headerItems={tabelHeader}>
-        {order.products.map((product,i) => {
-          return  <OrderModalRow product={product} row={i+1} key={i}/>
+        {order.products.map((product, i) => {
+          return <OrderModalRow product={product} row={i + 1} key={i} />;
         })}
-       
       </Table>
 
       {order.deliveryStatus ? (
-        <BtnWrapper variant="contained"> تحویل داده شد</BtnWrapper>
+        <BtnWrapper onClick={handleChangeState} variant="contained">
+          {" "}
+          تحویل داده شد
+        </BtnWrapper>
       ) : (
         <p> زمان تحویل : {delivaryDate} </p>
       )}

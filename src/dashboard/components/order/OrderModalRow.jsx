@@ -38,7 +38,7 @@ function OrderModalRow({ product, row }) {
   if(isLoading) return <p>در حال دریافت اطلاعات</p>
     const good = products.data.products.find(item => item._id === product.product);
 
-  console.log(good);
+  
   if(!good) return false
 
   return (
