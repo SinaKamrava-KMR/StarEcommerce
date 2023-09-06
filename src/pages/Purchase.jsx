@@ -28,7 +28,7 @@ import { addDelivery } from "../redux/reducer/cart/cartSlice";
 import Cookies from "js-cookie";
 import { editUser } from "../redux/reducer/user/userSlice";
 
-const password = 'sinakam1234';
+// const password = 'sinakam1234';
 
 const Purchase = () => {
   const [openCalender, setOpenCalender] = useState(false);
@@ -45,7 +45,6 @@ const Purchase = () => {
     lastname: lastName,
     address,
     phoneNumber,
-    password,
     deliveryDate: "",
   };
 
