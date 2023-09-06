@@ -69,6 +69,7 @@ function OrdersManagement() {
   const { isLoading, orders, setParams } = useOrder(searchParams.get("page"));
   const { isLoading: isGettingUsers, users } = useUsers();
 
+  console.log(orders);
   function handleClick(item) {
     console.log(item);
   }
@@ -121,17 +122,15 @@ function OrdersManagement() {
             !isGettingUsers &&
             orders?.data?.orders.map((order, idx) => {
               return (
-                order.deliveryStatus && (
-                  <OrderRow
-                    row={idx + 1}
-                    key={order?._id}
-                    delay={idx}
-                    order={order}
-                    user={users.data.users.find(
-                      (item) => item._id === order.user
-                    )}
-                  />
-                )
+                <OrderRow
+                  row={idx + 1}
+                  key={order?._id}
+                  delay={idx}
+                  order={order}
+                  user={users.data.users.find(
+                    (item) => item._id === order.user
+                  )}
+                />
               );
             })}
         </Table>

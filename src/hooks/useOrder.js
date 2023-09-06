@@ -12,7 +12,7 @@ export default function useOrder(defaultPage = 1, limit = 10) {
     refetch,
     error,
   } = useQuery({
-    queryKey: ["orders",params.page],
+    queryKey: ["orders"],
     queryFn:()=> getOrders({ ...params }),
   });
 
