@@ -37,12 +37,15 @@ const Input = styled.input`
 function Search() {
   const dispatch = useDispatch();
   const value = useSelector((state) => state.search.value);
-  const navigate = useNavigate();
   const [focus, setFocus] = useState(false);
-  const query = useLocation().search;
+  const navigate = useNavigate();
+  const query = useLocation().pathname;
 
   useEffect(() => {
-    if (focus && query === "") navigate("/products");
+    // if (query === "") navigate("/products");
+    if (focus && query !== "/products") {
+      navigate("/products?page=1");
+    }
   }, [focus, navigate, query]);
 
   return (
