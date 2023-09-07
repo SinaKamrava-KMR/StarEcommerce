@@ -46,9 +46,14 @@ const CloseWrapper = styled(Box)`
 function AddProductModal({ oncloseModal, product }) {
   const dispatch = useDispatch();
   const queryClient = useQueryClient();
+  const [mediaError, setMediaError] = useState(false);
   const [medias, setMedias] = useState(product?.images ? product?.images : []);
   const [isLoading, setIsLoading] = useState(false);
   async function handleSubmit(data, id) {
+    if (medias.length === 0) {
+      setMediaError(true);
+      return;
+    }
     setIsLoading(true);
     const service = new ProductServices();
     if (id === undefined) {
@@ -82,7 +87,7 @@ function AddProductModal({ oncloseModal, product }) {
     } else {
       // Update Product
       const images = await handleMedias(medias);
-      
+
       if (images) {
         data = { ...data, images };
       }
@@ -130,6 +135,14 @@ function AddProductModal({ oncloseModal, product }) {
     setMedias([]);
   }
 
+  function handleChangeMedia(list) {
+    if (list.length === 0) {
+      setMediaError(true)
+    } else {
+      setMediaError(false)
+    }
+    setMedias(list)
+  }
   return (
     <Wrapper component={motion.div} initial={{ y: -100 }} animate={{ y: 0 }}>
       <CloseWrapper onClick={oncloseModal}>
@@ -146,7 +159,12 @@ function AddProductModal({ oncloseModal, product }) {
           onReset={handleReset}
           onSubmit={handleSubmit}
         />
-        <ImageUploader medias={medias} setMedias={setMedias} />
+
+        <ImageUploader
+          error={mediaError}
+          medias={medias}
+          setMedias={handleChangeMedia}
+        />
       </Container>
     </Wrapper>
   );
