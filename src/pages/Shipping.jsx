@@ -67,6 +67,9 @@ function Shipping() {
     return acc + nxt.price * nxt.productCount;
   }, 0);
 
+
+  
+
   return (
     <ShiipingStyled>
       <StateWrapper>

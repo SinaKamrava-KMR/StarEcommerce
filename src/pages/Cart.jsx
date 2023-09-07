@@ -6,6 +6,7 @@ import CartRow from "../components/cart/CartRow";
 import { useDispatch, useSelector } from "react-redux";
 import { useState } from "react";
 import { deleteProducts, updateProduct } from "../redux/reducer/cart/cartSlice";
+import Empty from "../components/cart/Empty";
 
 const StateWrapper = styled.div`
   width: 50%;
@@ -58,6 +59,9 @@ function Cart() {
   const handleSetProductCount = (product) => {
     dispatch(updateProduct(product));
   };
+
+  if (carts.length === 0) return <Empty />;
+
   return (
     <CartStyled>
       <StateWrapper>

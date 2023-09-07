@@ -74,7 +74,11 @@ const routes = createBrowserRouter([
       },
       {
         path: "/purchase",
-        element: <Purchase />,
+        element: (
+          <PrivateRoute>
+            <Purchase />
+          </PrivateRoute>
+        ),
       },
     ],
   },

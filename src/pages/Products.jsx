@@ -4,6 +4,7 @@ import ProductsContainer from "../components/products/ProductsContainer";
 import useProduct from "../hooks/useProduct";
 import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const ProductsStyled = styled.div`
   display: flex;
@@ -17,6 +18,8 @@ const Products = () => {
   const { isLoading, products, setParams } = useProduct();
   const [searchParams, setSearchParams] = useSearchParams();
   const [subcategoriesSelected, setSubcategoriesSelected] = useState([]);
+  const searchValue = useSelector((state) => state.search.value);
+  const [filteredProducts, setFilteredProducts] = useState(products);
 
   const handlePArams = (filtered) => {
     console.log(filtered);
@@ -49,6 +52,25 @@ const Products = () => {
     fetchParams();
   }, [searchParams, setParams]);
 
+  useEffect(() => {
+    let id = 0;
+    if (searchValue.length > 3) {
+      id = setTimeout(() => {
+        const list = products.data.products.filter((product) =>
+          product.name.includes(searchValue)
+        );
+
+        setFilteredProducts({ ...products, data: { products: list } });
+      }, 1000);
+    } else {
+      setFilteredProducts(products);
+    }
+
+    return () => {
+      clearTimeout(id);
+    };
+  }, [searchValue, products]);
+
   return (
     <ProductsStyled>
       <FilterItems onParams={handlePArams} />
@@ -57,7 +79,7 @@ const Products = () => {
         categoryId={searchParams.get("category") || "all"}
         brand={searchParams.get("brand") || ""}
         isLoading={isLoading}
-        products={products}
+        products={filteredProducts}
       />
     </ProductsStyled>
   );
@@ -65,101 +87,64 @@ const Products = () => {
 
 export default Products;
 
+// useEffect(() => {
 
+//   if (searchParams.get("category")) {
+//     setParams({ limit: 15, category: searchParams.get("category") });
+//   }
+//   if (searchParams.get("brand")) {
+//     setParams({ limit: 15, brand: searchParams.get("brand") });
+//   }
+//   if (searchParams.get("brand") && searchParams.get("category")) {
+//     setParams({
+//       limit: 15,
+//       brand: searchParams.get("brand"),
+//       category: searchParams.get("category"),
+//     });
+//   }
+//   if (searchParams.get("price[lt]")) {
+//     setParams({
+//       limit: 15,
+//       lowerThanPrice: searchParams.get("price[lt]"),
+//       greaterThanPrice: searchParams.get("price[gt]"),
+//     });
+//   }
+//   if (searchParams.get("price[lt]") && searchParams.get("category")) {
+//     setParams({
+//       limit: 15,
+//       lowerThanPrice: searchParams.get("price[lt]"),
+//       greaterThanPrice: searchParams.get("price[gt]"),
+//       category: searchParams.get("category"),
+//     });
+//   }
+//   if (searchParams.get("price[lt]") && searchParams.get("brand")) {
+//     setParams({
+//       limit: 15,
+//       lowerThanPrice: searchParams.get("price[lt]"),
+//       greaterThanPrice: searchParams.get("price[gt]"),
+//       brand: searchParams.get("brand"),
+//     });
+//   }
 
+//   if (
+//     searchParams.get("price[lt]") &&
+//     searchParams.get("category") &&
+//     searchParams.get("brand")
+//   ) {
+//     setParams({
+//       limit: 15,
+//       lowerThanPrice: searchParams.get("price[lt]"),
+//       greaterThanPrice: searchParams.get("price[gt]"),
+//       brand: searchParams.get("brand"),
+//       category: searchParams.get("category"),
+//     });
+//   }
 
+//   const page = searchParams.get("page") || 1;
+//   setParams((params) => ({
+//     ...params,
+//     limit: 15,
+//     page,
+//   }));
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  // useEffect(() => {
-
-  //   if (searchParams.get("category")) {
-  //     setParams({ limit: 15, category: searchParams.get("category") });
-  //   }
-  //   if (searchParams.get("brand")) {
-  //     setParams({ limit: 15, brand: searchParams.get("brand") });
-  //   }
-  //   if (searchParams.get("brand") && searchParams.get("category")) {
-  //     setParams({
-  //       limit: 15,
-  //       brand: searchParams.get("brand"),
-  //       category: searchParams.get("category"),
-  //     });
-  //   }
-  //   if (searchParams.get("price[lt]")) {
-  //     setParams({
-  //       limit: 15,
-  //       lowerThanPrice: searchParams.get("price[lt]"),
-  //       greaterThanPrice: searchParams.get("price[gt]"),
-  //     });
-  //   }
-  //   if (searchParams.get("price[lt]") && searchParams.get("category")) {
-  //     setParams({
-  //       limit: 15,
-  //       lowerThanPrice: searchParams.get("price[lt]"),
-  //       greaterThanPrice: searchParams.get("price[gt]"),
-  //       category: searchParams.get("category"),
-  //     });
-  //   }
-  //   if (searchParams.get("price[lt]") && searchParams.get("brand")) {
-  //     setParams({
-  //       limit: 15,
-  //       lowerThanPrice: searchParams.get("price[lt]"),
-  //       greaterThanPrice: searchParams.get("price[gt]"),
-  //       brand: searchParams.get("brand"),
-  //     });
-  //   }
-
-  //   if (
-  //     searchParams.get("price[lt]") &&
-  //     searchParams.get("category") &&
-  //     searchParams.get("brand")
-  //   ) {
-  //     setParams({
-  //       limit: 15,
-  //       lowerThanPrice: searchParams.get("price[lt]"),
-  //       greaterThanPrice: searchParams.get("price[gt]"),
-  //       brand: searchParams.get("brand"),
-  //       category: searchParams.get("category"),
-  //     });
-  //   }
-
-  //   const page = searchParams.get("page") || 1;
-  //   setParams((params) => ({
-  //     ...params,
-  //     limit: 15,
-  //     page,
-  //   }));
-
-  // }, [searchParams,setParams]);
+// }, [searchParams,setParams]);
