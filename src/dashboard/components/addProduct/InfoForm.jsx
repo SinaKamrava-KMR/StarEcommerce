@@ -21,6 +21,7 @@ InfoForm.propTypes = {
   onSubmit: PropTypes.func,
   onReset: PropTypes.func,
   product: PropTypes.object,
+  error: PropTypes.bool,
 };
 
 const Controller = ({ control, register, name, rules, render }) => {
@@ -51,9 +52,9 @@ const Controller = ({ control, register, name, rules, render }) => {
 
 
 
-function InfoForm({ inModal = false, onSubmit, product, onReset }) {
+function InfoForm({inModal = false, onSubmit, product, onReset }) {
   const editorRef = useRef(null);
-
+  
   let categoriesList = useSelector((state) => state.categories.categories);
   let subcategoriesList = useSelector(
     (state) => state.categories.subcategories
@@ -92,7 +93,7 @@ function InfoForm({ inModal = false, onSubmit, product, onReset }) {
   const formsValues = watch();
 
   function onSub(data) {
-    if (product?.name !== undefined) {
+    if (product?.name !== undefined ) {
       const formValues = getValues();
       const changedFields = {};
 
@@ -117,14 +118,19 @@ function InfoForm({ inModal = false, onSubmit, product, onReset }) {
         },
         product?._id
       );
+
+     
     } else {
       onSubmit({
         ...data,
         description: editorRef.current,
       });
 
-      editorRef.current = "";
-      reset();
+   
+        editorRef.current = "";
+        reset();
+      
+  
     }
   }
 

@@ -12,6 +12,7 @@ const MediaContainer = styled(Box)({
   height: "100%",
   display: "flex",
   flexDirection: "column",
+  position:"relative",
   gap: "2rem",
   backgroundColor: "#ffffff",
   borderRadius: ".8rem",
@@ -20,8 +21,18 @@ const MediaContainer = styled(Box)({
     gridRow: "1/2",
   },
 });
+const Error = styled(Box)`
+  font-size: 1.3rem;
+  color: #fa7c7c;
+  position: absolute;
+  top: 25%;
+  left: 0;
+  right: 0;
+  text-align: center;
 
-const MainMedia = styled(Box)(({ hasContnet }) => ({
+`;
+
+const MainMedia = styled(Box)(({ hasContnet,error }) => ({
   width: "100%",
   height: "100%",
   position: "relative",
@@ -31,7 +42,7 @@ const MainMedia = styled(Box)(({ hasContnet }) => ({
   overflow: "hidden",
   alignItems: "center",
   justifyContent: "center",
-  border: hasContnet ? "none" : "2px dashed #c5c5c5",
+  border: hasContnet ? "none" : error?"2px dashed #fc8787":"2px dashed #c5c5c5",
 }));
 
 const Image = styled("img")({
@@ -46,8 +57,9 @@ import PropTypes from "prop-types";
 ImageUploader.propTypes = {
   medias: PropTypes.array,
   setMedias: PropTypes.func,
+  error: PropTypes.bool,
 };
-function ImageUploader({ medias, setMedias }) {
+function ImageUploader({ error,medias, setMedias }) {
   const initUrl =
     medias.length > 0
       ? `http://localhost:8000/images/products/images/${medias.at(-1)}`
@@ -94,8 +106,11 @@ function ImageUploader({ medias, setMedias }) {
 
   return (
     <MediaContainer>
+      {error && <Error>
+          لطفا برای محصول خود عکس انتخاب کنید
+      </Error>}
       <Typography variant="content">اپلود عکس های محصول</Typography>
-      <MainMedia hasContnet={medias.length > 0}>
+      <MainMedia hasContnet={medias.length > 0} error={error}>
         {medias.length > 0 ? (
           <Image src={activeImage?.file} />
         ) : (
