@@ -20,10 +20,16 @@ const Image = styled.img`
   width: 300px;
   height: 300px;
 `;
+
+
+
 const Text = styled.p`
   font-size: 1.5rem;
   font-weight: 600;
 `;
+
+
+
 const HomeButton = styled.p`
   margin-top: 2rem;
   cursor: pointer;

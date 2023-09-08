@@ -25,6 +25,7 @@ const SearchStyled = styled.div`
     min-width: 500px;
   }
 `;
+
 const Input = styled.input`
   width: 100%;
   height: 100%;
@@ -47,6 +48,8 @@ function Search() {
       navigate("/products?page=1");
     }
   }, [focus, navigate, query]);
+
+
 
   return (
     <SearchStyled onClick={() => setFocus((s) => !s)}>
