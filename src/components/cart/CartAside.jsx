@@ -13,6 +13,8 @@ import { useDispatch } from "react-redux";
 import { show } from "../../redux/reducer/toast/toastSlice";
 import { Link } from "react-router-dom";
 
+
+
 const shippingCost = 5000;
 const CartAside = ({ carts = [] }) => {
   const [discountPrice, setDiscountPrice] = useState(0);

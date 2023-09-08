@@ -43,11 +43,13 @@ const Color = styled.div`
   height: 1.5rem;
   border-radius: 50%;
 `;
+
 const Image = styled.img`
   width: 8rem;
   height: 8rem;
   border-radius: 0.5rem;
 `;
+
 
 const CartRow = ({ product, onCheck, initCheck, setCount }) => {
   return (
