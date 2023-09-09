@@ -15,7 +15,8 @@ import { Link } from "react-router-dom";
 
 
 
-const shippingCost = 5000;
+
+const shippingCost = 10000;
 const CartAside = ({ carts = [] }) => {
   const [discountPrice, setDiscountPrice] = useState(0);
   const dispatch = useDispatch();

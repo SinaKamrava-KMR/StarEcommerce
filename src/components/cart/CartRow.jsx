@@ -51,6 +51,7 @@ const Image = styled.img`
 `;
 
 
+
 const CartRow = ({ product, onCheck, initCheck, setCount }) => {
   return (
     <Wrapper>
@@ -75,6 +76,7 @@ const CartRow = ({ product, onCheck, initCheck, setCount }) => {
         init={product.productCount}
         setCount={(value)=>setCount({...product,productCount:value})}
       />
+      
       <p>
         {convertToPersianNumber(product.productCount * product.price)} تومان
       </p>
