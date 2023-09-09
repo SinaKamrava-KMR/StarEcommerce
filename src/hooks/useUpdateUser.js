@@ -7,6 +7,7 @@ import { updateUser } from "../services/api/updateUser";
 export function useUpdateUser(onSuccess) {
   const dispatch = useDispatch();
 
+  
   const { isLoading, mutate } = useMutation({
     mutationFn: ({id, data}) =>updateUser(id, data),
     onSuccess: (res) => {
