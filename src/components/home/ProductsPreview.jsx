@@ -9,6 +9,7 @@ import { useRef } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { addProduct } from "../../redux/reducer/cart/cartSlice";
+import { useResize } from "../../hooks/useResize";
 
 const Wrapper = styled.div`
   width: 100%;
@@ -33,19 +34,23 @@ const SeeMoreTag = styled.p`
   border-radius: 50px;
   color: #fff;
   padding: 0.4rem 1rem;
+  @media (max-width: 900px) {
+   font-size: 1rem;
+  }
+
 `;
 
-function ProductsPreview({ title, data, categoryId, wishList=[] }) {
+function ProductsPreview({ title, data, categoryId, wishList = [] }) {
+  const size = useResize();
+
   const dispatch = useDispatch();
   const sliderRef = useRef(null);
-  
+
   let filteredList = data?.filter((item) => item.category === categoryId);
 
-  
   const handleAdToCart = (product) => {
     dispatch(addProduct(product));
   };
-
 
   return (
     <Wrapper>
@@ -60,7 +65,11 @@ function ProductsPreview({ title, data, categoryId, wishList=[] }) {
           onRight={() => sliderRef.current.goPrev()}
         />
       </HeaderContainer>
-      <Slider ref={sliderRef} spaceBetween={10} slidesPerView={4}>
+      <Slider
+        ref={sliderRef}
+        spaceBetween={10}
+        slidesPerView={size > 1000 ? 4 : 3}
+      >
         {filteredList?.reverse()?.map(
           (product, idx) =>
             idx < 6 && (

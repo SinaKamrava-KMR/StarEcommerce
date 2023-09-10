@@ -30,6 +30,10 @@ const Container = styled.div`
   gap: 1rem;
   grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
   grid-template-rows: repeat(2, minmax(250px, 320px));
+  @media (max-width: 900px) {
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    grid-template-rows: repeat(2, minmax(150px, 200px));
+  }
 `;
 
 function MultiProductsPreview({ wishList = [] }) {

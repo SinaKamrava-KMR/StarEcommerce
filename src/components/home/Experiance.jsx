@@ -8,6 +8,9 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   gap: 4rem;
+  @media (max-width: 900px) {
+   display: none;
+  }
 `;
 const Container = styled.div`
   display: flex;

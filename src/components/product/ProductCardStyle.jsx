@@ -15,6 +15,10 @@ export const Wrapper = styled.div`
   border-radius: 1.5rem;
   padding-bottom: 1.6rem;
   overflow: hidden;
+  @media (max-width: 900px) {
+    padding: .5rem;
+    max-width: 15rem;
+  }
 `;
 export const Image = styled.img`
   width: 100%;
@@ -41,6 +45,9 @@ export const PriceWrapper = styled.div`
   display: flex;
   gap: 0.8rem;
   color: #555;
+  @media (max-width: 900px) {
+   font-size: 1rem;
+  }
 `;
 export const AddButton = styled.div`
   display: flex;
@@ -60,6 +67,9 @@ export const AddButton = styled.div`
   &:active {
     background-color: #333;
   }
+  @media (max-width: 900px) {
+   font-size: 1rem;
+  }
 `;
 export const Title = styled.p`
   overflow: hidden;
@@ -70,5 +80,8 @@ export const Title = styled.p`
     white-space: nowrap;
     overflow: hidden;
     font-weight: bold;
+  }
+  @media (max-width: 900px) {
+   font-size: 1.3rem;
   }
 `;

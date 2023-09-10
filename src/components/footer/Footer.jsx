@@ -8,6 +8,10 @@ const Wrapper = styled.div`
   display: grid;
   border-top: 1px solid #b9b9b9;
   grid-template-columns: 400px repeat(auto-fill, minmax(200px, 1fr));
+  @media (max-width: 900px) {
+    grid-template-columns:  repeat(auto-fill, minmax(210px, 1fr));
+    
+  }
 `;
 const Column = styled.div`
   display: flex;

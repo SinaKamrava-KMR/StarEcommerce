@@ -17,7 +17,12 @@ const ItemsWrapper = styled.div`
   justify-content: space-between;
   width: 100%;
   height: 220px;
-  gap: 3rem;
+  gap: 3rem; 
+   @media (max-width: 900px) {
+    height: 120px;
+    gap: .5rem; 
+  }
+  
 `;
 const Item = styled.div`
   position: relative;
@@ -48,7 +53,7 @@ const FloatButton = styled.p`
   display: flex;
   align-items: center;
   justify-content: center;
-
+  white-space: nowrap;
   border-radius: 0.5rem;
   padding: 1rem 0.5rem;
   gap: 1rem;
@@ -57,6 +62,13 @@ const FloatButton = styled.p`
   box-shadow: 0 2px 5px #5656565c;
   &:hover {
     box-shadow: 0 2px 10px #4444445c;
+  }
+  @media (max-width: 900px) {
+   font-size: 1rem;
+   padding: .8rem 0.5rem;
+  gap: .2rem;
+  left: 5%;
+  right: 5%;
   }
 `;
 
@@ -71,7 +83,7 @@ function HomeCategories() {
             <Image src="./public/categories/w1.jpg" />
             <FloatButton>
               <p> برند های محبوب</p>
-              <HiArrowLongLeft fontSize={20} />
+              <HiArrowLongLeft  />
             </FloatButton>
           </Item>
 
@@ -80,7 +92,7 @@ function HomeCategories() {
             <Link to={"/products?category=64ec453c6953de44bc52926e"}>
               <FloatButton>
                 <p> لباس کژوال </p>
-                <HiArrowLongLeft fontSize={20} />
+                <HiArrowLongLeft />
               </FloatButton>
             </Link>
           </Item>
@@ -89,7 +101,7 @@ function HomeCategories() {
             <Link to={"/products?category=64d78de9c3591a7ddbe60eb1"}>
               <FloatButton>
                 <p> لباس خانم ها </p>
-                <HiArrowLongLeft fontSize={20} />
+                <HiArrowLongLeft  />
               </FloatButton>
             </Link>
           </Item>
@@ -98,7 +110,7 @@ function HomeCategories() {
             <Link to={"/products?category=64da398b40368270f54bd808"}>
               <FloatButton>
                 <p> لباس مجلسی </p>
-                <HiArrowLongLeft fontSize={20} />
+                <HiArrowLongLeft  />
               </FloatButton>
             </Link>
           </Item>
