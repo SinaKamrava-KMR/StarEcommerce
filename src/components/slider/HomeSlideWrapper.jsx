@@ -10,23 +10,43 @@ const Wrapper = styled.div`
   justify-content: center;
   height: 100%;
   gap: 1rem;
+  @media (max-width: 1000px) {
+    width: 100% ;
+    padding: 0;
+    flex-direction: column;
+  gap: .5rem;
+  
+  }
 `;
 
 const Image = styled.img`
   width: 500px;
   height: 400px;
   object-fit: fill;
+  @media (max-width: 1000px) {
+   
+  width: 250px;
+  height: 200px;
+  
+  }
 `;
 const Content = styled.div`
   flex: 1;
   display: flex;
   flex-direction: column;
   gap: 2rem;
+  @media (max-width: 1000px) {
+    gap: 1rem;
+    flex: 0;
+    width: 80%;
+  
+  }
 `;
 const SlideAnimation = styled.div`
   /* animation: ${(props) =>
     props.active ? `slideAnimation 1s ease-in-out forwards;` : "none"};
   opacity: 0; */
+  
   animation-name: ${(props) => (props.active ? "slideAnimation" : "none")};
   animation-duration: 0.5s;
   animation-timing-function: ease-in-out;
@@ -42,6 +62,10 @@ const SlideAnimation = styled.div`
       transform: translate(-80px, -50px);
       opacity: 1;
     }
+  }
+  @media (max-width: 1000px) {
+    width:80%;
+    margin-top:10rem;
   }
 `;
 
@@ -65,6 +89,12 @@ const Title = styled.p`
       opacity: 1;
     }
   }
+  @media (max-width: 1000px) {
+    
+    font-size: 1.8rem;
+  
+  
+  }
 `;
 const Description = styled.p`
   animation-name: ${(props) => (props.active ? "up" : "none")};
@@ -85,6 +115,13 @@ const Description = styled.p`
       transform: translate(0, -40px);
       opacity: 1;
     }
+  }
+
+  @media (max-width: 1000px) {
+    
+    font-size: 1.4rem;
+    width: 100%;
+  
   }
 `;
 const Button = styled.div`
@@ -125,6 +162,14 @@ const Button = styled.div`
       transform: translate(0, -10px);
       opacity: 1;
     }
+  }
+
+  @media (max-width: 1000px) {
+    align-items: center;
+    padding: .5rem 0;
+    font-size: 1rem;
+    min-width: 150px;
+    margin-top: 0;
   }
 `;
 

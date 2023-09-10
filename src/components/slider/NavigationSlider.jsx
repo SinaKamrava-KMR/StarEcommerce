@@ -26,6 +26,10 @@ const Wrapper = styled.div`
     color: #333;
   }
   z-index: 20;
+  @media (max-width: 1000px) {
+    display: none;
+  
+  }
 `;
 
 const NavigationSlider = ({ onLeft, onRight }) => {

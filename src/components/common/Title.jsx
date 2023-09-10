@@ -6,6 +6,8 @@ export const Title = styled.p`
     color: #25252e;
     line-height: 2;
     white-space: nowrap;
-
+    @media (max-width: 900px) {
+   font-size: 1.5rem;
+  }
   
 `

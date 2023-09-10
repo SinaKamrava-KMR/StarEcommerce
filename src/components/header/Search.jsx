@@ -20,7 +20,7 @@ const SearchStyled = styled.div`
   padding-right: 5px;
   padding-block: 5px;
   gap: 5px;
-  flex: 1;
+  flex: 1 ;
   @media (min-width: 1200px) {
     min-width: 500px;
   }

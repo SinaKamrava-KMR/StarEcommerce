@@ -3,6 +3,7 @@ import Slider from "../slider/Slider";
 import { SwiperSlide } from "swiper/react";
 import Brand from "./brand";
 import { Title } from "../common/Title";
+import { useResize } from "../../hooks/useResize";
 
 const Wrapper = styled.div`
   width: 100%;
@@ -87,11 +88,12 @@ const brands = [
 ];
 
 const Brands = () => {
-  
+  const size = useResize();
+ 
   return (
     <Wrapper>
       <Title>برند های محبوب</Title>
-      <Slider slidesPerView={8}>
+      <Slider slidesPerView={size > 1000 ?8:3}>
         {brands.map((brand, idx) => (
           <SwiperSlide key={idx}>
             <Brand brand={brand} />
