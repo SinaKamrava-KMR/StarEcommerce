@@ -30,6 +30,14 @@ export const SeeMore = styled.div`
   &:hover {
     background-image: linear-gradient(120deg, #e85ef8 0%, #f94059 100%);
   }
+
+  @media (max-width: 1000px) {
+  bottom: 8%;
+  right: 15%;
+  width: 50px;
+  height: 50px;
+  font-size: 1rem;
+  }
 `;
 
 export const DiscountAd = styled.p`
@@ -47,4 +55,11 @@ export const DiscountAd = styled.p`
   justify-content: center;
   font-size: 12px;
   background-image: linear-gradient(to right, #6a11cb 0%, #2575fc 100%);
+  @media (max-width: 1000px) {
+  top: 30%;
+  left: 8%;
+  width: 40px;
+  height: 40px;
+  font-size: .8rem;
+  }
 `;

@@ -13,6 +13,13 @@ const SliderCircleWrapper = styled.div`
   right: ${(props) => (props.expand ? 0 : `16%`)};
   bottom: ${(props) => (props.expand ? 0 : `20%`)};
   background-color: ${(props) => props.color};
+  @media (max-width: 1000px) {
+    width: ${(props) => (props.expand ? "100%" : `250px`)};
+  height: ${(props) => (props.expand ? "100%" : `250px`)};
+  right: ${(props) => (props.expand ? 0 : `25%`)};
+ 
+  bottom: ${(props) => (props.expand ? 0 : `30%`)};
+  }
   /* background-image: linear-gradient(to right, #fdb4c166 0%, #fba3b466 19%, #ffb4b867 60%, #ffcbc35b 100%); */
 `;
 

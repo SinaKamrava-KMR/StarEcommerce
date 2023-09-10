@@ -9,6 +9,9 @@ const Wrapper = styled.div`
   display: flex;
   gap: 1.5rem;
   align-items: center;
+  @media (max-width: 1000px) {
+   display: none;
+  }
 `;
 
 const Circle = styled.div`

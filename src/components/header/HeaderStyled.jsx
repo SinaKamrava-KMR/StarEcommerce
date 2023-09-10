@@ -6,6 +6,7 @@ export const HeaderStyled = styled.header`
   display: grid;
   gap: 1.6rem;
   align-items: center;
+
   background-color: ${(props) =>
     props.position > 70 ? "#fff" : "transparent"};
   z-index: 99999;
@@ -47,6 +48,7 @@ export const Row = styled.div`
   align-items: center;
   justify-content: space-between;
   gap: 2rem;
+
 `;
 
 export const Flex1 = styled.div`
@@ -60,4 +62,6 @@ export const Flex1 = styled.div`
 
 export const SearchWrapper = styled.div`
     position: relative;
+    
+    flex: 1;
 `

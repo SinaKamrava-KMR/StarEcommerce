@@ -50,12 +50,12 @@ const Header = () => {
       </Row>
 
       <Row>
-        <Flex1 />
+      <Flex1 />
         <SearchWrapper>
           <Search  />
           <SearchDropDown/>
         </SearchWrapper>
-
+      
         <Link to="/cart">
           <IconWrapper>
             {carts.length > 0 && (
