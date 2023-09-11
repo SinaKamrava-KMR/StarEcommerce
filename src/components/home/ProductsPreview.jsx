@@ -27,6 +27,7 @@ const HeaderContainer = styled.div`
 const SeeMoreTag = styled.p`
   cursor: pointer;
   font-size: 12px;
+  
   background-color: #3794ebeb;
   &:hover {
     background-color: #126ec4eb;

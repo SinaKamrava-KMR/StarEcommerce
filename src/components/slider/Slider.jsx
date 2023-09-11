@@ -58,6 +58,7 @@ const Slider = forwardRef(
     return (
       <Wrapper>
         <Swiper
+          
           // install Swiper modules
           modules={[Navigation, Pagination, A11y, Autoplay, EffectFade]}
           slidesPerView={slidesPerView}
