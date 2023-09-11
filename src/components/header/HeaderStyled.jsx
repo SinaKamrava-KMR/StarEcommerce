@@ -30,6 +30,7 @@ export const BadgeIcon = styled.span`
   font-size: 12px;
   width: 16px;
   height: 16px;
+  
   padding: 9px;
   display: flex;
   border-radius: 50%;
@@ -37,6 +38,7 @@ export const BadgeIcon = styled.span`
   justify-content: center;
   & p {
     margin-top: 2px;
+
   }
 `;
 export const IconWrapper = styled.div`
@@ -45,9 +47,11 @@ export const IconWrapper = styled.div`
 
 export const Row = styled.div`
   display: flex;
+
   align-items: center;
   justify-content: space-between;
   gap: 2rem;
+
 
 `;
 

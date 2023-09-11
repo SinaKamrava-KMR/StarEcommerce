@@ -9,6 +9,7 @@ const LikeWrapper = styled.div`
   width: 30px;
   height: 30px;
   z-index: 10;
+  
   background-color: #dedede;
   color: #545454;
   display: flex;

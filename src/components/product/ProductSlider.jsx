@@ -10,6 +10,8 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   gap: 2rem;
+
+  
 `;
 const MainImage = styled.img`
   width: 400px;
