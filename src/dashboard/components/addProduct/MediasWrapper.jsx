@@ -25,6 +25,8 @@ const ImageItem = styled(ImageListItem)(({ isActive }) => ({
   display: "flex",
   borderRadius: " 0.9rem",
   gap: "1rem",
+
+
   overflow: "hidden",
   cursor: "pointer",
   position: "relative",
@@ -41,6 +43,8 @@ const UploadWrapper = styled(Box)`
   height: 100%;
   border-radius: 0.5rem;
   position: relative;
+
+
   display: flex;
   align-items: center;
   justify-content: center;
@@ -52,6 +56,8 @@ const RemoveBtn = styled(Box)`
   background-color: #ff5353;
   color: #ffffff;
   border-radius: 50%;
+
+  
   display: flex;
   align-items: center;
   justify-content: center;

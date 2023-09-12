@@ -18,6 +18,10 @@ const Wrapper = styled(Box)`
   flex-direction: column;
   align-items: flex-start;
   justify-content: center;
+
+
+
+
   gap: 2rem;
   min-width: 300px;
 `;
@@ -33,6 +37,8 @@ const colors = {
   totalSales: { stroke: "#4f46e5", fill: "#c7d2fe" },
   text: "#374151",
   background: "#fff",
+
+  
 };
 
 const CutomTick = (tickObject) => {
