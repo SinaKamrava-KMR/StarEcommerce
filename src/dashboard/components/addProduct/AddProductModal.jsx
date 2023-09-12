@@ -24,6 +24,8 @@ const Wrapper = styled(Box)`
   position: relative;
   background-color: #fff;
   width: 70%;
+
+
   height: 90%;
   border-radius: 0.7rem;
   box-shadow: 0 0 10px #7a7a7a;
@@ -31,6 +33,8 @@ const Wrapper = styled(Box)`
   flex-direction: column;
   gap: 2rem;
   align-items: center;
+
+
   padding: 2rem 1rem;
   padding-bottom: 5rem;
 `;
@@ -39,6 +43,8 @@ const CloseWrapper = styled(Box)`
   position: absolute;
   left: 2rem;
   top: 2rem;
+
+  
   cursor: pointer;
   font-size: 1.8rem;
 `;

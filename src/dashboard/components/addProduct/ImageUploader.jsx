@@ -59,6 +59,11 @@ ImageUploader.propTypes = {
   setMedias: PropTypes.func,
   error: PropTypes.bool,
 };
+// ImageUploader.propTypes = {
+//   medias: PropTypes.array,
+//   setMedias: PropTypes.func,
+//   error: PropTypes.bool,
+// };
 function ImageUploader({ error,medias, setMedias }) {
   const initUrl =
     medias.length > 0
@@ -109,6 +114,11 @@ function ImageUploader({ error,medias, setMedias }) {
       {error && <Error>
           لطفا برای محصول خود عکس انتخاب کنید
       </Error>}
+
+      
+
+
+
       <Typography variant="content">اپلود عکس های محصول</Typography>
       <MainMedia hasContnet={medias.length > 0} error={error}>
         {medias.length > 0 ? (
