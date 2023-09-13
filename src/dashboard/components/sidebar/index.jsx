@@ -5,7 +5,7 @@ import NavItem from "./NavItem";
 import DashboardIcon from "../../common/dashboardIcon";
 import AddProductButton from "./AddProductButton";
 import AddIcon from "@mui/icons-material/Add";
-import UsersIcon from "../../common/UsersIcon";
+// import UsersIcon from "../../common/UsersIcon";
 import { useState } from "react";
 import ActiveWrapper from "./ActiveWrapper";
 import OrderIcon from "../../common/OrderIcon";
@@ -52,7 +52,7 @@ const navLinks = [
     ),
     active: false,
   },
-  { id: "users", label: "کاربران", icon: <UsersIcon />, active: false },
+  // { id: "users", label: "کاربران", icon: <UsersIcon />, active: false },
   {
     id: "addProduct",
     label: "اضافه کردن محصول",
