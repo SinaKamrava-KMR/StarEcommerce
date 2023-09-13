@@ -39,20 +39,20 @@ function ActiveWrapper({ activeId }) {
       position = 65;
       break;
     case "products":
-      position = 117;
+      position = 115;
       break;
     case "management":
-      position = 169;
+      position = 167;
       break;
       case "categories":
-        position = 219;
+        position = 216;
         break;
-    case "users":
-      position = 272;
-      break;
     case "addProduct":
-      position = 320;
+      position = 267;
       break;
+    // case "addProduct":
+    //   position = 320;
+    //   break;
   }
 
   return <Wrapper position={position}></Wrapper>;
