@@ -21,6 +21,7 @@ const OrdersLayout = styled(Box)({
   height: "100%",
   display: "flex",
   flexDirection: "column",
+  
   padding: "2.5rem 3rem",
   gap: "2rem",
   "@media (max-width:900px)": {
@@ -33,6 +34,8 @@ const TopLayout = styled(Box)({
   alignItems: "flex-end",
   "@media (max-width:950px)": {
     flexDirection: "column",
+
+
     alignItems: "flex-start",
     gap: "2rem",
   },
@@ -57,6 +60,7 @@ const categoryItems = [
     label: "لباس کودک",
     count: 4,
   },
+
   {
     label: "لباس زنانه",
     count: 12,
