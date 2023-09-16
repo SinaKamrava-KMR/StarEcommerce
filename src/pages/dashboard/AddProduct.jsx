@@ -17,6 +17,8 @@ export const WrapperStyled = styled(Box)`
   overflow-y: auto;
   gap: 2rem;
 
+
+
   /* Scrollbar styles */
   scrollbar-width: thin;
   scrollbar-color: #616264 #d1d1d19a;
@@ -31,6 +33,10 @@ export const WrapperStyled = styled(Box)`
   &::-webkit-scrollbar-thumb {
     background: #616264;
     border-radius: 10px;
+
+
+
+
   }
 `;
 
@@ -40,6 +46,11 @@ export const Container = styled(Box)`
   flex: 1;
   display: grid;
   gap: 1rem;
+
+
+
+
+  
   grid-template-columns: 1fr 350px;
   grid-template-rows: 1fr;
   /* width*/
